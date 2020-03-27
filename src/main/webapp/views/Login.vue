@@ -23,7 +23,7 @@
         .then(response => {
           if (response.data.code === 200) {
             this.$router.replace({
-              path: 'index'
+              path: '/index'
             })
           }
         })
