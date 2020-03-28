@@ -2,14 +2,17 @@ package com.akijoey.library.controller;
 
 import com.akijoey.library.entity.User;
 import com.akijoey.library.result.Result;
+import com.akijoey.library.service.UserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
-import java.util.Objects;
-
 @RestController
 public class LoginController {
+
+    @Autowired
+    UserService userService;
 
     @CrossOrigin
     @RequestMapping("/api/login")
@@ -18,7 +21,9 @@ public class LoginController {
         String username = request.getUsername();
         username = HtmlUtils.htmlEscape(username);
 
-        if (!Objects.equals("admin", username) || !Objects.equals("123456", request.getPassword())) {
+        User user = userService.getUser(username, request.getPassword());
+
+        if (user == null) {
             return new Result(400);
         } else {
             return new Result(200);
