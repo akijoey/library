@@ -1,7 +1,7 @@
 <template>
   <div>
-    username:<input type="text" v-model="username" placeholder="input username"/>
-    password<input type="password" v-model="password" placeholder="input password"/>
+    username:<input type="text" v-model="loginForm.username" placeholder="input username"/>
+    password<input type="password" v-model="loginForm.password" placeholder="input password"/>
     <button @click="login">login</button>
   </div>
 </template>
@@ -10,25 +10,30 @@
   export default {
     data() {
       return {
-        username: '',
-        password: ''
+        loginForm: {
+          username: '',
+          password: ''
+        }
       }
     },
     methods: {
       login() {
+        var that = this
         this.$axios.post('/login', {
-          username: this.username,
-          password: this.password
+          username: this.loginForm.username,
+          password: this.loginForm.password
         })
         .then(response => {
           if (response.data.code === 200) {
+            that.$store.commit('login', that.loginForm)
+            var path = this.$route.query.redirect
             this.$router.replace({
-              path: '/index'
+              path: path === '/' || path === undefined ? '/index' : path
             })
           }
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
         })
       }
     }

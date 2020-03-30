@@ -26,7 +26,10 @@ const routes = [
   {
     path: '/index',
     name: 'Index',
-    component: () => import('@/views/Index')
+    component: () => import('@/views/Index'),
+    meta: {
+      requireAuth: true
+    }
   }
 ]
 
