@@ -3,6 +3,7 @@ package com.akijoey.library.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -16,6 +17,9 @@ public class Category {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Book> books;
 
     public int getId() {
         return id;

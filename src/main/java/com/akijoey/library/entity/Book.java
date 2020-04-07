@@ -14,10 +14,6 @@ public class Book {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="cid")
-    private Category category;
-
     @Column(name = "cover")
     private String cover;
 
@@ -39,20 +35,16 @@ public class Book {
     @Column(name = "summary")
     private String summary;
 
+    @ManyToOne
+    @JoinColumn(name="cid", referencedColumnName = "id")
+    private Category category;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public String getCover() {
@@ -109,5 +101,13 @@ public class Book {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
