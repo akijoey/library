@@ -1,43 +1,40 @@
 package com.akijoey.library.response;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.jwt.JwtHelper;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonWebToken {
 
+    private static final String ISSUER = "akijoey";
     private static final String SECRET = "library";
-    private static final String ISS = "echisan";
 
-    private static final long EXPIRATION = 3600L;
-    private static final long EXPIRATION_REMEMBER = 604800L;
+    private static final long EXPIRATION_ACCESS = 3600L;    // 1h = 3600s
+    private static final long EXPIRATION_REFRESH = 604800L; // 7d = 604800s
 
-    public static String generateToken(String username, boolean isRememberMe) {
-        long expiration = isRememberMe ? EXPIRATION_REMEMBER : EXPIRATION;
-        return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, SECRET)
-                .setIssuer(ISS)
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                .compact();
+    public static String generateToken(String subject) throws JsonProcessingException {
+        return JwtHelper.encode(new ObjectMapper().writeValueAsString(new HashMap<>(){{
+            put("iss", ISSUER);
+            put("sub", subject);
+            put("exp", Long.toString(System.currentTimeMillis() + EXPIRATION_ACCESS * 1000));
+        }}), new MacSigner(SECRET)).getEncoded();
     }
 
-    public static String getUsername(String token){
-        return parseToken(token).getSubject();
+    private static Map<String, String> parseToken(String token) throws JsonProcessingException {
+        String claims = JwtHelper.decodeAndVerify(token, new MacSigner(SECRET)).getClaims();
+        return new ObjectMapper().readValue(claims, Map.class);
     }
 
-    public static boolean isExpiration(String token){
-        return parseToken(token).getExpiration().before(new Date());
+    public static String getSubject(String token) throws JsonProcessingException {
+        return parseToken(token).get("sub");
     }
 
-    private static Claims parseToken(String token){
-        return Jwts.parser()
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token)
-                .getBody();
+    public static boolean isExpiration(String token) throws JsonProcessingException {
+        return Long.parseLong(parseToken(token).get("exp")) < System.currentTimeMillis();
     }
 
 }

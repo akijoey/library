@@ -26,7 +26,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -75,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
             response.setContentType("application/json;charset=utf-8");
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            String token = JsonWebToken.generateToken(username, false);
+            String token = JsonWebToken.generateToken(username);
             ResponseBody body = new ResponseBody(200, "Login Success", Map.of("token", token));
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         });
@@ -97,13 +96,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
                 String token = request.getHeader("Authorization").replace("Bearer ", "");
                 if (token != null) {
-                    String username = JsonWebToken.getUsername(token);
+                    String username = JsonWebToken.getSubject(token);
                     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                         UserDetails userDetails = userService.loadUserByUsername(username);
                         if (userDetails != null) {
                             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
                             authRequest.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                             SecurityContextHolder.getContext().setAuthentication(authRequest);
+
+                            System.out.println(SecurityContextHolder.getContext());
                         }
                     }
                 }
@@ -132,12 +133,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .anyRequest().authenticated()
+
+                // authentication
                 .and()
                 .addFilterAt(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(authorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                // 注销功能
+                // logout
                 .and()
                 .logout()
                 .logoutUrl("/api/user/logout")
@@ -148,17 +151,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }).permitAll()
 
                 .and().exceptionHandling()
-                // 认证失败 ( 防止重定向 )
+                // authentication failure
                 .authenticationEntryPoint((request, response, exception) -> {
                     response.setContentType("application/json;charset=utf-8");
                     response.setStatus(401);
-                    ResponseBody body = new ResponseBody(401, "Places Login", null);
-                    if (exception instanceof InsufficientAuthenticationException) {
-                        body.setMessage("request error");
-                    }
+                    ResponseBody body = new ResponseBody(401, "Authentication Failure", null);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(body));
                 })
-                // 权限不足
+                // permission denied
                 .accessDeniedHandler((request, response, exception) -> {
                     response.setContentType("application/json;charset=utf-8");
                     response.setStatus(403);
