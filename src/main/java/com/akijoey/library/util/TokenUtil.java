@@ -1,4 +1,4 @@
-package com.akijoey.library.response;
+package com.akijoey.library.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +8,7 @@ import org.springframework.security.jwt.crypto.sign.MacSigner;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonWebToken {
+public class TokenUtil {
 
     private static final String ISSUER = "akijoey";
     private static final String SECRET = "library";

@@ -1,6 +1,6 @@
 package com.akijoey.library.controller;
 
-import com.akijoey.library.response.ResponseBody;
+import com.akijoey.library.util.ResponseBody;
 import com.akijoey.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

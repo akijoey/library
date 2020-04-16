@@ -1,4 +1,4 @@
-package com.akijoey.library.response;
+package com.akijoey.library.util;
 
 public class ResponseBody {
 

@@ -1,7 +1,7 @@
 package com.akijoey.library.config;
 
-import com.akijoey.library.response.JsonWebToken;
-import com.akijoey.library.response.ResponseBody;
+import com.akijoey.library.util.TokenUtil;
+import com.akijoey.library.util.ResponseBody;
 import com.akijoey.library.service.MenuService;
 import com.akijoey.library.service.UserService;
 
@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -22,8 +20,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
             response.setContentType("application/json;charset=utf-8");
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            String token = JsonWebToken.generateToken(username);
+            String token = TokenUtil.generateToken(username);
             ResponseBody body = new ResponseBody(200, "Login Success", Map.of("token", token));
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         });
@@ -96,7 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
                 String token = request.getHeader("Authorization").replace("Bearer ", "");
                 if (token != null) {
-                    String username = JsonWebToken.getSubject(token);
+                    String username = TokenUtil.getSubject(token);
                     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                         UserDetails userDetails = userService.loadUserByUsername(username);
                         if (userDetails != null) {
@@ -110,6 +110,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
                 chain.doFilter(request, response);
             }
+
+//            @Autowired
+//            AuthenticationEntryPoint authenticationEntryPoint;
+//
+//            @Override
+//            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+//                if (SecurityContextHolder.getContext().getAuthentication() == null) {
+//                    String token = request.getHeader("Authorization").replace("Bearer ", "");
+//                    try {
+//                        authenticationTokenHandler(request, token);
+//                    } catch (AuthenticationException exception) {
+//                        authenticationEntryPoint.commence(request, response, exception);
+//                    }
+//                }
+//                chain.doFilter(request, response);
+//            }
+//
+//            private void authenticationTokenHandler(HttpServletRequest request, String token) throws AuthenticationException, IOException {
+//                if (token != null && token.length() > 0) {
+//                    String username = JsonWebToken.getSubject(token);
+//                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//                        UserDetails userDetails = userService.loadUserByUsername(username);
+//                        if (userDetails != null) {
+//                            // get redis
+//                            if (true) {
+//
+//                            }
+//                            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
+//                            authRequest.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                            SecurityContextHolder.getContext().setAuthentication(authRequest);
+//                        } else {
+//                            throw new UsernameNotFoundException("Username Not Found");
+//                        }
+//                    } else {
+//                        throw new BadCredentialsException("Bad Token");
+//                    }
+//                } else {
+//                    throw new AuthenticationCredentialsNotFoundException("Token Not Found");
+//                }
+//            }
         };
     }
 
