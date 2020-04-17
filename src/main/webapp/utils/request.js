@@ -12,7 +12,7 @@ const service = axios.create({
 service.interceptors.request.use(
   request => {
     if (store.getters.token) {
-      request.headers.Authorization = getToken()
+      request.headers.Authorization = 'Bearer ' + getToken()
     }
     return request
   },
@@ -25,14 +25,15 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    if (response.status !== 200) {
+    const { status, message } = response
+    if (status !== 200) {
       Message({
-        message: response.message || 'Error',
+        message: message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-      // 497: Illegal token; 498: Other clients logged in; 499: Token expired;
-      if (response.status === 497 || response.status === 498 || response.status === 499) {
+      // 495: Token Not Found; 496: Username Not Found; 497: Illegal Token; 498: Account Expired; 499: Token Expired;
+      if (status === 401 || status === 495 || status === 496 || status === 497 || status === 498 || status === 499) {
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
@@ -43,7 +44,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(response.message || 'Error'))
+      return Promise.reject(new Error(message || 'Error'))
     } else {
       return response
     }

@@ -2,7 +2,6 @@ package com.akijoey.library.config;
 
 import com.akijoey.library.util.TokenUtil;
 import com.akijoey.library.util.ResponseBody;
-import com.akijoey.library.service.MenuService;
 import com.akijoey.library.service.UserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     UserService userService;
 
     @Autowired
-    MenuService menuService;
+    TokenUtil tokenUtil;
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
@@ -74,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
             response.setContentType("application/json;charset=utf-8");
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            String token = TokenUtil.generateToken(username);
+            String token = tokenUtil.generateToken(username);
             ResponseBody body = new ResponseBody(200, "Login Success", Map.of("token", token));
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         });
@@ -90,66 +89,82 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, exception) -> {
+            response.setContentType("application/json;charset=utf-8");
+            response.setStatus(401);
+            ResponseBody body = new ResponseBody(401, "Authentication Failure", null);
+            if (exception instanceof CredentialsExpiredException) {
+                body.setStatus(499);
+                body.setMessage("Token Expired");
+            } else if (exception instanceof AccountExpiredException) {
+                body.setStatus(498);
+                body.setMessage("Account Expired");
+            } else if (exception instanceof BadCredentialsException) {
+                body.setStatus(497);
+                body.setMessage("Illegal Token");
+            } else if (exception instanceof UsernameNotFoundException) {
+                body.setStatus(496);
+                body.setMessage("Username Not Found");
+            } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
+                body.setStatus(495);
+                body.setMessage("Token Not Found");
+            }
+            response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+        };
+    }
+
+    @Bean
     OncePerRequestFilter authorizationFilter() {
         return new OncePerRequestFilter() {
+
+            @Autowired
+            AuthenticationEntryPoint authenticationEntryPoint;
+
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-                String token = request.getHeader("Authorization").replace("Bearer ", "");
-                if (token != null) {
-                    String username = TokenUtil.getSubject(token);
-                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                        UserDetails userDetails = userService.loadUserByUsername(username);
-                        if (userDetails != null) {
-                            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
-                            authRequest.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                            SecurityContextHolder.getContext().setAuthentication(authRequest);
-
-                            System.out.println(SecurityContextHolder.getContext());
-                        }
+                if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                    String token = request.getHeader("Authorization").replace("Bearer ", "");
+                    try {
+                        authenticationTokenHandler(request, token);
+                        chain.doFilter(request, response);
+                    } catch (AuthenticationException exception) {
+                        authenticationEntryPoint.commence(request, response, exception);
                     }
+                } else {
+                    chain.doFilter(request, response);
                 }
-                chain.doFilter(request, response);
             }
 
-//            @Autowired
-//            AuthenticationEntryPoint authenticationEntryPoint;
-//
-//            @Override
-//            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-//                if (SecurityContextHolder.getContext().getAuthentication() == null) {
-//                    String token = request.getHeader("Authorization").replace("Bearer ", "");
-//                    try {
-//                        authenticationTokenHandler(request, token);
-//                    } catch (AuthenticationException exception) {
-//                        authenticationEntryPoint.commence(request, response, exception);
-//                    }
-//                }
-//                chain.doFilter(request, response);
-//            }
-//
-//            private void authenticationTokenHandler(HttpServletRequest request, String token) throws AuthenticationException, IOException {
-//                if (token != null && token.length() > 0) {
-//                    String username = JsonWebToken.getSubject(token);
-//                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//                        UserDetails userDetails = userService.loadUserByUsername(username);
-//                        if (userDetails != null) {
-//                            // get redis
-//                            if (true) {
-//
-//                            }
-//                            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
-//                            authRequest.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                            SecurityContextHolder.getContext().setAuthentication(authRequest);
-//                        } else {
-//                            throw new UsernameNotFoundException("Username Not Found");
-//                        }
-//                    } else {
-//                        throw new BadCredentialsException("Bad Token");
-//                    }
-//                } else {
-//                    throw new AuthenticationCredentialsNotFoundException("Token Not Found");
-//                }
-//            }
+            private void authenticationTokenHandler(HttpServletRequest request, String token) throws AuthenticationException, IOException {
+                if (token != null && token.length() > 0) {
+                    Map<String, String> claims = tokenUtil.parseToken(token);
+                    String username = tokenUtil.getSubject(claims);
+                    long expiration = tokenUtil.getExpiration(claims);
+                    if (username != null) {
+                        UserDetails userDetails = userService.loadUserByUsername(username);
+                        if (userDetails != null) {
+                            if (!tokenUtil.isExpired(username, expiration)) {
+                                if (tokenUtil.isValid(username, expiration)) {
+                                    UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
+                                    authRequest.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                                    SecurityContextHolder.getContext().setAuthentication(authRequest);
+                                } else {
+                                    throw new AccountExpiredException("Account Expired");
+                                }
+                            } else {
+                                throw new CredentialsExpiredException("Token Expired");
+                            }
+                        } else {
+                            throw new UsernameNotFoundException("Username Not Found");
+                        }
+                    } else {
+                        throw new BadCredentialsException("Bad Token");
+                    }
+                } else {
+                    throw new AuthenticationCredentialsNotFoundException("Token Not Found");
+                }
+            }
         };
     }
 
@@ -192,12 +207,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and().exceptionHandling()
                 // authentication failure
-                .authenticationEntryPoint((request, response, exception) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    response.setStatus(401);
-                    ResponseBody body = new ResponseBody(401, "Authentication Failure", null);
-                    response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-                })
+                .authenticationEntryPoint(authenticationEntryPoint())
                 // permission denied
                 .accessDeniedHandler((request, response, exception) -> {
                     response.setContentType("application/json;charset=utf-8");
