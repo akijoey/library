@@ -23,13 +23,20 @@ public class TokenUtil {
     RedisUtil redisUtil;
 
     // generate token
-    public String generateToken(String subject) throws JsonProcessingException {
+    public String generateToken(String subject) {
         String expiration = Long.toString(System.currentTimeMillis() + EXPIRATION_ACCESS * 1000);
-        String token = JwtHelper.encode(new ObjectMapper().writeValueAsString(new HashMap<>(){{
+        Map<String, String> claims = new HashMap<>(){{
             put("iss", ISSUER);
             put("sub", subject);
             put("exp", expiration);
-        }}), new MacSigner(SECRET)).getEncoded();
+        }};
+        String json = null;
+        try {
+            json = new ObjectMapper().writeValueAsString(claims);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String token = JwtHelper.encode(json, new MacSigner(SECRET)).getEncoded();
         if (redisUtil.hasKey(subject)) {
             redisUtil.delete(subject);
         }
@@ -38,13 +45,19 @@ public class TokenUtil {
     }
 
     // parse token
-    public Map<String, String> parseToken(String token) throws JsonProcessingException {
-        String claims = JwtHelper.decodeAndVerify(token, new MacSigner(SECRET)).getClaims();
-        return new ObjectMapper().readValue(claims, Map.class);
+    public Map<String, String> parseToken(String token) {
+        String json = JwtHelper.decodeAndVerify(token, new MacSigner(SECRET)).getClaims();
+        Map<String, String> claims = null;
+        try {
+            claims = new ObjectMapper().readValue(json, Map.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return claims;
     }
 
     // get subject
-    public String getSubject(String token) throws JsonProcessingException {
+    public String getSubject(String token) {
         return parseToken(token).get("sub");
     }
     public String getSubject(Map<String, String> claims) {
@@ -52,7 +65,7 @@ public class TokenUtil {
     }
 
     // get expiration
-    public long getExpiration(String token) throws JsonProcessingException {
+    public long getExpiration(String token) {
         return Long.parseLong(parseToken(token).get("exp"));
     }
     public long getExpiration(Map<String, String> claims) {
@@ -60,7 +73,7 @@ public class TokenUtil {
     }
 
     // is expired
-    public boolean isExpired(String token) throws JsonProcessingException {
+    public boolean isExpired(String token) {
         Map<String, String> claims = parseToken(token);
         if (getExpiration(claims) < System.currentTimeMillis()) {
             String key = getSubject(claims);
@@ -84,7 +97,7 @@ public class TokenUtil {
     }
 
     // is valid
-    public boolean isValid(String token) throws JsonProcessingException {
+    public boolean isValid(String token) {
         Map<String, String> claims = parseToken(token);
         String key = getSubject(claims);
         if (redisUtil.hasKey(key)) {

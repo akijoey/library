@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -114,7 +115,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    @Bean
     OncePerRequestFilter authorizationFilter() {
         return new OncePerRequestFilter() {
 
@@ -124,9 +124,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
                 if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                    String token = request.getHeader("Authorization").replace("Bearer ", "");
+//                    System.out.println(request.getRequestURL());
                     try {
-                        authenticationTokenHandler(request, token);
+                        authenticationTokenHandler(request);
                         chain.doFilter(request, response);
                     } catch (AuthenticationException exception) {
                         authenticationEntryPoint.commence(request, response, exception);
@@ -136,9 +136,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
             }
 
-            private void authenticationTokenHandler(HttpServletRequest request, String token) throws AuthenticationException, IOException {
+            private void authenticationTokenHandler(HttpServletRequest request) throws AuthenticationException, IOException {
+                String token = request.getHeader("Authorization");
                 if (token != null && token.length() > 0) {
-                    Map<String, String> claims = tokenUtil.parseToken(token);
+                    Map<String, String> claims = tokenUtil.parseToken(token.replace("Bearer ", ""));
                     String username = tokenUtil.getSubject(claims);
                     long expiration = tokenUtil.getExpiration(claims);
                     if (username != null) {
@@ -180,7 +181,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/login");
     }
 
     @Override

@@ -9,26 +9,28 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
 
-    public boolean isExist(String username) {
-        User user = getByName(username);
-        return user != null;
+    public Map<String, Object> getInfoByUsername(String username) {
+        // get info: name, avatar, roles, routers
+        User user = (User)loadUserByUsername(username);
+
+        Map<String, Object> info = new HashMap<>();
+
+        return info;
     }
 
-    public User getByName(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    public User getUser(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
-    }
-
-    public void add(User user) {
+    public void register(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
         userRepository.save(user);
     }
 

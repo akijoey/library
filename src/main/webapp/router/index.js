@@ -1,38 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/components/'
 
 Vue.use(Router)
 
 const constantRoutes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('@/views/About.vue')
   },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/Login')
-  },
-  {
-    path: '/index',
-    name: 'Index',
-    component: () => import('@/views/Index'),
-    meta: {
-      requireAuth: true
-    }
-  }
+  // 404 page must be placed at the end !
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
+// create router
 const createRouter = () => new Router({
   mode: 'history',
   base: process.env.BASE_URL,
