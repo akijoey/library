@@ -11,8 +11,8 @@ export function login(data) {
 export function getInfo(token) {
   return request({
     url: '/user/info',
-	  method: 'get',
-	  params: { token }
+    method: 'get',
+    params: { token }
   })
 }
 

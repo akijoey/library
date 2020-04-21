@@ -9,13 +9,13 @@ const state = {
 }
 
 const mutations = {
-  ['SET_TOKEN']: (state, token) => {
+  SET_TOKEN: (state, token) => {
     state.token = token
   },
-  ['SET_NAME']: (state, name) => {
+  SET_NAME: (state, name) => {
     state.name = name
   },
-  ['SET_AVATAR']: (state, avatar) => {
+  SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
 }
@@ -27,7 +27,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const token = response.data.token.substring(7)
-        commit(SET_TOKEN, token)
+        commit('SET_TOKEN', token)
         setToken(token)
         resolve()
       }).catch(error => {
@@ -45,8 +45,8 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
         const { name, avatar, routes } = data
-        commit(SET_NAME, name)
-        commit(SET_AVATAR, avatar)
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', avatar)
         addRouter(routes)
         resolve(data)
       }).catch(error => {
@@ -59,7 +59,7 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
-        commit(SET_TOKEN, '')
+        commit('SET_TOKEN', '')
         removeToken()
         resetRouter()
         resolve()
@@ -72,7 +72,7 @@ const actions = {
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
-      commit(SET_TOKEN, '')
+      commit('SET_TOKEN', '')
       removeToken()
       resolve()
     })

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Layout from '@/components/layout'
-import Admin from '@/components/admin'
+// import Admin from '@/components/admin'
 
 Vue.use(Router)
 
