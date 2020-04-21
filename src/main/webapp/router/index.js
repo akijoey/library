@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Layout from '@/component/layout'
-import Admin from '@/component/admin'
+import Layout from '@/components/layout'
+import Admin from '@/components/admin'
 
 Vue.use(Router)
 
@@ -14,7 +14,7 @@ const constantRoutes = [
   },
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/views/error'),
     hidden: true
   },
   {
