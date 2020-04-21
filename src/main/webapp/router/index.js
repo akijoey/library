@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/'
+
+import Layout from '@/component/layout'
+import Admin from '@/component/admin'
 
 Vue.use(Router)
 
@@ -16,10 +18,27 @@ const constantRoutes = [
     hidden: true
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('@/views/About.vue')
+    path: '/',
+    component: Layout,
+    redirect: '/home',
+    children: [{
+      path: 'home',
+      name: 'Home',
+      component: () => import('@/views/home/index'),
+      meta: { title: 'Home', icon: 'home' }
+    }]
   },
+  // {
+  //   path: '/',
+  //   component: Admin,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: 'Dashboard', icon: 'dashboard' }
+  //   }]
+  // },
   // 404 page must be placed at the end !
   { path: '*', redirect: '/404', hidden: true }
 ]

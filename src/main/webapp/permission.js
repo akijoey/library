@@ -8,6 +8,11 @@ const whiteList = ['/login']
 
 router.beforeEach(async(to, from, next) => {
 
+  // test path
+  if (to.path === '/home') {
+    next()
+  }
+
   // set page title
   const title = 'Library'
   document.title = `${to.meta.title} - ${title}`
