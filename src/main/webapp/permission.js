@@ -9,8 +9,9 @@ const whiteList = ['/login']
 router.beforeEach(async(to, from, next) => {
 
   // test path
-  if (to.path === '/home') {
+  if (to.path != '/login') {
     next()
+    return
   }
 
   // set page title

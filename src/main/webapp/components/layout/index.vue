@@ -1,14 +1,15 @@
 <template>
   <el-container>
     <el-header>
-      <el-menu router default-active="'/index'" mode="horizontal">
-        <el-menu-item v-for="(item, i) in navList" :key="i" :index="item.name">
-          {{ item.title }}
+      <el-menu router :default-active="$route.path" mode="horizontal">
+        <el-menu-item v-for="(item, i) in navList" :key="i" :index="item.path">
+          <i :class="item.icon"></i>
+          <span slot="title">{{ item.title }}</span>
         </el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
-      <router-view :key="key" />
+      <router-view :key="$route.fullPath" />
     </el-main>
     <el-footer>
       <div id="footer">
@@ -24,19 +25,14 @@
     data() {
       return {
         navList: [
-          { name: 'home', title: '首页' },
-          { name: 'library', title: '图书馆' },
-          { name: 'user', title: '个人中心' }
+          { path: '/home', title: '首页', icon: 'el-icon-house' },
+          { path: '/library', title: '图书馆', icon: 'el-icon-notebook-2' },
+          { path: '/user', title: '个人中心', icon: 'el-icon-user' }
         ]
       }
     },
     methods: {
       
-    },
-    computed: {
-      key() {
-        return this.$route.path
-      }
     }
   }
 </script>

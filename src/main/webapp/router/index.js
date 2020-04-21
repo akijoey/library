@@ -17,6 +17,31 @@ const constantRoutes = [
     component: () => import('@/views/error'),
     hidden: true
   },
+
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/home',
+  //   children: [{
+  //     path: 'home',
+  //     name: 'Home',
+  //     component: () => import('@/views/home/index'),
+  //     meta: { title: 'Home', icon: 'home' }
+  //   },
+  //   {
+  //     path: 'library',
+  //     name: 'Library',
+  //     component: () => import('@/views/library/index'),
+  //     meta: { title: 'Library', icon: 'library' }
+  //   },
+  //   {
+  //     path: 'user',
+  //     name: 'User',
+  //     component: () => import('@/views/user/index'),
+  //     meta: { title: 'User', icon: 'user' }
+  //   }]
+  // },
+
   {
     path: '/',
     component: Layout,
@@ -28,6 +53,30 @@ const constantRoutes = [
       meta: { title: 'Home', icon: 'home' }
     }]
   },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/library',
+    children: [{
+      path: 'library',
+      name: 'Library',
+      component: () => import('@/views/library/index'),
+      meta: { title: 'Library', icon: 'library' }
+    }]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/user',
+    children: [{
+      path: 'user',
+      name: 'User',
+      component: () => import('@/views/user/index'),
+      meta: { title: 'User', icon: 'user' }
+    }]
+  },
+
+
   // {
   //   path: '/',
   //   component: Admin,
