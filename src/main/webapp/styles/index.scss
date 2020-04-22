@@ -1,0 +1,16 @@
+@import './keyframes';
+
+html,
+body,
+#app {
+	height: 100%;
+	margin: 0;
+}
+
+// *::-webkit-scrollbar {
+//     width: 0;
+// }
+
+*::selection {
+    color: #409EFF;
+}
