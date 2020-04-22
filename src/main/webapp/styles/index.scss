@@ -7,10 +7,10 @@ body,
 	margin: 0;
 }
 
-// *::-webkit-scrollbar {
-//     width: 0;
-// }
+*::-webkit-scrollbar {
+  width: 0;
+}
 
 *::selection {
-    color: #409EFF;
+  color: #409EFF;
 }

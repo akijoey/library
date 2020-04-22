@@ -2,10 +2,11 @@
   <el-container>
     <el-header>
       <el-menu router :default-active="$route.path" mode="horizontal">
+        <img id="logo" src="/favicon.ico" alt="logo" />
         <span id="title">Library</span>
-        <el-menu-item v-for="(item, i) in navList" :key="i" :index="item.path">
-          <i :class="item.icon"></i>
-          <span slot="title">{{ item.title }}</span>
+        <el-menu-item v-for="(nav, i) in navbar" :key="i" :index="nav.path">
+          <i :class="nav.icon"></i>
+          <span slot="title">{{ nav.title }}</span>
         </el-menu-item>
       </el-menu>
     </el-header>
@@ -24,15 +25,24 @@
     name: 'Layout',
     data() {
       return {
-        navList: [
-          { path: '/home', title: '首页', icon: 'el-icon-house' },
-          { path: '/library', title: '图书馆', icon: 'el-icon-notebook-2' },
-          { path: '/user', title: '个人中心', icon: 'el-icon-user' }
+        navbar: [
+          {
+            path: '/user',
+            title: '个人中心',
+            icon: 'el-icon-user'
+          },
+          {
+            path: '/library',
+            title: '图书馆',
+            icon: 'el-icon-notebook-2'
+          },
+          {
+            path: '/home',
+            title: '首页',
+            icon: 'el-icon-house'
+          }
         ]
       }
-    },
-    methods: {
-      
     }
   }
 </script>
@@ -47,9 +57,15 @@
       animation: down 1s;
       ul {
         min-width: 500px; // min width
-        padding: 0 20%;
+        padding: 0 25%;
+        #logo {
+          padding: .8rem .6rem .8rem 0;
+          float: left;
+        }
         #title {
           font-size: 1.3rem;
+          font-weight: bold;
+          font-family: Trebuchet MS;
           line-height: 3.6rem;
         }
         .el-menu-item {
@@ -58,8 +74,10 @@
       }
     }
     main {
+      width: 50%;
       min-height: calc(100% - 10rem);
       margin: 0 auto;
+      padding: 30px 0;
     }
     footer {
       height: 6rem !important;
