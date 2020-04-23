@@ -1,0 +1,17 @@
+// must import on the first line
+
+@function fabs($x) {
+	@if $x > 0 {
+		@return $x;
+	} @else {
+    @return -$x;
+  }
+}
+
+@function sqrt($x) {
+  $res: 1;
+  @for $i from 1 through 24 {
+    $res: $res - ($res * $res - fabs($x)) / (2 * $res);
+  }
+  @return $res;
+}
