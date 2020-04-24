@@ -101,10 +101,10 @@
       #book-#{$i} {
         box-shadow: 0 4px 6px 5px rgba(7, 17, 27, .06);
         border-radius: 5px;
-        transition: .3s;
+        transition: .5s;
         animation: star (.5s + $i * .05);
         &:hover {
-          box-shadow: 0 4px 6px 5px rgba(7, 17, 27, .15);
+          box-shadow: 0 4px 6px 5px rgba(7, 17, 27, .2);
         }
         img {
           width: 110px;
