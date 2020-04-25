@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Layout from '@/components/layout'
-// import Admin from '@/components/admin'
+import Client from '@/layout/client'
+// import Admin from '@/layout/admin'
 
 Vue.use(Router)
 
@@ -20,7 +20,7 @@ const constantRoutes = [
 
   // {
   //   path: '/',
-  //   component: Layout,
+  //   component: Client,
   //   redirect: '/home',
   //   children: [{
   //     path: 'home',
@@ -44,7 +44,7 @@ const constantRoutes = [
 
   {
     path: '/',
-    component: Layout,
+    component: Client,
     redirect: '/home',
     children: [{
       path: 'home',
@@ -55,7 +55,7 @@ const constantRoutes = [
   },
   {
     path: '/',
-    component: Layout,
+    component: Client,
     redirect: '/library',
     children: [{
       path: 'library',
@@ -66,7 +66,7 @@ const constantRoutes = [
   },
   {
     path: '/',
-    component: Layout,
+    component: Client,
     redirect: '/user',
     children: [{
       path: 'user',

@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    name: 'Layout',
+    name: 'Client',
     data() {
       return {
         navbar: [
@@ -57,7 +57,7 @@
     ul {
       padding: 0 $auto;
       #logo {
-        padding: .8rem .6rem;
+        padding: .65rem .75rem 0 1.45rem;
         float: left;
       }
       #title {

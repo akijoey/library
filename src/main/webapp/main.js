@@ -6,9 +6,11 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
-import '@/styles/index.scss'  // global css
+import '@/styles/index.scss'  // global style
 
-import '@/permission' // permission control
+import '@/utils/iconfont'  // iconfont symbol
+
+import '@/permission' // global before guards
 
 Vue.use(ElementUI);
 
