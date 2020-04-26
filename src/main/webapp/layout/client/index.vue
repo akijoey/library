@@ -5,8 +5,8 @@
         <img id="logo" src="/favicon.ico" alt="logo" />
         <span id="title">Library</span>
         <el-menu-item v-for="(nav, i) in navbar" :key="i" :index="nav.path">
-          <i :class="nav.icon"></i>
-          <span slot="title">{{ nav.title }}</span>
+          <icon-font :icon-class="nav.meta.icon" />
+          <span slot="title">{{ nav.meta.title }}</span>
         </el-menu-item>
       </el-menu>
     </el-header>
@@ -23,25 +23,11 @@
 <script>
   export default {
     name: 'Client',
-    data() {
-      return {
-        navbar: [
-          {
-            path: '/user',
-            title: '个人中心',
-            icon: 'el-icon-user'
-          },
-          {
-            path: '/library',
-            title: '图书馆',
-            icon: 'el-icon-notebook-2'
-          },
-          {
-            path: '/home',
-            title: '首页',
-            icon: 'el-icon-house'
-          }
-        ]
+    computed: {
+      navbar() {
+        return this.$router.options.routes.find(route => {
+          return route.redirect === '/home'
+        }).children
       }
     }
   }

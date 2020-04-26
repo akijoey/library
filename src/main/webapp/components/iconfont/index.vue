@@ -23,11 +23,12 @@
 
 <style>
   .icon-font {
-    width: 1em;
+    width: 24px;
     height: 1em;
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
     margin-right: 5px;
+    font-size: 18px;
   }
 </style>

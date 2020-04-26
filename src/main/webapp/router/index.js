@@ -9,7 +9,7 @@ Vue.use(Router)
 const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/login'),
     hidden: true
   },
   {
@@ -17,6 +17,79 @@ const constantRoutes = [
     component: () => import('@/views/error'),
     hidden: true
   },
+
+  {
+    path: '/',
+    component: Client,
+    redirect: '/home',
+    children: [
+      {
+        path: '/user',
+        name: 'User',
+        component: () => import('@/views/user'),
+        meta: { title: '个人中心', icon: 'user' },
+      },
+      {
+        path: '/library',
+        name: 'Library',
+        component: () => import('@/views/library'),
+        meta: { title: '图书馆', icon: 'book' }
+      },
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/home'),
+        meta: { title: '主页', icon: 'home' }
+      }
+    ]
+  },
+
+  // {
+  //   path: '/',
+  //   component: Client,
+  //   redirect: '/home',
+  //   children: [
+  //     {
+  //       path: '/home',
+  //       name: 'Home',
+  //       component: () => import('@/views/home/index'),
+  //       meta: { title: '主页', icon: 'home' }
+  //     },
+  //     {
+  //       path: '/library',
+  //       name: 'Library',
+  //       component: () => import('@/views/library/index'),
+  //       meta: { title: '图书馆', icon: 'book' }
+  //     },
+  //     {
+  //       path: '/user',
+  //       name: 'User',
+  //       component: () => import('@/views/user/index'),
+  //       meta: { title: '个人中心', icon: 'user' },
+  //       redirect: '/user/info',
+  //       children: [
+  //         {
+  //           path: 'info',
+  //           name: 'Info',
+  //           component: () => import('@/views/user/info/index'),
+  //           meta: { title: 'Info', icon: 'info' }
+  //         },
+  //         {
+  //           path: 'passwd',
+  //           name: 'Passwd',
+  //           component: () => import('@/views/user/passwd/index'),
+  //           meta: { title: 'Password', icon: 'info' }
+  //         },
+  //         {
+  //           path: 'record',
+  //           name: 'Record',
+  //           component: () => import('@/views/user/record/index'),
+  //           meta: { title: 'Record', icon: 'info' }
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/',
@@ -27,54 +100,73 @@ const constantRoutes = [
   //     name: 'Home',
   //     component: () => import('@/views/home/index'),
   //     meta: { title: 'Home', icon: 'home' }
-  //   },
-  //   {
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Client,
+  //   redirect: '/library',
+  //   children: [{
   //     path: 'library',
   //     name: 'Library',
   //     component: () => import('@/views/library/index'),
   //     meta: { title: 'Library', icon: 'library' }
-  //   },
-  //   {
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Client,
+  //   redirect: '/user',
+  //   children: [{
   //     path: 'user',
   //     name: 'User',
   //     component: () => import('@/views/user/index'),
-  //     meta: { title: 'User', icon: 'user' }
+  //     meta: { title: 'User', icon: 'user' },
+  //     redirect: '/user/info',
+  //     children: [{
+  //       path: 'info',
+  //       name: 'Info',
+  //       component: () => import('@/views/user/info/index'),
+  //       meta: { title: 'Info', icon: 'info' }
+  //     }]
   //   }]
   // },
-
-  {
-    path: '/',
-    component: Client,
-    redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/home/index'),
-      meta: { title: 'Home', icon: 'home' }
-    }]
-  },
-  {
-    path: '/',
-    component: Client,
-    redirect: '/library',
-    children: [{
-      path: 'library',
-      name: 'Library',
-      component: () => import('@/views/library/index'),
-      meta: { title: 'Library', icon: 'library' }
-    }]
-  },
-  {
-    path: '/',
-    component: Client,
-    redirect: '/user',
-    children: [{
-      path: 'user',
-      name: 'User',
-      component: () => import('@/views/user/index'),
-      meta: { title: 'User', icon: 'user' }
-    }]
-  },
+  // {
+  //   path: '/',
+  //   component: Client,
+  //   redirect: '/user',
+  //   children: [{
+  //     path: 'user',
+  //     name: 'User',
+  //     component: () => import('@/views/user/index'),
+  //     meta: { title: 'User', icon: 'user' },
+  //     redirect: '/user/passwd',
+  //     children: [{
+  //       path: 'passwd',
+  //       name: 'Passwd',
+  //       component: () => import('@/views/user/passwd/index'),
+  //       meta: { title: 'Passwd', icon: 'passwd' }
+  //     }]
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Client,
+  //   redirect: '/user',
+  //   children: [{
+  //     path: 'user',
+  //     name: 'User',
+  //     component: () => import('@/views/user/index'),
+  //     meta: { title: 'User', icon: 'user' },
+  //     redirect: '/user/record',
+  //     children: [{
+  //       path: 'record',
+  //       name: 'Record',
+  //       component: () => import('@/views/user/record/index'),
+  //       meta: { title: 'Record', icon: 'record' }
+  //     }]
+  //   }]
+  // },
 
 
   // {

@@ -60,6 +60,7 @@
     span, svg {
       font-size: 1rem;
       font-weight: bold;
+      margin-left: -4px;
     }
     button {
       margin: 25px 15px 0 10px;
