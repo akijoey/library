@@ -41,11 +41,11 @@
     align-items: center;
     height: calc(100vh - 10rem - 40px);
     img {
-      width: 360px;
+      width: 350px;
       animation: up .8s;
     }
     h1 {
-      font-size: 6rem;
+      font-size: 5rem;
       font-family: Trebuchet MS;
       margin: 0 0 30px 10px;
       animation: down 1s;
@@ -58,11 +58,11 @@
       animation: down .8s;
     }
     span, svg {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: bold;
     }
     button {
-      margin: 25px 20px 0 10px;
+      margin: 25px 15px 0 10px;
       animation: port .8s;
     }
   }

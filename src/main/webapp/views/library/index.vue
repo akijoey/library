@@ -118,7 +118,7 @@
         }
         .title {
           font-weight: bold;
-          color: #0077FF;
+          color: #3EA07B;
         }
       }
     }

@@ -100,7 +100,7 @@
         text-decoration: none;
         transition: .2s;
         &:hover {
-          color: #409EFF;
+          color: #41B883;
         }
       }
     }

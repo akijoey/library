@@ -38,7 +38,7 @@
   aside {
     width: 150px !important;
     padding-top: 10px;
-    @for $i from 0 to 6 {
+    @for $i from 0 to 3 {
       #side-#{$i} {
         animation: port (.5s + $i * .1);
       }
