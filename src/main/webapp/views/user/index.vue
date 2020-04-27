@@ -33,9 +33,9 @@
       return {
         index: 0,
         sidebar: [
-          { title: '个人信息', icon: 'sitemap' },
-          { title: '修改密码', icon: 'sitemap' },
-          { title: '借书记录', icon: 'sitemap' }
+          { title: '个人信息', icon: 'vcard-o' },
+          { title: '修改密码', icon: 'wrench' },
+          { title: '借书记录', icon: 'table' }
         ]
       }
     },
