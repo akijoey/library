@@ -1,17 +1,17 @@
 <template>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item label="密码" prop="pass">
-      <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+  <el-form :model="form" :rules="rules" ref="form" status-icon label-width="70px">
+    <el-form-item label="旧密码" prop="password" id="form-0">
+      <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="确认密码" prop="checkPass">
-      <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+    <el-form-item label="确认密码" prop="checkPassword" id="form-1">
+      <el-input type="password" v-model="form.checkPassword" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="年龄" prop="age">
-      <el-input v-model.number="ruleForm.age"></el-input>
+    <el-form-item label="新密码" prop="newPassword" id="form-2" @keyup.enter.native="handleSubmit">
+      <el-input type="password" v-model="form.newPassword" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
+    <el-form-item id="form-3">
+      <el-button icon="el-icon-check" type="primary" @click="handleSubmit">提交</el-button>
+      <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -20,77 +20,85 @@
   export default {
     name: 'Passwd',
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
+      const validatePassword = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入密码'));
+          callback(new Error('请输入密码'))
         } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
+          if (this.form.checkPassword !== '') {
+            this.$refs.form.validateField('checkPassword')
           }
-          callback();
+          callback()
         }
-      };
-      var validatePass2 = (rule, value, callback) => {
+      }
+      const validateCheckPassword = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('两次输入密码不一致!'));
+          callback(new Error('请再次输入密码'))
+        } else if (value !== this.form.password) {
+          callback(new Error('两次输入密码不一致'))
         } else {
-          callback();
+          callback()
         }
-      };
+      }
+      const vaildateNewPassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入新密码'))
+        } else if (value.length < 6) {
+          callback(new Error('密码长度不能小于 6 位'))
+        } else {
+          callback()
+        }
+      }
       return {
-        ruleForm: {
-          pass: '',
-          checkPass: '',
-          age: ''
+        form: {
+          password: '',
+          checkPassword: '',
+          newPassword: ''
         },
         rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
-          ]
+          password: [{
+            validator: validatePassword,
+            trigger: 'blur'
+          }],
+          checkPassword: [{
+            validator: validateCheckPassword,
+            trigger: 'blur'
+          }],
+          newPassword: [{
+              validator: vaildateNewPassword,
+              trigger: 'blur'
+          }]
         }
-      };
+      }
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
+      handleSubmit() {
+        this.$refs.form.validate((valid) => {
           if (valid) {
-            alert('submit!');
+            // post password and new password
+            console.log('submit');
           } else {
-            console.log('error submit!!');
+            console.log('Error Submit');
             return false;
           }
-        });
+        })
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      handleReset() {
+        this.$refs.form.resetFields()
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  .el-form {
+    @for $i from 0 to 4 {
+      #form-#{$i} {
+        width: 400px;
+        animation: star (.5s + $i * .1);
+      }
+    }
+    button + button {
+      margin-left: 20px;
+    }
+  }
 </style>

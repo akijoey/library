@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form :model="form" :rules="rules" ref="form" class="login-form" label-position="left">
 
       <div class="title-container">
         <h3 class="title">Login Form</h3>
@@ -8,46 +8,25 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <icon-font icon-class="user" />
         </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
+        <el-input type="text" v-model="form.username" placeholder="Username" ref="username" />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <icon-font icon-class="password" />
         </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
+        <el-input :type="password" v-model="form.password" placeholder="Password" ref="password" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPassword">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <icon-font :icon-class="eye" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
-
+      <el-form-item id="form-3">
+        <el-button :loading="loading" type="primary" @click="handleLogin">Login</el-button>
+        <el-button type="primary" @click="handleRegister">Register</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -59,30 +38,42 @@ export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (value === '') {
+        callback(new Error('Please input username'))
+      } else if (!validUsername(value)) {
+        callback(new Error('Please enter the correct username'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value === '') {
+        callback(new Error('Please input password'))
+      } else if (value.length < 6) {
         callback(new Error('The password can not be less than 6 digits'))
       } else {
         callback()
       }
     }
     return {
-      loginForm: {
-        username: undefined,
-        password: undefined
+      form: {
+        username: '',
+        password: ''
       },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+      rules: {
+        username: [{
+          required: true,
+          trigger: 'blur',
+          validator: validateUsername
+        }],
+        password: [{
+          required: true,
+          trigger: 'blur',
+          validator: validatePassword
+        }]
       },
+      show: false,
       loading: false,
-      passwordType: 'password',
       redirect: undefined
     }
   },
@@ -94,29 +85,44 @@ export default {
       immediate: true
     }
   },
+  computed: {
+    password() {
+      return this.show ? '' : 'password'
+    },
+    eye() {
+      return this.show ? 'eye' : 'eye-slash'
+    }
+  },
   methods: {
     showPassword() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
+      this.show = this.show ? false : true
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.form.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          console.log('submit')
+          // this.$store.dispatch('user/login', this.form).then(() => {
+          //   this.$router.push({ path: this.redirect || '/' })
+          //   this.loading = false
+          // }).catch(() => {
+          //   this.loading = false
+          // })
         } else {
-          console.log('error submit!!')
+          console.log('Error Submit')
+          return false
+        }
+      })
+    },
+    handleRegister() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          console.log('submit')
+        } else {
+          console.log('Error Submit')
           return false
         }
       })
@@ -178,7 +184,7 @@ $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
-  min-height: 100%;
+  min-height: 100vh;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
@@ -190,18 +196,6 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
-  }
-
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
   }
 
   .svg-container {
@@ -234,4 +228,12 @@ $light_gray:#eee;
     user-select: none;
   }
 }
+
+  button {
+    width: 48%;
+    margin-bottom: 30px;
+    & + button {
+      margin-left: 4% !important;
+    }
+  }
 </style>

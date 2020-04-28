@@ -1,13 +1,13 @@
 <template>
-  <el-table :data="data" border highlight-current-row>
+  <el-table :data="data" border highlight-current-row @current-change="handleChange">
     <el-table-column prop="name" label="书名" align="center"></el-table-column>
-    <el-table-column prop="borrow" label="借书日期" align="center" sortable :sort-by="date">
+    <el-table-column prop="borrow" label="借书日期" align="center" sortable>
       <template slot-scope="scope">
         <i class="el-icon-time"></i>
         <span>{{ scope.row.borrow | date }}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="return" label="还书期限" align="center" sortable :sort-by="date">
+    <el-table-column prop="return" label="还书期限" align="center" sortable>
       <template slot-scope="scope">
         <i class="el-icon-time"></i>
         <span>{{ scope.row.return | date }}</span>
@@ -15,8 +15,8 @@
     </el-table-column>
     <el-table-column label="操作" align="center" width="200">
       <template slot-scope="scope">
-        <el-button icon="el-icon-refresh-right" size="mini" @click="handleDetail(scope.$index, scope.row)">续借</el-button>
-        <el-button icon="el-icon-position" size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">还书</el-button>
+        <el-button icon="el-icon-refresh-right" size="mini" @click.stop="handleBorrow(scope.row)">续借</el-button>
+        <el-button icon="el-icon-position" size="mini" type="primary" @click.stop="handleReturn(scope.row)">还书</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -74,7 +74,15 @@
       }
     },
     methods: {
-
+      handleChange(row) {
+        console.log(row)
+      },
+      handleBorrow(row) {
+        console.log(row)
+      },
+      handleReturn(row) {
+        console.log(row)
+      }
     }
   }
 </script>
