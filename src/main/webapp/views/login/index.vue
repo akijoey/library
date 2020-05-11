@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item prop="username" id="form-1">
         <icon-font icon-class="user" />
-        <el-input type="text" v-model="form.username" placeholder="Username" ref="username" />
+        <el-input v-model="form.username" placeholder="Username" ref="username" />
       </el-form-item>
       <el-form-item prop="password" id="form-2">
         <icon-font icon-class="password" />
@@ -22,104 +22,86 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
-export default {
-  name: 'Login',
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input username'))
-      } else if (!validUsername(value)) {
-        callback(new Error('Please enter the correct username'))
-      } else {
-        callback()
+  import {
+    validateUsername,
+    validatePassword
+  } from '@/utils/validate'
+  export default {
+    name: 'Login',
+    data() {
+      return {
+        form: {
+          username: '',
+          password: ''
+        },
+        rules: {
+          username: [{
+            validator: validateUsername,
+            trigger: 'blur'
+          }],
+          password: [{
+            validator: validatePassword,
+            trigger: 'blur'
+          }]
+        },
+        show: false,
+        loading: false,
+        redirect: undefined
       }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input password'))
-      } else if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
+    },
+    watch: {
+      $route: {
+        handler: function(route) {
+          this.redirect = route.query && route.query.redirect
+        },
+        immediate: true
       }
-    }
-    return {
-      form: {
-        username: '',
-        password: ''
-      },
-      rules: {
-        username: [{
-          required: true,
-          trigger: 'blur',
-          validator: validateUsername
-        }],
-        password: [{
-          required: true,
-          trigger: 'blur',
-          validator: validatePassword
-        }]
-      },
-      show: false,
-      loading: false,
-      redirect: undefined
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
-  },
-  computed: {
-    password() {
-      return this.show ? '' : 'password'
     },
-    eye() {
-      return this.show ? 'eye' : 'eye-slash'
-    }
-  },
-  methods: {
-    showPassword() {
-      this.show = this.show ? false : true
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+    computed: {
+      password() {
+        return this.show ? '' : 'password'
+      },
+      eye() {
+        return this.show ? 'eye' : 'eye-slash'
+      }
     },
-    handleLogin() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.loading = true
-          console.log('submit')
-          // this.$store.dispatch('user/login', this.form).then(() => {
-          //   this.$router.push({ path: this.redirect || '/' })
-          //   this.loading = false
-          // }).catch(() => {
-          //   this.loading = false
-          // })
-        } else {
-          console.log('Error Submit')
-          return false
-        }
-      })
-    },
-    handleRegister() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          // register api
-          console.log('submit')
-        } else {
-          console.log('Error Submit')
-          return false
-        }
-      })
+    methods: {
+      showPassword() {
+        this.show = this.show ? false : true
+        this.$nextTick(() => {
+          this.$refs.password.focus()
+        })
+      },
+      handleLogin() {
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            this.loading = true
+            console.log('submit')
+            // this.$store.dispatch('user/login', this.form).then(() => {
+            //   this.$router.push({ path: this.redirect || '/' })
+            //   this.loading = false
+            // }).catch(() => {
+            //   this.loading = false
+            // })
+          } else {
+            console.log('Error Submit')
+            return false
+          }
+        })
+      },
+      handleRegister() {
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            // register api
+            console.log('submit')
+          } else {
+            console.log('Error Submit')
+            return false
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang="scss">
@@ -163,7 +145,6 @@ export default {
               border: 0;
               color: #fff;
               background: transparent;
-              -webkit-appearance: none;
               caret-color: $cursor;
               &:-webkit-autofill {
                 box-shadow: 0 0 0px 1000px #283443 inset !important;

@@ -17,37 +17,14 @@
 </template>
 
 <script>
+  import {
+    validateOldPassword,
+    validateCheckPassword,
+    vaildateNewPassword
+  } from '@/utils/validate'
   export default {
     name: 'Passwd',
     data() {
-      const validatePassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.form.checkPassword !== '') {
-            this.$refs.form.validateField('checkPassword')
-          }
-          callback()
-        }
-      }
-      const validateCheckPassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.form.password) {
-          callback(new Error('两次输入密码不一致'))
-        } else {
-          callback()
-        }
-      }
-      const vaildateNewPassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入新密码'))
-        } else if (value.length < 6) {
-          callback(new Error('密码长度不能小于 6 位'))
-        } else {
-          callback()
-        }
-      }
       return {
         form: {
           password: '',
@@ -56,7 +33,7 @@
         },
         rules: {
           password: [{
-            validator: validatePassword,
+            validator: validateOldPassword,
             trigger: 'blur'
           }],
           checkPassword: [{
