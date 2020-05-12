@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <el-container>
-      <el-aside>
-        <el-menu default-active="0" @select="select">
-          <el-menu-item v-for="(side, i) in sidebar" :key="i" :index="i.toString()" :id="'side-' + i">
-            <icon-font :icon-class="side.icon" />
-            <span slot="title">{{ side.title }}</span>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
-      <el-main>
-        <user-info v-show="index == 0" />
-        <user-passwd v-show="index == 1" />
-        <user-record v-show="index == 2" />
-      </el-main>
-    </el-container>
-  </div>
+  <el-container>
+    <el-aside>
+      <el-menu default-active="0" @select="select">
+        <el-menu-item v-for="(side, i) in sidebar" :key="i" :index="i.toString()" :id="'side-' + i">
+          <icon-font :icon-class="side.icon" />
+          <span slot="title">{{ side.title }}</span>
+        </el-menu-item>
+      </el-menu>
+    </el-aside>
+    <el-main>
+      <user-info v-show="index == 0" />
+      <user-passwd v-show="index == 1" />
+      <user-record v-show="index == 2" />
+    </el-main>
+  </el-container>
 </template>
 
 <script>
