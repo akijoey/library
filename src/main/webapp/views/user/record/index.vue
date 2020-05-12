@@ -95,9 +95,11 @@
         this.show = true
       },
       handleBorrow(row) {
+        // post row.id to borrow
         console.log(row)
       },
       handleReturn(row) {
+        // post row.id to return
         console.log(row)
       }
     }

@@ -16,8 +16,8 @@
       <div v-html="summary"></div>
     </div>
     <div slot="footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="visible = false">确定</el-button>
+      <el-button v-if="path" type="primary" @click="handleBorrow">借书</el-button>
+      <el-button v-else type="primary" @click="handleReturn">还书</el-button>
     </div>
   </el-dialog>
 </template>
@@ -51,6 +51,9 @@
           summary += `<p>${section}</p>`
         }
         return summary
+      },
+      path() {
+        return this.$route.path === '/library'
       }
     },
     data() {
@@ -78,6 +81,15 @@
     methods: {
       openDialog() {
         console.log(this.index)
+        // post index to get book info
+      },
+      handleBorrow() {
+        // post index to borrow
+        this.visible = false
+      },
+      handleReturn() {
+        // post index to return
+        this.visible = false
       }
     }
   }
