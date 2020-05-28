@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
+
+    void deleteByIsbn(long isbn);
+
     List<Book> findAllByCategory(Category category);
     List<Book> findAllByTitleLikeOrAndAuthorLike(String key1, String key2);
 }

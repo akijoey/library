@@ -1,8 +1,7 @@
 package com.akijoey.library.controller;
 
-import com.akijoey.library.entity.User;
-import com.akijoey.library.util.ResponseBody;
 import com.akijoey.library.service.UserService;
+import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,18 +20,16 @@ public class UserController {
     TokenUtil tokenUtil;
 
     @GetMapping("/info")
-    public ResponseBody getInfo(HttpServletRequest request) {
-        // get user info and routes
+    public Map<String, Object> getInfo(HttpServletRequest request) {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
         String username = tokenUtil.getSubject(token);
         Map<String, Object> info = userService.getInfoByUsername(username);
-        return new ResponseBody(200, "Get Success", "lalala");
+        return ResultUtil.createResult(200, "Get Success", info);
     }
 
     @PostMapping("/register")
-    public ResponseBody register(@RequestBody String username, @RequestBody String password) {
-        // register
+    public Map<String, Object> register(@RequestBody String username, @RequestBody String password) {
         userService.register(username, password);
-        return new ResponseBody(200, "Register Success", null);
+        return ResultUtil.createResult(200, "Register Success");
     }
 }

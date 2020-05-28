@@ -10,9 +10,8 @@ import javax.persistence.*;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "isbn")
+    private long isbn;
 
     @Column(name = "cover")
     private String cover;
@@ -39,12 +38,12 @@ public class Book {
     @JoinColumn(name="cid", referencedColumnName = "id")
     private Category category;
 
-    public int getId() {
-        return id;
+    public long getIsbn() {
+        return isbn;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIsbn(long isbn) {
+        this.isbn = isbn;
     }
 
     public String getCover() {

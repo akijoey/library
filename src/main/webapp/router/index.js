@@ -27,7 +27,7 @@ const constantRoutes = [
         path: '/user',
         name: 'User',
         component: () => import('@/views/user'),
-        meta: { title: '个人中心', icon: 'user' },
+        meta: { title: '个人中心', icon: 'user' }
       },
       {
         path: '/library',

@@ -1,14 +1,14 @@
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/library?serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: '000822'
+    url: jdbc:mysql://193.112.128.94:3306/library?serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
+    username: library
+    password: 'library'
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
   redis:
-    host: 127.0.0.1
+    host: 193.112.128.94
     port: 6379
-    database: 0
+    database: 1

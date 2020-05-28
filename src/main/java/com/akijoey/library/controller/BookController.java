@@ -26,8 +26,8 @@ public class BookController {
     }
 
     @PostMapping("/api/delete")
-    public void delete(@RequestBody Book book) {
-        bookService.deleteById(book.getId());
+    public void delete(@RequestBody long isbn) {
+        bookService.deleteByIsbn(isbn);
     }
 
     @GetMapping("/api/category/{cid}/book")

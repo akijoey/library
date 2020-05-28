@@ -1,5 +1,6 @@
 package com.akijoey.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,19 +19,21 @@ public class Role {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_role",
-            joinColumns = { @JoinColumn(name = "uid", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") }
+            joinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "uid", referencedColumnName = "id") }
     )
     private List<User> users;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "menu_role",
-        joinColumns = { @JoinColumn(name = "mid", referencedColumnName = "id") },
-        inverseJoinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") }
+        joinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") },
+        inverseJoinColumns = { @JoinColumn(name = "mid", referencedColumnName = "id") }
     )
     private List<Menu> menus;
 

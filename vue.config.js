@@ -5,6 +5,9 @@ function resolve(dir) {
 }
 
 module.exports = {
+  devServer: {
+    port: 8228
+  },
   outputDir: 'src/main/resources/static',
   configureWebpack: {
     entry: './src/main/webapp/main.js'

@@ -31,12 +31,12 @@ public class User implements UserDetails {
     @Transient
     private Boolean enabled = true;
 
-//    @ManyToMany(mappedBy = "users")
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
-            joinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "uid", referencedColumnName = "id") }
+            joinColumns = { @JoinColumn(name = "uid", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") }
     )
     private List<Role> roles;
 
@@ -100,8 +100,8 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    @Override
     @JsonIgnore
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
         for (Role role : roles) {

@@ -106,7 +106,7 @@
             float: left;
           }
           p {
-            margin-left: 5px;
+            margin: 9px 5px;
             font-size: 10px;
           }
         }

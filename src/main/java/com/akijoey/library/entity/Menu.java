@@ -1,5 +1,6 @@
 package com.akijoey.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,11 +19,14 @@ public class Menu {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "url")
-    private String url;
-
     @Column(name = "path")
     private String path;
+
+    @Column(name = "redirect")
+    private String redirect;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "icon")
     private String icon;
@@ -30,13 +34,20 @@ public class Menu {
     @Column(name = "component")
     private String component;
 
+    @JsonIgnore
     @Column(name = "pid")
     private int pid;
 
     @Transient
-    private Boolean enabled;
+    private List<Menu> children;
 
-    @ManyToMany(mappedBy = "menus")
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "menu_role",
+            joinColumns = { @JoinColumn(name = "mid", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "rid", referencedColumnName = "id") }
+    )
     private List<Role> roles;
 
     public int getId() {
@@ -55,12 +66,20 @@ public class Menu {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getRedirect() {
+        return redirect;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setRedirect(String redirect) {
+        this.redirect = redirect;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getPath() {
@@ -93,6 +112,14 @@ public class Menu {
 
     public void setPid(int pid) {
         this.pid = pid;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 
     public List<Role> getRoles() {

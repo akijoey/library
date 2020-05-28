@@ -27,8 +27,8 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public void deleteById(int id) {
-        bookRepository.deleteById(id);
+    public void deleteByIsbn(long isbn) {
+        bookRepository.deleteByIsbn(isbn);
     }
 
     public List<Book> listByCategory(int cid) {
