@@ -23,6 +23,9 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
 
     @Autowired
+    RoleService roleService;
+
+    @Autowired
     MenuService menuService;
 
     public Map<String, Object> getInfoByUsername(String username) {
@@ -44,6 +47,8 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        List<Role> roles = roleService.getUserRoles();
+        user.setRoles(roles);
         userRepository.save(user);
     }
 

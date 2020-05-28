@@ -115,6 +115,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
+    @Bean
     OncePerRequestFilter authorizationFilter() {
         return new OncePerRequestFilter() {
 
