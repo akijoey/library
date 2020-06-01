@@ -42,13 +42,13 @@
     height: calc(100vh - 10rem - 40px);
     img {
       width: 350px;
-      animation: up .8s;
+      animation: up .7s;
     }
     h1 {
       font-size: 5rem;
       font-family: Trebuchet MS;
       margin: 0 0 30px 10px;
-      animation: down 1s;
+      animation: down .8s .2s backwards;
     }
     p {
       font-size: 2rem;

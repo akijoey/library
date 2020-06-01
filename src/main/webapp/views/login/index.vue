@@ -14,7 +14,7 @@
         <icon-font :icon-class="eye" @click.native="showPassword" />
       </el-form-item>
       <el-form-item id="form-3">
-        <el-button :loading="loading" type="primary" @click="handleLogin">Login</el-button>
+        <el-button type="primary" :loading="loading" @click="handleLogin">Login</el-button>
         <el-button type="primary" @click="handleRegister">Register</el-button>
       </el-form-item>
     </el-form>

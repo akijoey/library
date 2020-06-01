@@ -43,7 +43,7 @@
           {
             id: 1,
             title: '解忧杂货店',
-            cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg',
+            cover: 'https://images.weserv.nl/?url=img3.doubanio.com/view/subject/s/public/s27264181.jpg',
             author: '[日] 东野圭吾',
             press: '南海出版公司',
             date: '2014-5',
