@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
@@ -24,8 +25,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -116,19 +119,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    OncePerRequestFilter authorizationFilter() {
-        return new OncePerRequestFilter() {
+    BasicAuthenticationFilter authorizationFilter() throws Exception {
+        return new BasicAuthenticationFilter(authenticationManager()) {
 
             @Autowired
             AuthenticationEntryPoint authenticationEntryPoint;
 
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-                if (SecurityContextHolder.getContext().getAuthentication() == null) {
-//                    System.out.println(request.getRequestURL());
+                String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+                if (authorization != null) {
                     try {
-                        authenticationTokenHandler(request);
-                        chain.doFilter(request, response);
+                        authenticationTokenHandler(request, authorization);
+                        super.doFilterInternal(request, response, chain);
                     } catch (AuthenticationException exception) {
                         authenticationEntryPoint.commence(request, response, exception);
                     }
@@ -137,10 +140,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
             }
 
-            private void authenticationTokenHandler(HttpServletRequest request) throws AuthenticationException, IOException {
-                String token = request.getHeader("Authorization");
+            private void authenticationTokenHandler(HttpServletRequest request, String authorization) throws AuthenticationException, IOException {
+                String token = authorization.replace("Bearer ", "");
                 if (token != null && token.length() > 0) {
-                    Map<String, String> claims = tokenUtil.parseToken(token.replace("Bearer ", ""));
+                    Map<String, String> claims = tokenUtil.parseToken(token);
                     String username = tokenUtil.getSubject(claims);
                     long expiration = tokenUtil.getExpiration(claims);
                     if (username != null) {
@@ -189,6 +192,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/api/user/register").permitAll()
                 .anyRequest().authenticated()
 
                 // authentication

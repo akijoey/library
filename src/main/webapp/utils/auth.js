@@ -1,13 +1,13 @@
 import cookies from 'vue-cookies'
 
-export function getToken(key) {
-	return cookies.get(key)
+export function getToken() {
+	return cookies.get('token')
 }
 
-export function setToken(key, token) {
-	return cookies.set(key, token)
+export function setToken(token) {
+	return cookies.set('token', token)
 }
 
-export function removeToken(key) {
-	return cookies.remove(key)
+export function removeToken() {
+	return cookies.remove('token')
 }

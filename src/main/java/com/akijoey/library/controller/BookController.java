@@ -9,28 +9,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/book")
 public class BookController {
 
     @Autowired
     BookService bookService;
 
-    @GetMapping("/api/books")
+    @GetMapping("/getList")
     public List<Book> list() {
         return bookService.list();
     }
 
-    @PostMapping("/api/book")
+    @PostMapping("/update")
     public Book addOrUpdate(@RequestBody Book book) {
         bookService.addOrUpdate(book);
         return book;
     }
 
-    @PostMapping("/api/delete")
+    @PostMapping("/delete")
     public void delete(@RequestBody long isbn) {
         bookService.deleteByIsbn(isbn);
     }
 
-    @GetMapping("/api/category/{cid}/book")
+    @GetMapping("/category/{cid}")
     public List<Book> listByCategory(@PathVariable("cid") int cid) {
         if (cid != 0)
             return bookService.listByCategory(cid);

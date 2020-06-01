@@ -76,15 +76,15 @@
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
-            console.log('submit')
-            // this.$store.dispatch('user/login', this.form).then(() => {
-            //   this.$router.push({ path: this.redirect || '/' })
-            //   this.loading = false
-            // }).catch(() => {
-            //   this.loading = false
-            // })
+            this.$store.dispatch('user/login', this.form).then(message => {
+              this.loading = false
+              this.$router.push({ path: this.redirect || '/' })
+              this.$message.success(message)
+            }).catch(() => {
+              this.loading = false
+            })
           } else {
-            console.log('Error Submit')
+            this.$message.error('Format Error')
             return false
           }
         })
@@ -95,7 +95,7 @@
             // register api
             console.log('submit')
           } else {
-            console.log('Error Submit')
+            this.$message.error('Format Error')
             return false
           }
         })

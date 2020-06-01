@@ -8,8 +8,10 @@ const whiteList = ['/login']
 
 router.beforeEach(async(to, from, next) => {
 
+  console.log(to.path)
+
   // test path
-  if (to.path != '/login') {
+  if (to.path == '/login') {
     next()
     return
   }
@@ -30,7 +32,7 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-          next()
+          next({...to, replace: true})
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

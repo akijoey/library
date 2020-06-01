@@ -15,8 +15,7 @@ service.interceptors.request.use(
       request.headers.Authorization = 'Bearer ' + getToken()
     }
     return request
-  },
-  error => {
+  }, error => {
     console.log(error)
     return Promise.reject(error)
   }
@@ -25,13 +24,9 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    const { status, message } = response
+    const { status, message } = response.data
     if (status !== 200) {
-      Message({
-        message: message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+      Message.error(message || 'Error')
       // 495: Token Not Found; 496: Username Not Found; 497: Illegal Token; 498: Account Expired; 499: Token Expired;
       if (status === 401 || status === 495 || status === 496 || status === 497 || status === 498 || status === 499) {
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
@@ -48,14 +43,9 @@ service.interceptors.response.use(
     } else {
       return response
     }
-  },
-  error => {
+  }, error => {
     console.log(error)
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    Message.error(error.message)
     return Promise.reject(error)
   }
 )

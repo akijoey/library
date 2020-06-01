@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     MenuService menuService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public Map<String, Object> getInfoByUsername(String username) {
         User user = userRepository.findByUsername(username);
         List<Role> roles = user.getRoles();
@@ -37,16 +41,26 @@ public class UserService implements UserDetailsService {
         }
         menuService.formatMenus(menus);
         return new HashMap<>(){{
-            put("username", username);
+            put("name", username);
             put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
             put("routes", menus);
+        }};
+    }
+
+    public Map<String, Object> getDetailByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return new HashMap<>(){{
+            put("username", username);
+            put("phone", "13751767806");
+            put("address", "广州市番禺区小谷围街道");
         }};
     }
 
     public void register(String username, String password) {
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password);
+        String encrypt = passwordEncoder.encode(password);
+        user.setPassword(encrypt);
         List<Role> roles = roleService.getUserRoles();
         user.setRoles(roles);
         userRepository.save(user);
