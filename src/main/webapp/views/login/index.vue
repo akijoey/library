@@ -14,18 +14,17 @@
         <icon-font :icon-class="eye" @click.native="showPassword" />
       </el-form-item>
       <el-form-item id="form-3">
-        <el-button type="primary" :loading="loading" @click="handleLogin">Login</el-button>
-        <el-button type="primary" @click="handleRegister">Register</el-button>
+        <el-button type="primary" :loading="loading.login" @click="handleLogin">Login</el-button>
+        <el-button type="primary" :loading="loading.register" @click="handleRegister">Register</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-  import {
-    validateUsername,
-    validatePassword
-  } from '@/utils/validate'
+  import { login, register } from '@/api/user'
+  import { setToken } from '@/utils/auth'
+  import { validateUsername, validatePassword } from '@/utils/validate'
   export default {
     name: 'Login',
     data() {
@@ -44,8 +43,11 @@
             trigger: 'blur'
           }]
         },
+        loading: {
+          login: false,
+          register: false
+        },
         show: false,
-        loading: false,
         redirect: undefined
       }
     },
@@ -75,14 +77,15 @@
       handleLogin() {
         this.$refs.form.validate(valid => {
           if (valid) {
-            this.loading = true
-            this.$store.dispatch('user/login', this.form).then(message => {
-              this.loading = false
-              this.$router.push({ path: this.redirect || '/' })
+            this.loading.login = true
+            login(this.form).then(response => {
+              const { message, data } = response.data
+              const { token } = data
+              setToken(token)
+              this.loading.login = false
               this.$message.success(message)
-            }).catch(() => {
-              this.loading = false
-            })
+              this.$router.push({ path: this.redirect || '/' })
+            }).catch(() => this.loading.login = false)
           } else {
             this.$message.error('Format Error')
             return false
@@ -92,8 +95,12 @@
       handleRegister() {
         this.$refs.form.validate(valid => {
           if (valid) {
-            // register api
-            console.log('submit')
+            this.loading.register = true
+            register(this.form).then(response => {
+              const { message } = response.data
+              this.loading.register = false
+              this.$message.success(message)
+            }).catch(() => this.loading.register = false)
           } else {
             this.$message.error('Format Error')
             return false

@@ -15,9 +15,40 @@ export function getInfo() {
   })
 }
 
+export function getDetail() {
+  return request({
+    url: '/user/detail',
+    method: 'get'
+  })
+}
+
+export function update(data) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data
+  })
+}
+
+export function passwd(data) {
+  return request({
+    url: '/user/passwd',
+    method: 'post',
+    data
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/logout',
     method: 'post'
+  })
+}
+
+export function register(data) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    data
   })
 }

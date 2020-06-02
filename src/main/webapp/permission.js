@@ -1,7 +1,6 @@
 import store from './store'
 import router from './router'
-import { getToken } from '@/utils/auth'
-import { Message } from 'element-ui'
+import { getToken, removeToken } from '@/utils/auth'
 
 // no redirect whitelist
 const whiteList = ['/login']
@@ -29,16 +28,14 @@ router.beforeEach(async(to, from, next) => {
       if (store.getters.name) {
         next()
       } else {
-        try {
-          // get user info
-          await store.dispatch('user/getInfo')
+        // get user info
+        store.dispatch('user/getInfo').then(() => {
           next({...to, replace: true})
-        } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Error')
+        }).catch(() => {
+          // remove token and go to login page
+          removeToken()
           next(`/login?redirect=${to.path}`)
-        }
+        })
       }
     }
   } else {

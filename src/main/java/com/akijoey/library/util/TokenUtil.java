@@ -37,11 +37,16 @@ public class TokenUtil {
             e.printStackTrace();
         }
         String token = JwtHelper.encode(json, new MacSigner(SECRET)).getEncoded();
+        removeToken(subject);
+        redisUtil.set(subject, expiration, EXPIRATION_REFRESH);
+        return token;
+    }
+
+    // remove token
+    public void removeToken(String subject) {
         if (redisUtil.hasKey(subject)) {
             redisUtil.delete(subject);
         }
-        redisUtil.set(subject, expiration, EXPIRATION_REFRESH);
-        return token;
     }
 
     // parse token

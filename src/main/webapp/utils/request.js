@@ -1,6 +1,5 @@
 import axios from 'axios'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
 import { MessageBox, Message } from 'element-ui'
 
 const service = axios.create({
@@ -9,45 +8,41 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use(
-  request => {
-    if (store.getters.token) {
-      request.headers.Authorization = 'Bearer ' + getToken()
-    }
-    return request
-  }, error => {
-    console.log(error)
-    return Promise.reject(error)
+service.interceptors.request.use(request => {
+  const token = getToken()
+  if (token !== null) {
+    request.headers.authorization = 'Bearer ' + token
   }
-)
+  return request
+}, error => {
+  console.error(error)
+  return Promise.reject(error)
+})
 
 // response interceptor
-service.interceptors.response.use(
-  response => {
-    const { status, message } = response.data
-    if (status !== 200) {
-      Message.error(message || 'Error')
-      // 495: Token Not Found; 496: Username Not Found; 497: Illegal Token; 498: Account Expired; 499: Token Expired;
-      if (status === 401 || status === 495 || status === 496 || status === 497 || status === 498 || status === 499) {
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload() // refresh page
-          })
-        })
-      }
-      return Promise.reject(new Error(message || 'Error'))
-    } else {
-      return response
+service.interceptors.response.use(response => {
+  const { status, message } = response.data
+  if (status !== 200) {
+    Message.error(message)
+    // 495: Token Not Found; 496: Username Not Found; 497: Illegal Token; 498: Account Expired; 499: Token Expired;
+    if (status === 495 || status === 496 || status === 497 || status === 498 || status === 499) {
+      MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+        confirmButtonText: 'Re-Login',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        removeToken()
+        location.reload() // refresh page
+      })
     }
-  }, error => {
-    console.log(error)
-    Message.error(error.message)
+    const error = new Error(message)
     return Promise.reject(error)
+  } else {
+    return response
   }
-)
+}, error => {
+  console.error(error)
+  return Promise.reject(error)
+})
 
 export default service

@@ -16,16 +16,16 @@
     </el-form-item>
     <el-form-item id="form-3">
       <el-button icon="el-icon-check" type="primary" @click="handleSubmit">提交</el-button>
-      <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
+      <el-button icon="el-icon-switch-button" @click="handleLogout">退出</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-  import {
-    validateUsername,
-    validatePhone
-  } from '@/utils/validate'
+  import { logout } from '@/api/user'
+  import { resetRouter } from '@/router'
+  import { removeToken } from '@/utils/auth'
+  import { validateUsername, validatePhone } from '@/utils/validate'
   export default {
     name: 'Info',
     data() {
@@ -73,13 +73,18 @@
             // post username and phone
             console.log('submit')
           } else {
-            console.log('Error Submit')
+            this.$message.error('Format Error')
             return false
           }
         })
       },
-      handleReset() {
-
+      handleLogout() {
+        logout().then(response => {
+          const { message } = response.data
+          this.$message.success(message)
+          removeToken()
+          resetRouter()
+        })
       }
     }
   }
