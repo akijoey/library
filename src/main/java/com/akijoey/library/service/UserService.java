@@ -56,6 +56,10 @@ public class UserService implements UserDetailsService {
         }};
     }
 
+    public void changePassword(String password, String newPassword) {
+
+    }
+
     public void register(String username, String password) {
         User user = new User();
         user.setUsername(username);

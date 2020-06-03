@@ -27,7 +27,7 @@ public class UserController {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
         String username = tokenUtil.getSubject(token);
         Map<String, Object> info = userService.getInfoByUsername(username);
-        return resultUtil.createResult(200, "Get Success", info);
+        return resultUtil.successResult("Get Success", info);
     }
 
     @GetMapping("/detail")
@@ -35,30 +35,30 @@ public class UserController {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
         String username = tokenUtil.getSubject(token);
         Map<String, Object> detail = userService.getDetailByUsername(username);
-        return resultUtil.createResult(200, "Get Success", detail);
+        return resultUtil.successResult("Get Success", detail);
     }
 
     @PostMapping("/update")
     public Map<String, Object> update(@RequestBody Map<String, String> data) {
 //        userService.update();
-        return resultUtil.createResult(200, "Update Success");
+        return resultUtil.successResult("Update Success");
     }
 
     @PostMapping("/upload")
     public Map<String, Object> upload(@RequestBody Map<String, String> data) {
 //        userService.upload();
-        return resultUtil.createResult(200, "Upload Success");
+        return resultUtil.successResult("Upload Success");
     }
 
     @PostMapping("/passwd")
-    public Map<String, Object> passwd(@RequestBody String password) {
-//        userService.passwd();
-        return resultUtil.createResult(200, "Change Success");
+    public Map<String, Object> passwd(@RequestBody Map<String, String> data) {
+        userService.changePassword(data.get("password"), data.get("newPassword"));
+        return resultUtil.successResult("Change Success");
     }
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> data) {
         userService.register(data.get("username"), data.get("password"));
-        return resultUtil.createResult(200, "Register Success");
+        return resultUtil.successResult("Register Success");
     }
 }

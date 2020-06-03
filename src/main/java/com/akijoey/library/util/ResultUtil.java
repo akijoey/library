@@ -8,18 +8,32 @@ import java.util.Map;
 @Component
 public class ResultUtil {
 
-    public Map<String, Object> createResult(Integer status, String message) {
+    public Map<String, Object> successResult(String message) {
+        return new HashMap<>(){{
+            put("status", 200);
+            put("message", message);
+        }};
+    }
+    public Map<String, Object> successResult(String message, Object data) {
+        return new HashMap<>(){{
+            put("status", 200);
+            put("message", message);
+            put("data", data);
+        }};
+    }
+
+    public Map<String, Object> customResult(Integer status, String message) {
         return new HashMap<>(){{
             put("status", status);
             put("message", message);
         }};
     }
-
-    public Map<String, Object> createResult(Integer status, String message, Object data) {
+    public Map<String, Object> customResult(Integer status, String message, Object data) {
         return new HashMap<>(){{
             put("status", status);
             put("message", message);
             put("data", data);
         }};
     }
+
 }

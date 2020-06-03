@@ -78,12 +78,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             response.setContentType("application/json;charset=utf-8");
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             String token = tokenUtil.generateToken(username);
-            Map<String, Object> result = resultUtil.createResult(200, "Login Success", Map.of("token", token));
+            Map<String, Object> result = resultUtil.successResult("Login Success", Map.of("token", token));
             response.getWriter().write(new ObjectMapper().writeValueAsString(result));
         });
         authenticationFilter.setAuthenticationFailureHandler((request, response, exception) -> {
             response.setContentType("application/json;charset=utf-8");
-            Map<String, Object> result = resultUtil.createResult(401, "Login Failure");
+            Map<String, Object> result = resultUtil.customResult(401, "Login Failure");
             response.getWriter().write(new ObjectMapper().writeValueAsString(result));
         });
         authenticationFilter.setFilterProcessesUrl("/api/user/login");
@@ -95,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, exception) -> {
             response.setContentType("application/json;charset=utf-8");
-            Map<String, Object> result = resultUtil.createResult(401, "Authentication Failure");
+            Map<String, Object> result = resultUtil.customResult(401, "Authentication Failure");
             if (exception instanceof CredentialsExpiredException) {
                 result.put("status", 499);
                 result.put("message", "Token Expired");
@@ -140,7 +140,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             private void authenticationTokenHandler(HttpServletRequest request, String authorization) throws AuthenticationException, IOException {
                 String token = authorization.replace("Bearer ", "");
-                if (token != null && token.length() > 0) {
+                if (token.length() > 0) {
                     Map<String, String> claims = tokenUtil.parseToken(token);
                     String username = tokenUtil.getSubject(claims);
                     long expiration = tokenUtil.getExpiration(claims);
@@ -210,9 +210,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         String token = authorization.replace("Bearer ", "");
                         tokenUtil.removeToken(tokenUtil.getSubject(token));
                     }
-                    Map<String, Object> result = resultUtil.createResult(200, "Logout Success");
+                    Map<String, Object> result = resultUtil.successResult("Logout Success");
                     response.getWriter().write(new ObjectMapper().writeValueAsString(result));
-                }).permitAll()
+                })
 
                 .and().exceptionHandling()
                 // authentication failure
@@ -220,7 +220,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // permission denied
                 .accessDeniedHandler((request, response, exception) -> {
                     response.setContentType("application/json;charset=utf-8");
-                    Map<String, Object> result = resultUtil.createResult(403, "Permission Denied");
+                    Map<String, Object> result = resultUtil.customResult(403, "Permission Denied");
                     response.getWriter().write(new ObjectMapper().writeValueAsString(result));
                 });
 

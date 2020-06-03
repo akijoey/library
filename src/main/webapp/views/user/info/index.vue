@@ -84,6 +84,8 @@
           this.$message.success(message)
           removeToken()
           resetRouter()
+          this.$router.push({ path: '/' })
+          this.$store.commit('user/reset')
         })
       }
     }

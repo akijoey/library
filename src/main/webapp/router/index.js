@@ -3,6 +3,15 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+// override push
+const push = Router.prototype.push
+Router.prototype.push = function newPush(location, resolve, reject) {
+  if (resolve || reject) {
+    return push.call(this, location, resolve, reject)
+  }
+  return push.call(this, location).catch(error => error)
+}
+
 const constantRoutes = [
   {
     path: '/login',
@@ -90,22 +99,24 @@ const router = createRouter()
 // reset router
 export function resetRouter() {
   const newRouter = createRouter()
+  router.options.routes = constantRoutes
   router.matcher = newRouter.matcher
 }
 
 // add router
 export function addRouter(routes) {
   const newRoutes = formatRoutes(routes)
-  newRoutes.forEach(newRoute => {
-    router.options.routes.push(newRoute)
+  constantRoutes.forEach(route => {
+    newRoutes.push(route)
   })
   // error page must be placed at the end
-  router.options.routes.push({
+  newRoutes.push({
     path: '*',
     redirect: '/error',
     hidden: true
   })
-  router.addRoutes(router.options.routes)
+  router.options.routes = newRoutes
+  router.addRoutes(newRoutes)
 }
 
 export default router
