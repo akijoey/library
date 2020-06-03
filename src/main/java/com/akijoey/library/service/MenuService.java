@@ -13,15 +13,15 @@ public class MenuService {
     @Autowired
     MenuRepository menuRepository;
 
-    public List<Menu> getAllByPid(int pid) {
+    public List<Menu> getMenusByPid(int pid) {
         return menuRepository.findAllByPid(pid);
     }
 
     public void formatMenus(List<Menu> menus) {
-        for (Menu menu : menus) {
-            List<Menu> children = getAllByPid(menu.getId());
+        menus.forEach(menu -> {
+            List<Menu> children = getMenusByPid(menu.getId());
             menu.setChildren(children);
-        }
+        });
         menus.removeIf(menu -> menu.getPid() != 0);
     }
 }

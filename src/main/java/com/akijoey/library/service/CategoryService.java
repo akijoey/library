@@ -19,7 +19,7 @@ public class CategoryService {
         return categoryRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
-    public Category get(int id) {
+    public Category getCategoryById(int id) {
         Category category = categoryRepository.findById(id).orElse(null);
         return category;
     }

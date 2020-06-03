@@ -14,12 +14,12 @@ public class RoleService {
     @Autowired
     RoleRepository roleRepository;
 
-    public Role getByName(String name) {
+    public Role getRoleByName(String name) {
         return roleRepository.findByName(name);
     }
 
     public List<Role> getUserRoles() {
-        Role role = getByName("ROLE_USER");
+        Role role = getRoleByName("ROLE_USER");
         return new ArrayList<>(){{
             add(role);
         }};

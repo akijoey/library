@@ -5,10 +5,10 @@ import com.akijoey.library.entity.Category;
 import com.akijoey.library.repository.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookService {
@@ -19,20 +19,34 @@ public class BookService {
     @Autowired
     CategoryService categoryService;
 
-    public List<Book> list() {
-        return bookRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public List<Map<String, Object>> getList() {
+        return bookRepository.findList();
     }
 
-    public void addOrUpdate(Book book) {
-        bookRepository.save(book);
+    public List<Map<String, Object>> getListByCategory(int cid) {
+        Category category = categoryService.getCategoryById(cid);
+        return bookRepository.findListByCategory(category);
     }
 
-    public void deleteByIsbn(long isbn) {
+    public List<Map<String, Object>> getTable() {
+        return bookRepository.findTable();
+    }
+
+    public List<Map<String, Object>> getTableByCategory(int cid) {
+        Category category = categoryService.getCategoryById(cid);
+        return bookRepository.findTableByCategory(category);
+    }
+
+    public Book getBookByIsbn(long isbn) {
+        return bookRepository.findByIsbn(isbn);
+    }
+
+    public void deleteBookByIsbn(long isbn) {
         bookRepository.deleteByIsbn(isbn);
     }
 
-    public List<Book> listByCategory(int cid) {
-        Category category = categoryService.get(cid);
-        return bookRepository.findAllByCategory(category);
+    public void insertOrUpdateBook(Book book) {
+        bookRepository.save(book);
     }
+
 }

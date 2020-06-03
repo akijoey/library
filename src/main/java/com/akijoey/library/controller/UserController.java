@@ -1,5 +1,6 @@
 package com.akijoey.library.controller;
 
+import com.akijoey.library.entity.User;
 import com.akijoey.library.service.UserService;
 import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
@@ -22,6 +23,12 @@ public class UserController {
     @Autowired
     ResultUtil resultUtil;
 
+    @PostMapping("/register")
+    public Map<String, Object> register(@RequestBody Map<String, String> data) {
+        userService.insertUser(data.get("username"), data.get("password"));
+        return resultUtil.successResult("Register Success");
+    }
+
     @GetMapping("/info")
     public Map<String, Object> getInfo(HttpServletRequest request) {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
@@ -38,16 +45,16 @@ public class UserController {
         return resultUtil.successResult("Get Success", detail);
     }
 
-    @PostMapping("/update")
-    public Map<String, Object> update(@RequestBody Map<String, String> data) {
-//        userService.update();
-        return resultUtil.successResult("Update Success");
-    }
-
     @PostMapping("/upload")
     public Map<String, Object> upload(@RequestBody Map<String, String> data) {
-//        userService.upload();
+        userService.uploadAvatar();
         return resultUtil.successResult("Upload Success");
+    }
+
+    @PostMapping("/update")
+    public Map<String, Object> update(@RequestBody Map<String, String> data) {
+        userService.updateUser();
+        return resultUtil.successResult("Update Success");
     }
 
     @PostMapping("/passwd")
@@ -56,9 +63,4 @@ public class UserController {
         return resultUtil.successResult("Change Success");
     }
 
-    @PostMapping("/register")
-    public Map<String, Object> register(@RequestBody Map<String, String> data) {
-        userService.register(data.get("username"), data.get("password"));
-        return resultUtil.successResult("Register Success");
-    }
 }

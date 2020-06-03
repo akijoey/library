@@ -32,13 +32,20 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("username error");
+        }
+        return user;
+    }
+
     public Map<String, Object> getInfoByUsername(String username) {
         User user = userRepository.findByUsername(username);
         List<Role> roles = user.getRoles();
         List<Menu> menus = new ArrayList<>();
-        for (Role role : roles) {
-            menus.addAll(role.getMenus());
-        }
+        roles.forEach(role -> menus.addAll(role.getMenus()));
         menuService.formatMenus(menus);
         return new HashMap<>(){{
             put("name", username);
@@ -48,19 +55,10 @@ public class UserService implements UserDetailsService {
     }
 
     public Map<String, Object> getDetailByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return new HashMap<>(){{
-            put("username", username);
-            put("phone", "13751767806");
-            put("address", "广州市番禺区小谷围街道");
-        }};
+        return userRepository.findDetailByUsername(username);
     }
 
-    public void changePassword(String password, String newPassword) {
-
-    }
-
-    public void register(String username, String password) {
+    public void insertUser(String username, String password) {
         User user = new User();
         user.setUsername(username);
         String encrypt = passwordEncoder.encode(password);
@@ -70,12 +68,15 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("username error");
-        }
-        return user;
+    public void updateUser() {
+
+    }
+
+    public void uploadAvatar() {
+
+    }
+
+    public void changePassword(String password, String newPassword) {
+
     }
 }
