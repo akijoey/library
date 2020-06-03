@@ -20,15 +20,27 @@ public class BookController {
     @Autowired
     ResultUtil resultUtil;
 
-    @GetMapping("/list")
-    public Map<String, Object> getList() {
-        List<Map<String, Object>> list = bookService.getList();
+    @GetMapping("/total")
+    public Map<String, Object> getTotal() {
+        long total = bookService.getTotal();
+        return resultUtil.successResult("Get Success", Map.of("total", total));
+    }
+
+    @GetMapping("/total/{cid}")
+    public Map<String, Object> getTotal(@PathVariable("cid") int cid) {
+        long total = bookService.getTotalByCategory(cid);
+        return resultUtil.successResult("Get Success", Map.of("total", total));
+    }
+
+    @GetMapping("/list/{page}/{size}")
+    public Map<String, Object> getList(@PathVariable("page") int page, @PathVariable("size") int size) {
+        List<Map<String, Object>> list = bookService.getList(page, size);
         return resultUtil.successResult("Get Success", list);
     }
 
-    @GetMapping("/list/{cid}")
-    public Map<String, Object> getList(@PathVariable("cid") int cid) {
-        List<Map<String, Object>> list = bookService.getListByCategory(cid);
+    @GetMapping("/list/{page}/{size}/{cid}")
+    public Map<String, Object> getList(@PathVariable("page") int page, @PathVariable("size") int size, @PathVariable("cid") int cid) {
+        List<Map<String, Object>> list = bookService.getListByCategory(page, size, cid);
         return resultUtil.successResult("Get Success", list);
     }
 

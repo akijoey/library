@@ -10,7 +10,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <div v-for="(book, i) in books" :key="i" :id="'book-' + i" @click="handleClick(book.id)">
+        <div v-for="(book, i) in books" :key="i" :id="'book-' + i" @click="handleClick(book.isbn)">
           <img :src="book.cover" alt="cover">
           <p class="title">{{ book.title }}</p>
           <p>{{ book.author }}</p>
@@ -18,11 +18,12 @@
       </el-main>
       <detail-dialog :index="index" :show.sync="show" />
     </el-container>
-    <el-pagination layout="prev, pager, next" :total="50" background></el-pagination>
+    <el-pagination layout="prev, pager, next" :page-size="18" :total="total" background @current-change="handleChange"></el-pagination>
   </div>
 </template>
 
 <script>
+  import { getList, getTotal } from '@/api/book'
   import Dialog from '@/components/dialog'
   export default {
     name: 'Library',
@@ -39,54 +40,34 @@
           { title: '经管', icon: 'el-icon-menu' },
           { title: '科技', icon: 'el-icon-menu' }
         ],
-        books: [
-          {
-            id: 1,
-            title: '解忧杂货店',
-            cover: 'https://images.weserv.nl/?url=img3.doubanio.com/view/subject/s/public/s27264181.jpg',
-            author: '[日] 东野圭吾',
-            press: '南海出版公司',
-            date: '2014-5',
-            page: 291,
-            summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾',
-            cid: '1'
-          },
-          {
-            id: 2,
-            title: '山茶文具店',
-            cover: 'https://img3.doubanio.com/view/subject/s/public/s29707472.jpg',
-            author: '[日] 小川糸',
-            press: '湖南文艺出版社',
-            date: '2018-3',
-            page: 320,
-            summary: '在镰仓，有一家帮人代笔的文具店，每代店主均由女性担任，只要有委托便会接受，即使是餐厅的菜单也会帮忙。&lt;br&gt;不知不觉间，雨宫鸠子成为了第11代传人，而与外祖母之间的误会，以及开始独自一人活在世上的恐惧，使她充满迷茫。给死去宠物的吊唁信、宣布离婚的公告信、拒绝借钱的回绝信、写给挚友的分手信……&lt;br&gt;一封封代笔信是客人们的写实生活，也是一节节人生的课堂。',
-            cid: '1'
-          },
-          { id: 3, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 4, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 5, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 6, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 7, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 8, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 9, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 10, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 11, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 12, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 13, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 14, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 15, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 16, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 17, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-          { id: 18, title: '解忧杂货店', cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg', author: '[日] 东野圭吾', press: '南海出版公司', date: '2014-5', page: 291, summary: '现代人内心流失的东西，这家杂货店能帮你找回——&lt;br&gt;&lt;br&gt;僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。&lt;br&gt;&lt;br&gt;因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……&lt;br&gt;&lt;br&gt;他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。&lt;br&gt;&lt;br&gt;生命中的一次偶然交会，将如何演绎出截然不同的人生？&lt;br&gt;&lt;br&gt;如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。——东野圭吾', cid: '1' },
-        ],
+        total: 0,
+        books: [],
         index: 0,
         show: false
       }
+    },
+    created() {
+      getTotal('').then(response => {
+        const { data } = response.data
+        this.total = data.total
+      })
+      getList(1, 18, '').then(response => {
+        const { data } = response.data
+        this.books = data
+      })
     },
     methods: {
       handleClick(index) {
         this.index = index
         this.show = true
+      },
+      handleChange(currentPage) {
+        console.log(currentPage)
+        this.books = [] // refresh animation
+        getList(currentPage, 18, '').then(response => {
+        const { data } = response.data
+        this.books = data
+      })
       }
     }
   }
@@ -126,6 +107,9 @@
         p {
           font-size: 12px;
           line-height: 18px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           margin: 0 0 0 5px;
         }
         .title {
@@ -138,6 +122,7 @@
   .el-pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-top: 20px;
     animation: up 1.2s;
   }

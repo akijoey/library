@@ -1,8 +1,15 @@
 import request from '@/utils/request'
 
-export function getList(params) {
+export function getTotal(cid) {
+  return request({
+    url: '/book/total/' + cid,
+		method: 'get'
+  })
+}
+
+export function getList(page, size, cid) {
 	return request({
-		url: '/book/list/' + params,
+		url: `/book/list/${page}/${size}/${cid}`,
 		method: 'get'
 	})
 }

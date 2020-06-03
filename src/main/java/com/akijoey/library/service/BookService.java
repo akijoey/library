@@ -5,6 +5,8 @@ import com.akijoey.library.entity.Category;
 import com.akijoey.library.repository.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +21,24 @@ public class BookService {
     @Autowired
     CategoryService categoryService;
 
-    public List<Map<String, Object>> getList() {
-        return bookRepository.findList();
+    public long getTotal() {
+        return bookRepository.count();
     }
 
-    public List<Map<String, Object>> getListByCategory(int cid) {
+    public long getTotalByCategory(int cid) {
         Category category = categoryService.getCategoryById(cid);
-        return bookRepository.findListByCategory(category);
+        return bookRepository.countByCategory(category);
+    }
+
+    public List<Map<String, Object>> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return bookRepository.findList(pageable);
+    }
+
+    public List<Map<String, Object>> getListByCategory(int page, int size, int cid) {
+        Category category = categoryService.getCategoryById(cid);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return bookRepository.findListByCategory(category, pageable);
     }
 
     public List<Map<String, Object>> getTable() {
