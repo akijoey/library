@@ -38,7 +38,7 @@ service.interceptors.response.use(response => {
     const error = new Error(message)
     return Promise.reject(error)
   } else {
-    return response
+    return response.data
   }
 }, error => {
   console.error(error)

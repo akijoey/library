@@ -4,10 +4,10 @@ import com.akijoey.library.entity.Category;
 import com.akijoey.library.repository.CategoryRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryService {
@@ -15,8 +15,8 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<Category> list() {
-        return categoryRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public List<Map<String, Object>> getSide() {
+        return categoryRepository.findSide();
     }
 
     public Category getCategoryById(int id) {

@@ -1,10 +1,6 @@
 <template>
   <el-dialog :visible.sync="visible" append-to-body @open="openDialog">
-    <el-image :src="book.cover">
-      <div slot="error">
-        <i class="el-icon-picture-outline"></i>
-      </div>
-    </el-image>
+    <img :src="book.cover" />
     <div id="info">
       <p v-for="(value, key, i) in fields" :key="key" :id="'info-' + i">
         <strong>{{ value + ': ' }}</strong>
@@ -23,6 +19,7 @@
 </template>
 
 <script>
+  import { getDetail } from '@/api/book'
   export default {
     name: 'Dialog',
     props: {
@@ -59,14 +56,7 @@
     data() {
       return {
         book: {
-          title: '解忧杂货店',
-          cover: 'https://img3.doubanio.com/view/subject/s/public/s27264181.jpg',
-          author: '[日] 东野圭吾',
-          press: '南海出版公司',
-          date: '2014-5',
-          page: 291,
-          summary: '现代人内心流失的东西，这家杂货店能帮你找回——\n僻静的街道旁有一家杂货店，只要写下烦恼投进卷帘门的投信口，第二天就会在店后的牛奶箱里得到回答。\n因男友身患绝症，年轻女孩静子在爱情与梦想间徘徊；克郎为了音乐梦想离家漂泊，却在现实中寸步难行；少年浩介面临家庭巨变，挣扎在亲情与未来的迷茫中……\n他们将困惑写成信投进杂货店，随即奇妙的事情竟不断发生。\n生命中的一次偶然交会，将如何演绎出截然不同的人生？\n如今回顾写作过程，我发现自己始终在思考一个问题：站在人生的岔路口，人究竟应该怎么做？我希望读者能在掩卷时喃喃自语：我从未读过这样的小说。\n——东野圭吾',
-          category: '文学'
+          summary: ''
         },
         fields: {
           title: '书名',
@@ -80,8 +70,13 @@
     },
     methods: {
       openDialog() {
-        console.log(this.index)
-        // post index to get book info
+        getDetail({
+          isbn: this.index
+        }).then(response => {
+          const { data } = response
+          data.category = data.category.name
+          this.book = data
+        })
       },
       handleBorrow() {
         // post index to borrow
@@ -97,14 +92,15 @@
 
 <style lang="scss" scoped>
   @import '@/styles/math';
-  .el-dialog__wrapper /deep/ .el-dialog {
+  .el-dialog__wrapper ::v-deep .el-dialog {
     width: 700px;
     & > div:nth-child(2) {
       padding: 10px 45px;
-      .el-image {
+      img {
         width: 160px;
         height: 160px * sqrt(2);
         border-radius: 8px;
+        box-shadow: 0 5px 12px 0 rgba(7, 17, 27, .6);
       }
       #info {
         width: 410px;

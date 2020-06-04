@@ -27,7 +27,7 @@ const actions = {
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        const { data } = response.data
+        const { data } = response
         const { name, avatar, routes } = data
         commit('setter', name, avatar)
         addRouter(routes)

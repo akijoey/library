@@ -3,6 +3,7 @@ package com.akijoey.library.controller;
 import com.akijoey.library.entity.Book;
 import com.akijoey.library.service.BookService;
 
+import com.akijoey.library.service.CategoryService;
 import com.akijoey.library.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,16 @@ public class BookController {
     BookService bookService;
 
     @Autowired
+    CategoryService categoryService;
+
+    @Autowired
     ResultUtil resultUtil;
+
+    @GetMapping("/side")
+    public Map<String, Object> getSide() {
+        List<Map<String, Object>> side = categoryService.getSide();
+        return resultUtil.successResult("Get Success", side);
+    }
 
     @GetMapping("/total")
     public Map<String, Object> getTotal() {
@@ -57,8 +67,8 @@ public class BookController {
     }
 
     @PostMapping("/detail")
-    public Map<String, Object> getDetail(@RequestBody long isbn) {
-        Book detail = bookService.getBookByIsbn(isbn);
+    public Map<String, Object> getDetail(@RequestBody Map<String, Long> data) {
+        Book detail = bookService.getBookByIsbn(data.get("isbn"));
         return resultUtil.successResult("Get Success", detail);
     }
 

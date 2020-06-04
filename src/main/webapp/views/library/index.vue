@@ -2,72 +2,82 @@
   <div>
     <el-container>
       <el-aside>
-        <el-menu default-active="0">
+        <!-- <el-menu default-active="0" @select="select">
           <el-menu-item v-for="(side, i) in sidebar" :key="i" :index="i.toString()" :id="'side-' + i">
-            <i :class="side.icon"></i>
+            <icon-font :icon-class="side.icon" />
             <span slot="title">{{ side.title }}</span>
           </el-menu-item>
-        </el-menu>
+        </el-menu> -->
+        <side-menu :sidebar="sidebar" @select="handleSelect" />
       </el-aside>
       <el-main>
         <div v-for="(book, i) in books" :key="i" :id="'book-' + i" @click="handleClick(book.isbn)">
-          <img :src="book.cover" alt="cover">
+          <img :src="book.cover" alt="cover" />
           <p class="title">{{ book.title }}</p>
           <p>{{ book.author }}</p>
         </div>
       </el-main>
-      <detail-dialog :index="index" :show.sync="show" />
+      <detail-dialog :index="isbn" :show.sync="show" />
     </el-container>
-    <el-pagination layout="prev, pager, next" :page-size="18" :total="total" background @current-change="handleChange"></el-pagination>
+    <el-pagination layout="total, prev, pager, next, jumper" :page-size="18" :total="total" :current-page.sync="page" @current-change="handleChange" background></el-pagination>
   </div>
 </template>
 
 <script>
-  import { getList, getTotal } from '@/api/book'
+  import { getSide, getTotal, getList } from '@/api/book'
+  import Sidebar from '@/components/sidebar'
   import Dialog from '@/components/dialog'
   export default {
     name: 'Library',
     components: {
+      'side-menu': Sidebar,
       'detail-dialog': Dialog
     },
     data() {
       return {
+        index: '0',
         sidebar: [
-          { title: '文学', icon: 'el-icon-menu' },
-          { title: '流行', icon: 'el-icon-menu' },
-          { title: '文化', icon: 'el-icon-menu' },
-          { title: '生活', icon: 'el-icon-menu' },
-          { title: '经管', icon: 'el-icon-menu' },
-          { title: '科技', icon: 'el-icon-menu' }
+          { title: '全部', icon: 'book' }
         ],
         total: 0,
+        page: 0,
         books: [],
-        index: 0,
+        isbn: 0,
         show: false
       }
     },
     created() {
-      getTotal('').then(response => {
-        const { data } = response.data
-        this.total = data.total
-      })
-      getList(1, 18, '').then(response => {
-        const { data } = response.data
-        this.books = data
+      getSide().then(response => {
+        const { data } = response
+        data.forEach(category => {
+          this.sidebar.push(category)
+        })
+        this.handleChange(1)
       })
     },
     methods: {
-      handleClick(index) {
-        this.index = index
-        this.show = true
-      },
-      handleChange(currentPage) {
-        console.log(currentPage)
+      handleChange(page) {
         this.books = [] // refresh animation
-        getList(currentPage, 18, '').then(response => {
-        const { data } = response.data
-        this.books = data
-      })
+        const cid = this.index > 0 ? this.index : ''
+        getTotal(cid).then(response => {
+          const { data } = response
+          this.total = data.total
+        })
+        getList(page, 18, cid).then(response => {
+          const { data } = response
+          this.books = data
+        })
+      },
+      handleSelect(index) {
+        if (this.index !== index) {
+          this.index = index
+          this.handleChange(1)
+          this.page = 1
+        }
+      },
+      handleClick(isbn) {
+        this.isbn = isbn
+        this.show = true
       }
     }
   }
@@ -78,11 +88,6 @@
   aside {
     width: 150px !important;
     padding-top: 10px;
-    @for $i from 0 to 6 {
-      #side-#{$i} {
-        animation: port (.5s + $i * .1);
-      }
-    }
   }
   main {
     display: grid;

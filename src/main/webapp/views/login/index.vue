@@ -79,7 +79,7 @@
           if (valid) {
             this.loading.login = true
             login(this.form).then(response => {
-              const { message, data } = response.data
+              const { message, data } = response
               const { token } = data
               setToken(token)
               this.loading.login = false
@@ -97,7 +97,7 @@
           if (valid) {
             this.loading.register = true
             register(this.form).then(response => {
-              const { message } = response.data
+              const { message } = response
               this.loading.register = false
               this.$message.success(message)
             }).catch(() => this.loading.register = false)

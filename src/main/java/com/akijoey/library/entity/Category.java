@@ -18,6 +18,9 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "icon")
+    private String icon;
+
     @OneToMany(mappedBy = "category")
     private List<Book> books;
 
@@ -35,5 +38,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

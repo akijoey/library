@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function getSide() {
+  return request({
+    url: '/book/side',
+		method: 'get'
+  })
+}
+
 export function getTotal(cid) {
   return request({
     url: '/book/total/' + cid,

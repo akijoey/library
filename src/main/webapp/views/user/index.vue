@@ -1,12 +1,7 @@
 <template>
   <el-container>
     <el-aside>
-      <el-menu default-active="0" @select="select">
-        <el-menu-item v-for="(side, i) in sidebar" :key="i" :index="i.toString()" :id="'side-' + i">
-          <icon-font :icon-class="side.icon" />
-          <span slot="title">{{ side.title }}</span>
-        </el-menu-item>
-      </el-menu>
+      <side-menu :sidebar="sidebar" @select="handleSelect" />
     </el-aside>
     <el-main>
       <user-info v-show="index == 0" />
@@ -20,12 +15,14 @@
   import Info from './info'
   import Passwd from './passwd'
   import Record from './record'
+  import Sidebar from '@/components/sidebar'
   export default {
     name: 'User',
-    components: { 
+    components: {
       'user-info': Info,
       'user-passwd': Passwd,
-      'user-record': Record
+      'user-record': Record,
+      'side-menu': Sidebar
     },
     data() {
       return {
@@ -38,7 +35,7 @@
       }
     },
     methods: {
-      select(index) {
+      handleSelect(index) {
         this.index = index
       }
     }
@@ -49,11 +46,6 @@
   aside {
     width: 150px !important;
     padding-top: 10px;
-    @for $i from 0 to 3 {
-      #side-#{$i} {
-        animation: port (.5s + $i * .1);
-      }
-    }
   }
   main {
     padding: 15px 10px 15px 50px;
