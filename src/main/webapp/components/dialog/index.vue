@@ -75,7 +75,7 @@
         }).then(response => {
           const { data } = response
           data.category = data.category.name
-          this.book = data
+          this.book = data.detail
         })
       },
       handleBorrow() {

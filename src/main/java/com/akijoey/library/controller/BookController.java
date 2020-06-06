@@ -3,7 +3,6 @@ package com.akijoey.library.controller;
 import com.akijoey.library.entity.Book;
 import com.akijoey.library.service.BookService;
 
-import com.akijoey.library.service.CategoryService;
 import com.akijoey.library.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +18,7 @@ public class BookController {
     BookService bookService;
 
     @Autowired
-    CategoryService categoryService;
-
-    @Autowired
     ResultUtil resultUtil;
-
-    @GetMapping("/side")
-    public Map<String, Object> getSide() {
-        List<Map<String, Object>> side = categoryService.getSide();
-        return resultUtil.successResult("Get Success", side);
-    }
 
     @GetMapping("/total")
     public Map<String, Object> getTotal() {
@@ -45,31 +35,31 @@ public class BookController {
     @GetMapping("/list/{page}/{size}")
     public Map<String, Object> getList(@PathVariable("page") int page, @PathVariable("size") int size) {
         List<Map<String, Object>> list = bookService.getList(page, size);
-        return resultUtil.successResult("Get Success", list);
+        return resultUtil.successResult("Get Success", Map.of("list", list));
     }
 
     @GetMapping("/list/{page}/{size}/{cid}")
     public Map<String, Object> getList(@PathVariable("page") int page, @PathVariable("size") int size, @PathVariable("cid") int cid) {
         List<Map<String, Object>> list = bookService.getListByCategory(page, size, cid);
-        return resultUtil.successResult("Get Success", list);
+        return resultUtil.successResult("Get Success", Map.of("list", list));
     }
 
-    @GetMapping("/table")
-    public Map<String, Object> getTable() {
-        List<Map<String, Object>> list = bookService.getTable();
-        return resultUtil.successResult("Get Success", list);
+    @GetMapping("/table/{page}/{size}")
+    public Map<String, Object> getTable(@PathVariable("page") int page, @PathVariable("size") int size) {
+        List<Map<String, Object>> table = bookService.getTable(page, size);
+        return resultUtil.successResult("Get Success", Map.of("table", table));
     }
 
-    @GetMapping("/table/{cid}")
-    public Map<String, Object> getTable(@PathVariable("cid") int cid) {
-        List<Map<String, Object>> list = bookService.getTableByCategory(cid);
-        return resultUtil.successResult("Get Success", list);
+    @GetMapping("/table/{page}/{size}/{cid}")
+    public Map<String, Object> getTable(@PathVariable("page") int page, @PathVariable("size") int size, @PathVariable("cid") int cid) {
+        List<Map<String, Object>> table = bookService.getTableByCategory(page, size, cid);
+        return resultUtil.successResult("Get Success", Map.of("table", table));
     }
 
     @PostMapping("/detail")
     public Map<String, Object> getDetail(@RequestBody Map<String, Long> data) {
         Book detail = bookService.getBookByIsbn(data.get("isbn"));
-        return resultUtil.successResult("Get Success", detail);
+        return resultUtil.successResult("Get Success", Map.of("detail", detail));
     }
 
     @PostMapping("/insert")

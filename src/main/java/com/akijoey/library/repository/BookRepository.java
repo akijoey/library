@@ -28,9 +28,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Map<String, Object>> findListByCategory(@Param("category") Category category, Pageable pageable);
 
     @Query(value = "select isbn as isbn, title as title, author as author, press as press, date as data, page as page from Book")
-    List<Map<String, Object>> findTable();
+    List<Map<String, Object>> findTable(Pageable pageable);
 
     @Query(value = "select isbn as isbn, title as title, author as author, press as press, date as data, page as page from Book where category = :category")
-    List<Map<String, Object>> findTableByCategory(@Param("category") Category category);
+    List<Map<String, Object>> findTableByCategory(@Param("category") Category category, Pageable pageable);
 
 }

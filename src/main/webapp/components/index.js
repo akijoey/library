@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import IconFont from '@/components/iconfont'
+import IconFont from './iconfont'
 import '@/utils/iconfont' // iconfont symbol
 
 // register globally

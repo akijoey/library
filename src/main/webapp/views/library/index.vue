@@ -2,12 +2,6 @@
   <div>
     <el-container>
       <el-aside>
-        <!-- <el-menu default-active="0" @select="select">
-          <el-menu-item v-for="(side, i) in sidebar" :key="i" :index="i.toString()" :id="'side-' + i">
-            <icon-font :icon-class="side.icon" />
-            <span slot="title">{{ side.title }}</span>
-          </el-menu-item>
-        </el-menu> -->
         <side-menu :sidebar="sidebar" @select="handleSelect" />
       </el-aside>
       <el-main>
@@ -24,7 +18,8 @@
 </template>
 
 <script>
-  import { getSide, getTotal, getList } from '@/api/book'
+  import { getSide } from '@/api/category'
+  import { getTotal, getList } from '@/api/book'
   import Sidebar from '@/components/sidebar'
   import Dialog from '@/components/dialog'
   export default {
@@ -49,7 +44,7 @@
     created() {
       getSide().then(response => {
         const { data } = response
-        data.forEach(category => {
+        data.side.forEach(category => {
           this.sidebar.push(category)
         })
         this.handleChange(1)
@@ -65,7 +60,7 @@
         })
         getList(page, 18, cid).then(response => {
           const { data } = response
-          this.books = data
+          this.books = data.list
         })
       },
       handleSelect(index) {

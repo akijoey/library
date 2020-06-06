@@ -80,8 +80,7 @@
             this.loading.login = true
             login(this.form).then(response => {
               const { message, data } = response
-              const { token } = data
-              setToken(token)
+              setToken(data.token)
               this.loading.login = false
               this.$message.success(message)
               this.$router.push({ path: this.redirect || '/' })

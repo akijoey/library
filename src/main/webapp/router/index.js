@@ -74,7 +74,7 @@ const formatRoutes = routes => {
       name: route.name,
       path: route.path,
       redirect: route.redirect,
-      component: () => import(`../${route.component}/index.vue`),
+      component: () => import(`@/${route.component}/index.vue`),
       meta: {
         title: route.title,
         icon: route.icon

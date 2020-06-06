@@ -41,13 +41,15 @@ public class BookService {
         return bookRepository.findListByCategory(category, pageable);
     }
 
-    public List<Map<String, Object>> getTable() {
-        return bookRepository.findTable();
+    public List<Map<String, Object>> getTable(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return bookRepository.findTable(pageable);
     }
 
-    public List<Map<String, Object>> getTableByCategory(int cid) {
+    public List<Map<String, Object>> getTableByCategory(int page, int size, int cid) {
         Category category = categoryService.getCategoryById(cid);
-        return bookRepository.findTableByCategory(category);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return bookRepository.findTableByCategory(category, pageable);
     }
 
     public Book getBookByIsbn(long isbn) {

@@ -1,6 +1,5 @@
 package com.akijoey.library.controller;
 
-import com.akijoey.library.entity.User;
 import com.akijoey.library.service.UserService;
 import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
