@@ -1,5 +1,5 @@
 <template>
-
+  <div>this is admin layout</div>
 </template>
 
 <script>

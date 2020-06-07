@@ -89,6 +89,7 @@
                         <configuration>
                             <backend>html</backend>
                             <doctype>book</doctype>
+                            <outputDirectory>${basedir}/public</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

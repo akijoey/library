@@ -183,7 +183,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/login");
+        web.ignoring().antMatchers(
+                "/css/**", "/js/**",
+                "/img/**", "/fonts/**", "/favicon.ico",
+                "/", "/api", "/login"
+        );
     }
 
     @Override
@@ -191,7 +195,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/user/register").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/**").authenticated()
 
                 // authentication
                 .and()

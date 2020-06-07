@@ -33,11 +33,11 @@
         },
         rules: {
           password: [{
-            validator: validateOldPassword,
+            validator: validateOldPassword.bind(this),
             trigger: 'blur'
           }],
           checkPassword: [{
-            validator: validateCheckPassword,
+            validator: validateCheckPassword.bind(this),
             trigger: 'blur'
           }],
           newPassword: [{
@@ -49,7 +49,7 @@
     },
     methods: {
       handleSubmit() {
-        this.$refs.form.validate((valid) => {
+        this.$refs.form.validate(valid => {
           if (valid) {
             // post password and new password
             console.log('submit');

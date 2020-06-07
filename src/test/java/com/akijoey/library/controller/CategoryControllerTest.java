@@ -1,5 +1,6 @@
 package com.akijoey.library.controller;
 
+import com.akijoey.library.util.TokenUtil;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 public class CategoryControllerTest {
 
+    @Autowired
+    TokenUtil tokenUtil;
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -54,19 +58,13 @@ public class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER")
     void getSide() throws Exception {
-        ResultActions result =  mockMvc.perform(RestDocumentationRequestBuilders.get("/api/category/side"));
-        result.andReturn().getResponse().setCharacterEncoding("UTF-8");
-        result.andExpect(status().isOk())
-                .andDo(document("category/side",
-                        responseFields(
-                                fieldWithPath("status").description("状态"),
-                                fieldWithPath("message").description("消息"),
-                                fieldWithPath("data.side[].title").description("标题"),
-                                fieldWithPath("data.side[].icon").description("图标")
-                        ))
-                );
+        String token = tokenUtil.generateToken("user");
+        mockMvc.perform(get("/api/category/side")
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header("Authorization", "Bearer " + token))
+                .andDo(document("category/side", preprocessResponse(prettyPrint())));
+        tokenUtil.removeToken("user");
     }
 
 }

@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0b2138"],{2323:function(n,t,e){"use strict";e.r(t);var a=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div",[n._v("this is admin layout")])},i=[],u={name:"Admin",data:function(){return{}},methods:{}},c=u,d=e("2877"),s=Object(d["a"])(c,a,i,!1,null,"4dcf460d",null);t["default"]=s.exports}}]);
+//# sourceMappingURL=chunk-2d0b2138.07b89713.js.map

@@ -74,8 +74,8 @@
           isbn: this.index
         }).then(response => {
           const { data } = response
-          data.category = data.category.name
           this.book = data.detail
+          this.book.category = this.book.category.name
         })
       },
       handleBorrow() {
@@ -101,11 +101,17 @@
         height: 160px * sqrt(2);
         border-radius: 8px;
         box-shadow: 0 5px 12px 0 rgba(7, 17, 27, .6);
+        animation: down .6s;
       }
       #info {
         width: 410px;
         font-size: 17px;
         float: right;
+        @for $i from 0 to 6 {
+          #info-#{$i} {
+            animation: port (.4s + $i * .05);
+          }
+        }
         p:first-child {
           margin-top: 6px;
         }
@@ -116,6 +122,7 @@
       }
       #summary {
         margin-top: 30px;
+        animation: up .5s;
         & /deep/ p {
           font-size: 16px;
           white-space: pre-wrap;

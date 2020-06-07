@@ -26,7 +26,7 @@
     name: 'Home',
     methods: {
       start() {
-        this.$router.push('/login')
+        window.location.pathname = '/api'
       },
       github() {
         window.location.href = 'https://github.com/AkiJoey/Library'

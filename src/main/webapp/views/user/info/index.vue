@@ -80,7 +80,7 @@
       },
       handleLogout() {
         logout().then(response => {
-          const { message } = response.data
+          const { message } = response
           this.$message.success(message)
           removeToken()
           resetRouter()
