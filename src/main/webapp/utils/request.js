@@ -1,15 +1,15 @@
 import axios from 'axios'
-import { getToken, removeToken } from '@/utils/auth'
-import { MessageBox, Message } from 'element-ui'
+import store from '@/store'
+import { Message } from 'element-ui'
 
 const service = axios.create({
-	baseURL: 'http://localhost:8080/api',
+	baseURL: 'http://193.112.128.94:7001/api',
 	timeout: 5000
 })
 
 // request interceptor
 service.interceptors.request.use(request => {
-  const token = getToken()
+  const token = store.getters.token
   if (token !== null) {
     request.headers.authorization = 'Bearer ' + token
   }
@@ -24,15 +24,18 @@ service.interceptors.response.use(response => {
   const { status, message } = response.data
   if (status !== 200) {
     Message.error(message)
-    // 495: Token Not Found; 496: Username Not Found; 497: Illegal Token; 498: Account Expired; 499: Token Expired;
-    if (status === 495 || status === 496 || status === 497 || status === 498 || status === 499) {
-      MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        confirmButtonText: 'Re-Login',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      }).then(() => {
-        removeToken()
-        location.reload() // refresh page
+    const statuses = [
+      495,  // 495: Token Not Found;
+      496,  // 496: Username Not Found;
+      497,  // 497: Illegal Token;
+      498,  // 498: Account Expired;
+      499   // 499: Token Expired;
+    ]
+    if (statuses.indexOf(status) !== -1) {
+      store.dispatch('user/logout').then(() => {
+        setTimeout(() => {
+          location.reload() // refresh page
+        }, 3000)
       })
     }
     const error = new Error(message)

@@ -22,8 +22,7 @@
 </template>
 
 <script>
-  import { login, register } from '@/api/user'
-  import { setToken } from '@/utils/auth'
+  import { register } from '@/api/user'
   import { validateUsername, validatePassword } from '@/utils/validate'
   export default {
     name: 'Login',
@@ -78,9 +77,8 @@
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading.login = true
-            login(this.form).then(response => {
-              const { message, data } = response
-              setToken(data.token)
+            this.$store.dispatch('user/login', this.form).then(response => {
+              const { message } = response
               this.loading.login = false
               this.$message.success(message)
               this.$router.push({ path: this.redirect || '/' })

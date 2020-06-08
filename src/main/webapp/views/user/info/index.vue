@@ -22,9 +22,6 @@
 </template>
 
 <script>
-  import { logout } from '@/api/user'
-  import { resetRouter } from '@/router'
-  import { removeToken } from '@/utils/auth'
   import { validateUsername, validatePhone } from '@/utils/validate'
   export default {
     name: 'Info',
@@ -79,13 +76,10 @@
         })
       },
       handleLogout() {
-        logout().then(response => {
+        this.$store.dispatch('user/logout').then(response => {
           const { message } = response
           this.$message.success(message)
-          removeToken()
-          resetRouter()
           this.$router.push({ path: '/' })
-          this.$store.commit('user/reset')
         })
       }
     }

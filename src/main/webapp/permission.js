@@ -1,6 +1,5 @@
 import store from './store'
 import router from './router'
-import { getToken, removeToken } from '@/utils/auth'
 
 // no redirect whitelist
 const whiteList = ['/login']
@@ -20,7 +19,7 @@ router.beforeEach(async(to, from, next) => {
   document.title = `${to.meta.title} - ${title}`
 
   // determine whether the user has logged in
-  if (getToken()) {
+  if (store.getters.token) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -33,7 +32,6 @@ router.beforeEach(async(to, from, next) => {
           next({...to, replace: true})
         }).catch(() => {
           // remove token and go to login page
-          removeToken()
           next(`/login?redirect=${to.path}`)
         })
       }
