@@ -34,15 +34,19 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("username error");
         }
         return user;
     }
 
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public Map<String, Object> getInfoByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = getUserByUsername(username);
         List<Role> roles = user.getRoles();
         List<Menu> menus = new ArrayList<>();
         roles.forEach(role -> menus.addAll(role.getMenus()));

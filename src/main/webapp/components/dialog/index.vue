@@ -20,10 +20,11 @@
 
 <script>
   import { getDetail } from '@/api/book'
+  import { borrowing } from '@/api/record'
   export default {
     name: 'Dialog',
     props: {
-      index: {
+      isbn: {
         type: Number,
         required: true
       },
@@ -71,19 +72,24 @@
     methods: {
       openDialog() {
         getDetail({
-          isbn: this.index
+          isbn: this.isbn
         }).then(response => {
           const { data } = response
           this.book = data.detail
           this.book.category = this.book.category.name
-        })
+        }).catch(error => console.log(error))
       },
       handleBorrow() {
-        // post index to borrow
-        this.visible = false
+        borrowing({
+          isbn: this.isbn
+        }).then(response => {
+          const { message } = response
+          this.$message.success(message)
+          this.visible = false
+        })
       },
       handleReturn() {
-        // post index to return
+        this.$emit('return')
         this.visible = false
       }
     }
@@ -110,6 +116,9 @@
         @for $i from 0 to 6 {
           #info-#{$i} {
             animation: port (.4s + $i * .05);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
         p:first-child {

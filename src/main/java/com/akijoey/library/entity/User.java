@@ -49,6 +49,10 @@ public class User implements UserDetails {
     )
     private List<Role> roles;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Record> records;
+
     public int getId() {
         return id;
     }
@@ -131,6 +135,14 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 
     @JsonIgnore

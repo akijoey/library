@@ -1,8 +1,10 @@
 package com.akijoey.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -37,6 +39,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="cid", referencedColumnName = "id")
     private Category category;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "book")
+    private List<Record> records;
 
     public long getIsbn() {
         return isbn;
@@ -108,5 +114,13 @@ public class Book {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 }

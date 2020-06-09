@@ -75,8 +75,8 @@ public class BookController {
     }
 
     @PostMapping("/delete")
-    public Map<String, Object> delete(@RequestBody long isbn) {
-        bookService.deleteBookByIsbn(isbn);
+    public Map<String, Object> delete(@RequestBody Map<String, Long> data) {
+        bookService.deleteBookByIsbn(data.get("isbn"));
         return resultUtil.successResult("Delete Success");
     }
 

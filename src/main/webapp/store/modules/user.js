@@ -9,12 +9,14 @@ const state = {
 }
 
 const mutations = {
-  token: (state, token) => {
+  setToken: (state, token) => {
     state.token = token
     setToken(token)
   },
-  setter: (state, name, avatar) => {
+  setName: (state, name) => {
     state.name = name
+  },
+  setAvatar: (state, avatar) => {
     state.avatar = avatar
   },
   reset: state => {
@@ -31,7 +33,7 @@ const actions = {
       login(data).then(response => {
         const { data } = response
         const { token } = data
-        commit('token', token)
+        commit('setToken', token)
         resolve(response)
       }).catch(() => reject())
     })
@@ -41,7 +43,8 @@ const actions = {
       getInfo().then(response => {
         const { data } = response
         const { name, avatar, routes } = data
-        commit('setter', name, avatar)
+        commit('setName', name)
+        commit('setAvatar', avatar)
         addRouter(routes)
         resolve()
       }).catch(() => {

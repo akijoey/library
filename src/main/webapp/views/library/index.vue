@@ -11,7 +11,7 @@
           <p>{{ book.author }}</p>
         </div>
       </el-main>
-      <detail-dialog :index="isbn" :show.sync="show" />
+      <detail-dialog :isbn="isbn" :show.sync="show" />
     </el-container>
     <el-pagination layout="total, prev, pager, next, jumper" :page-size="18" :total="total" :current-page.sync="page" @current-change="handleChange" background></el-pagination>
   </div>
@@ -107,8 +107,8 @@
         p {
           font-size: 12px;
           line-height: 18px;
-          overflow: hidden;
           white-space: nowrap;
+          overflow: hidden;
           text-overflow: ellipsis;
           margin: 0 0 0 5px;
         }
