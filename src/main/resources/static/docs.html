@@ -464,6 +464,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_get_detail_2"><strong>Get Detail</strong></a></li>
 </ul>
 </li>
+<li><a href="#_record_api"><strong>Record API</strong></a>
+<ul class="sectlevel3">
+<li><a href="#_get_total_2"><strong>Get Total</strong></a></li>
+<li><a href="#_get_table_2"><strong>Get Table</strong></a></li>
+<li><a href="#_borrow"><strong>Borrow</strong></a></li>
+<li><a href="#_return"><strong>Return</strong></a></li>
+<li><a href="#_renew"><strong>Renew</strong></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -511,8 +520,8 @@ Content-Length: 51
 Host: localhost:8080
 
 {
-  "username" : "user",
-  "password" : 123456
+  "password" : 123456,
+  "username" : "user"
 }</code></pre>
 </div>
 </div>
@@ -563,8 +572,8 @@ Content-Length: 51
 Host: localhost:8080
 
 {
-  "username" : "user",
-  "password" : 123456
+  "password" : 123456,
+  "username" : "user"
 }</code></pre>
 </div>
 </div>
@@ -588,7 +597,7 @@ Content-Length: 243
 
 {
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI5NjQifQ.huuwc5u8K4x5tURBZ5PlYwbtrBpw0WUUU3pOTgVV1oA"
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg5MTYifQ.sYxRr955Pq5C5f1uTvnJA75H4KAKfTlaTAgb5WDwIwM"
   },
   "message" : "Login Success",
   "status" : 200
@@ -613,7 +622,7 @@ Content-Length: 243
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user/info HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI3NjgifQ.WeZPEkVc-9f8LXojs1BEJ9DSkR42zEoeihdm3OPcBUo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg3MTMifQ.-2U0P55P8zCJ2jbkzGqEhKC7ejZlJRjI2sQjczPDqfo
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -700,7 +709,7 @@ Content-Length: 1117
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user/detail HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI5ODYifQ.3m3xRmEtdHMxneIs2kxsw-YUysGa76q7fuDvmjl4lak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg5NTMifQ.5zdr8HHEe6j1MyJwArZ84brIm1K9XWP5_ocBjx5MH24
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -752,7 +761,7 @@ Content-Length: 163
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/logout HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI1NDQifQ.AV5ovzdPDJ1glsnsG5IGQxhsgra9gLHYv_OcIgX3OVs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg1NTQifQ.NPigLVzpugixvPtxz-YL-tmuNENSQknOmlY7QeWW7Tw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -806,7 +815,7 @@ Content-Length: 55
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/category/side HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI1MDAifQ.hSo2WzrKiyqeBC_1O2XUgxtSHaDtpLT_AQx90XC_kDA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgxMzcifQ.pYLLLzPbnboJVEQ-GDGDyei47kIdgsvtmQBbXkyW6jc
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -881,7 +890,7 @@ Content-Length: 449
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/total/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI0NDkifQ.htkXbpw3fhTIYrvbRsL_yLrBAyukr1iVpcfj3RHKQGA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgwNzkifQ.Ur7Efm1gR-S89ZKDcAS-pHDcebr8wIDcH0fMyQxECvQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -930,7 +939,7 @@ Content-Length: 90
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/list/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDA3OTcifQ._FNb02mIe9qSb2tD32isPEXvPqtqLf-CG-BcXBCbXAE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTYzNjMifQ.kKSam8bPenmYFN-pEI5osHZHS6mEwNNTJbkkxPkTotU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1015,6 +1024,9 @@ Content-Length: 2112
 </div>
 <div class="sect3">
 <h4 id="_get_table"><strong>Get Table</strong></h4>
+<div class="paragraph">
+<p>Get book table by category.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre>GET /api/book/table/{page}/{size}/{cid}</pre>
@@ -1026,7 +1038,7 @@ Content-Length: 2112
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/table/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDI0MTAifQ.G5gSAYA6QZy6kRhBilSIepw_1BL1jTJUgprI5mpa9tc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgwMzIifQ.ZwJqlME17T0ZLAcU3MTZoWsHtfgRTdCCQLSEOD7Xv9o
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1131,6 +1143,9 @@ Content-Length: 2227
 </div>
 <div class="sect3">
 <h4 id="_get_detail_2"><strong>Get Detail</strong></h4>
+<div class="paragraph">
+<p>Get book detail by isbn.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre>POST /api/book/detail</pre>
@@ -1143,7 +1158,7 @@ Content-Length: 2227
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/book/detail HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE1NDExNDIzNDQifQ.mTtQa3l99XKdxx8w2Co-HnNEbsibtK8sWYgja1_Alus
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTc5NzIifQ.VGcZb4UolzO04t4XCDbu8TobVW4IulTvnKz7TuAjMoI
 Content-Length: 30
 Host: localhost:8080
 
@@ -1197,11 +1212,334 @@ Content-Length: 934
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_record_api"><strong>Record API</strong></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Collection of record API.</p>
+</div>
+<div class="sect3">
+<h4 id="_get_total_2"><strong>Get Total</strong></h4>
+<div class="paragraph">
+<p>Get total of records by user.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>GET /api/record/total</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_11"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/record/total HTTP/1.1
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg1MDAifQ.Tw1x5RLKxTpTuurLmqx-LCWiWFVKmCr_NqMZlElFyGY
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_11"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 90
+
+{
+  "data" : {
+    "total" : 23
+  },
+  "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_table_2"><strong>Get Table</strong></h4>
+<div class="paragraph">
+<p>Get record table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>GET /api/record/table/{page}/{size}</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_12"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/record/table/1/10 HTTP/1.1
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg0MTYifQ.fKigwbFU-QY8kKJn8Hoa3ka0reWmoaX-I_k2xbqZ9fE
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_12"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 2073
+
+{
+  "data" : {
+    "table" : [ {
+      "isbn" : 9787020028115,
+      "return" : "2020-07-09T00:00:00.000+0000",
+      "name" : "骆驼祥子",
+      "id" : 1,
+      "borrow" : "2020-06-09T00:00:00.000+0000"
+    }, {
+      "return" : "2020-08-09T02:55:02.000+0000",
+      "name" : "艺术批评史",
+      "isbn" : 9787100130448,
+      "borrow" : "2020-06-09T02:27:48.000+0000",
+      "id" : 20
+    }, {
+      "return" : "2020-07-16T09:19:18.000+0000",
+      "name" : "艺术批评史",
+      "borrow" : "2020-06-09T09:19:18.000+0000",
+      "id" : 23,
+      "isbn" : 9787100130448
+    }, {
+      "id" : 24,
+      "borrow" : "2020-06-09T09:19:19.000+0000",
+      "isbn" : 9787101052039,
+      "return" : "2020-07-09T09:19:19.000+0000",
+      "name" : "万历十五年"
+    }, {
+      "id" : 25,
+      "return" : "2020-07-09T09:19:20.000+0000",
+      "name" : "唐人行第录",
+      "isbn" : 9787101041828,
+      "borrow" : "2020-06-09T09:19:20.000+0000"
+    }, {
+      "id" : 27,
+      "return" : "2020-07-09T09:19:24.000+0000",
+      "isbn" : 9787101014914,
+      "borrow" : "2020-06-09T09:19:24.000+0000",
+      "name" : "万历十五年"
+    }, {
+      "borrow" : "2020-06-09T09:19:25.000+0000",
+      "id" : 28,
+      "return" : "2020-07-09T09:19:25.000+0000",
+      "name" : "古代交通与地理文献研究",
+      "isbn" : 9787100157582
+    }, {
+      "isbn" : 9787101052039,
+      "id" : 33,
+      "name" : "万历十五年",
+      "return" : "2020-07-09T10:16:22.000+0000",
+      "borrow" : "2020-06-09T10:16:22.000+0000"
+    }, {
+      "return" : "2020-07-09T10:16:23.000+0000",
+      "borrow" : "2020-06-09T10:16:23.000+0000",
+      "id" : 34,
+      "isbn" : 9787101001846,
+      "name" : "突厥集史（全二册）"
+    }, {
+      "return" : "2020-07-09T10:16:25.000+0000",
+      "borrow" : "2020-06-09T10:16:25.000+0000",
+      "id" : 35,
+      "isbn" : 9787100021654,
+      "name" : "中国近三百年学术史（全两册）"
+    } ]
+  },
+  "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_borrow"><strong>Borrow</strong></h4>
+<div class="paragraph">
+<p>Borrow book by isbn.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Post /api/record/borrow</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_13"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/borrow HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgzMjAifQ.ebQLrbK545pLp-soi-M-XJauIgINNPeqyqVcuNLM5BM
+Content-Length: 30
+Host: localhost:8080
+
+{
+  "isbn" : 9787020028115
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_13"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Borrow Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_return"><strong>Return</strong></h4>
+<div class="paragraph">
+<p>Return book by id.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Post /api/record/return</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_14"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/return HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgxOTkifQ.2_MVE8nL2zNUqjCx1EsWeIFsfMmk_wgyBBTHFZChRfw
+Content-Length: 16
+Host: localhost:8080
+
+{
+  "id" : 1
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_14"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Return Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_renew"><strong>Renew</strong></h4>
+<div class="paragraph">
+<p>Renew book by id and new return time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Post /api/record/renew</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_15"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/renew HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgyNjUifQ.c-rJtB0l6fQdsacmi1hOV6pMiL-GUF89lNo8qbKFUbc
+Content-Length: 48
+Host: localhost:8080
+
+{
+  "id" : 1,
+  "timestamp" : 1596931200000
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_15"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 54
+
+{
+  "message" : "Renew Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version v1.0<br>
-Last updated 2020-06-07 21:45:23 +0800
+Last updated 2020-06-10 21:34:19 +0800
 </div>
 </div>
 </body>

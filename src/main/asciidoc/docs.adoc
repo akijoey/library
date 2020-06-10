@@ -110,6 +110,7 @@ include::{snippets}/book/list/http-request.adoc[]
 include::{snippets}/book/list/http-response.adoc[]
 
 ==== *Get Table*
+Get book table by category.
 ----
 GET /api/book/table/{page}/{size}/{cid}
 ----
@@ -119,6 +120,7 @@ include::{snippets}/book/table/http-request.adoc[]
 include::{snippets}/book/table/http-response.adoc[]
 
 ==== *Get Detail*
+Get book detail by isbn.
 ----
 POST /api/book/detail
 ----
@@ -126,3 +128,56 @@ POST /api/book/detail
 include::{snippets}/book/detail/http-request.adoc[]
 ====== _Sample Response_
 include::{snippets}/book/detail/http-response.adoc[]
+
+== *Record API*
+Collection of record API.
+
+==== *Get Total*
+Get total of records by user.
+----
+GET /api/record/total
+----
+====== _Sample Request_
+include::{snippets}/record/total/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/record/total/http-response.adoc[]
+
+==== *Get Table*
+Get record table.
+----
+GET /api/record/table/{page}/{size}
+----
+====== _Sample Request_
+include::{snippets}/record/table/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/record/table/http-response.adoc[]
+
+==== *Borrow*
+Borrow book by isbn.
+----
+Post /api/record/borrow
+----
+====== _Sample Request_
+include::{snippets}/record/borrow/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/record/borrow/http-response.adoc[]
+
+==== *Return*
+Return book by id.
+----
+Post /api/record/return
+----
+====== _Sample Request_
+include::{snippets}/record/return/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/record/return/http-response.adoc[]
+
+==== *Renew*
+Renew book by id and new return time.
+----
+Post /api/record/renew
+----
+====== _Sample Request_
+include::{snippets}/record/renew/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/record/renew/http-response.adoc[]
