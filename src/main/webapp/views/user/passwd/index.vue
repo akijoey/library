@@ -1,15 +1,15 @@
 <template>
   <el-form :model="form" :rules="rules" ref="form" status-icon label-width="70px">
-    <el-form-item label="旧密码" prop="password" id="form-0">
+    <el-form-item label="旧密码" prop="password">
       <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="确认密码" prop="checkPassword" id="form-1">
+    <el-form-item label="确认密码" prop="checkPassword">
       <el-input type="password" v-model="form.checkPassword" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="新密码" prop="newPassword" id="form-2" @keyup.enter.native="handleSubmit">
+    <el-form-item label="新密码" prop="newPassword" @keyup.enter.native="handleSubmit">
       <el-input type="password" v-model="form.newPassword" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item id="form-3">
+    <el-form-item>
       <el-button icon="el-icon-check" type="primary" @click="handleSubmit">提交</el-button>
       <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
     </el-form-item>
@@ -68,8 +68,8 @@
 
 <style lang="scss" scoped>
   .el-form {
-    @for $i from 0 to 4 {
-      #form-#{$i} {
+    @for $i from 1 to 5 {
+      & > div:nth-child(#{$i}) {
         width: 400px;
         animation: star (.5s + $i * .1);
       }

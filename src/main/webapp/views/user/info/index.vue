@@ -1,6 +1,6 @@
 <template>
   <el-form :model="form" :rules="rules" ref="form" status-icon label-width="70px">
-    <el-form-item prop="avatar" id="form-0">
+    <el-form-item prop="avatar">
       <img v-if="form.avatar" :src="form.avatar">
       <el-upload ref="upload" action="#" :limit="1" :auto-upload="false" :before-upload="beforeUpdate" :http-request="httpRequest">
         <el-button icon="el-icon-refresh" slot="trigger" @click="handleSelect">选择图片</el-button>
@@ -8,13 +8,13 @@
         <p slot="tip">只能上传 jpg / png 文件, 且不超过 500kb</p>
       </el-upload>
     </el-form-item>
-    <el-form-item label="用户名" prop="username" id="form-1">
+    <el-form-item label="用户名" prop="username">
       <el-input v-model="form.username" />
     </el-form-item>
-    <el-form-item label="手机号" prop="phone" id="form-2">
+    <el-form-item label="手机号" prop="phone">
       <el-input v-model="form.phone" />
     </el-form-item>
-    <el-form-item id="form-3">
+    <el-form-item>
       <el-button icon="el-icon-check" type="primary" @click="handleSubmit">提交</el-button>
       <el-button icon="el-icon-switch-button" @click="handleLogout">退出</el-button>
     </el-form-item>
@@ -88,8 +88,8 @@
 
 <style lang="scss" scoped>
   .el-form {
-    @for $i from 0 to 4 {
-      #form-#{$i} {
+    @for $i from 1 to 5 {
+      & > div:nth-child(#{$i}) {
         width: 425px;
         animation: star (.5s + $i * .1);
         &:first-child {

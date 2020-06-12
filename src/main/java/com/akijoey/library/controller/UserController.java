@@ -5,6 +5,7 @@ import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -45,8 +46,10 @@ public class UserController {
     }
 
     @PostMapping("/upload")
-    public Map<String, Object> upload(@RequestBody Map<String, String> data) {
-        userService.uploadAvatar();
+    public Map<String, Object> upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile avatar) {
+        String token = request.getHeader("Authorization").replace("Bearer ", "");
+        String username = tokenUtil.getSubject(token);
+        userService.uploadAvatar(username, avatar);
         return resultUtil.successResult("Upload Success");
     }
 
