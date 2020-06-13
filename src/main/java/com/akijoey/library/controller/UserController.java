@@ -46,11 +46,14 @@ public class UserController {
     }
 
     @PostMapping("/upload")
-    public Map<String, Object> upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile avatar) {
+    public Map<String, Object> upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile image) {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
         String username = tokenUtil.getSubject(token);
-        userService.uploadAvatar(username, avatar);
-        return resultUtil.successResult("Upload Success");
+        String avatar = userService.uploadAvatar(username, image);
+        if (avatar == null) {
+            return resultUtil.customResult(500, "Upload Failure");
+        }
+        return resultUtil.successResult("Upload Success", Map.of("avatar", avatar));
     }
 
     @PostMapping("/update")
@@ -60,8 +63,12 @@ public class UserController {
     }
 
     @PostMapping("/passwd")
-    public Map<String, Object> passwd(@RequestBody Map<String, String> data) {
-        userService.changePassword(data.get("password"), data.get("newPassword"));
+    public Map<String, Object> passwd(HttpServletRequest request, @RequestBody Map<String, String> data) {
+        String token = request.getHeader("Authorization").replace("Bearer ", "");
+        String username = tokenUtil.getSubject(token);
+        if (!userService.changePassword(username, data.get("oldPassword"), data.get("newPassword"))) {
+            return resultUtil.customResult(401, "Password Error");
+        }
         return resultUtil.successResult("Change Success");
     }
 

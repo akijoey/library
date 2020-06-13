@@ -5,6 +5,7 @@ import com.akijoey.library.entity.Role;
 import com.akijoey.library.entity.User;
 import com.akijoey.library.repository.UserRepository;
 
+import com.akijoey.library.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,10 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -32,6 +36,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    FileUtil fileUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -77,11 +84,25 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public void uploadAvatar(String username, MultipartFile avatar) {
-
+    public String uploadAvatar(String username, MultipartFile image) {
+        String avatar = fileUtil.uploadImage(image);
+        if (avatar != null) {
+            User user = getUserByUsername(username);
+            user.setAvatar(avatar);
+            userRepository.save(user);
+        }
+        return avatar;
     }
 
-    public void changePassword(String password, String newPassword) {
-
+    public boolean changePassword(String username, String oldPassword, String newPassword) {
+        User user = getUserByUsername(username);
+        String password = user.getPassword();
+        if (passwordEncoder.matches(oldPassword, password)) {
+            String encrypt = passwordEncoder.encode(newPassword);
+            user.setPassword(encrypt);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 }

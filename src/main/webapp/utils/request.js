@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-import { Message } from 'element-ui'
+import { Message as $message } from 'element-ui'
 
 const service = axios.create({
 	baseURL: 'http://193.112.128.94:7001/api',
@@ -23,7 +23,7 @@ service.interceptors.request.use(request => {
 service.interceptors.response.use(response => {
   const { status, message } = response.data
   if (status !== 200) {
-    Message.error(message)
+    $message.error(message)
     const statuses = [
       495,  // 495: Token Not Found;
       496,  // 496: Username Not Found;
@@ -35,7 +35,7 @@ service.interceptors.response.use(response => {
       store.dispatch('user/logout').then(() => {
         setTimeout(() => {
           location.reload() // refresh page
-        }, 3000)
+        }, 2000)
       })
     }
     const error = new Error(message)

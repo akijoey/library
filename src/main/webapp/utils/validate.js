@@ -32,7 +32,7 @@ export const validateOldPassword = function (rule, value, callback) {
 export const validateCheckPassword = function (rule, value, callback) {
   if (value === '') {
     callback(new Error('请再次输入密码'))
-  } else if (value !== this.form.password) {
+  } else if (value !== this.form.oldPassword) {
     callback(new Error('两次输入密码不一致'))
   } else {
     callback()

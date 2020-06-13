@@ -1,19 +1,19 @@
 <template>
   <div id="login-container">
     <el-form :model="form" :rules="rules" ref="form" label-position="left">
-      <el-form-item id="form-0">
+      <el-form-item>
         <h1>Login Form</h1>
       </el-form-item>
-      <el-form-item prop="username" id="form-1">
+      <el-form-item prop="username">
         <icon-font icon-class="user" />
         <el-input v-model="form.username" placeholder="Username" ref="username" />
       </el-form-item>
-      <el-form-item prop="password" id="form-2">
+      <el-form-item prop="password">
         <icon-font icon-class="password" />
         <el-input :type="password" v-model="form.password" placeholder="Password" ref="password" @keyup.enter.native="handleLogin" />
         <icon-font :icon-class="eye" @click.native="showPassword" />
       </el-form-item>
-      <el-form-item id="form-3">
+      <el-form-item>
         <el-button type="primary" :loading="loading.login" @click="handleLogin">Login</el-button>
         <el-button type="primary" :loading="loading.register" @click="handleRegister">Register</el-button>
       </el-form-item>
@@ -126,8 +126,8 @@
     );
     .el-form {
       width: 450px;
-      @for $i from 0 to 4 {
-        #form-#{$i} {
+      @for $i from 1 to 5 {
+        & > div:nth-child(#{$i}) {
           animation: up (.5s + $i * .1);
           margin-bottom: 25px;
           &:nth-child(2), &:nth-child(3) {

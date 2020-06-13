@@ -1,7 +1,7 @@
 <template>
   <el-form :model="form" :rules="rules" ref="form" status-icon label-width="70px">
-    <el-form-item label="旧密码" prop="password">
-      <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+    <el-form-item label="旧密码" prop="oldPassword">
+      <el-input type="password" v-model="form.oldPassword" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="确认密码" prop="checkPassword">
       <el-input type="password" v-model="form.checkPassword" autocomplete="off"></el-input>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import { passwd } from '@/api/user'
   import {
     validateOldPassword,
     validateCheckPassword,
@@ -27,12 +28,12 @@
     data() {
       return {
         form: {
-          password: '',
+          oldPassword: '',
           checkPassword: '',
           newPassword: ''
         },
         rules: {
-          password: [{
+          oldPassword: [{
             validator: validateOldPassword.bind(this),
             trigger: 'blur'
           }],
@@ -51,11 +52,16 @@
       handleSubmit() {
         this.$refs.form.validate(valid => {
           if (valid) {
-            // post password and new password
-            console.log('submit');
+            passwd({
+              oldPassword: this.form.oldPassword,
+              newPassword: this.form.newPassword
+            }).then(response => {
+              const { message } = response
+              this.$message.success(message)
+            })
           } else {
-            console.log('Error Submit');
-            return false;
+            this.$message.error('Format Error')
+            return false
           }
         })
       },
