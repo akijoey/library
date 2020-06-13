@@ -14,13 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -37,6 +33,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    FileUtil fileUtil;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = getUserByUsername(username);
@@ -52,15 +51,12 @@ public class UserService implements UserDetailsService {
 
     public Map<String, Object> getInfoByUsername(String username) {
         User user = getUserByUsername(username);
+        String avatar = user.getAvatar();
         List<Role> roles = user.getRoles();
         List<Menu> menus = new ArrayList<>();
         roles.forEach(role -> menus.addAll(role.getMenus()));
         menuService.formatMenus(menus);
-        return new HashMap<>(){{
-            put("name", username);
-            put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-            put("routes", menus);
-        }};
+        return Map.of("name", username, "avatar", avatar, "routes", menus);
     }
 
     public Map<String, Object> getDetailByUsername(String username) {
@@ -77,14 +73,27 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void updateUser() {
-
+    public void updateUser(String username, Map<String, String> data) {
+        User user = getUserByUsername(username);
+        user.setUsername(data.get("username"));
+        user.setPhone(data.get("phone"));
+        user.setAddress(data.get("Address"));
+        userRepository.save(user);
     }
 
-    public void uploadAvatar(String username, String avatar) {
-        User user = getUserByUsername(username);
-        user.setAvatar(avatar);
-        userRepository.save(user);
+    public boolean existUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public String uploadAvatar(String username, MultipartFile image) {
+        String avatar = fileUtil.uploadImage(image);
+        if (avatar != null) {
+            User user = getUserByUsername(username);
+            fileUtil.deleteImage(user.getAvatar());
+            user.setAvatar(avatar);
+            userRepository.save(user);
+        }
+        return avatar;
     }
 
     public boolean changePassword(String username, String oldPassword, String newPassword) {

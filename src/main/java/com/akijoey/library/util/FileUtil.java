@@ -1,6 +1,7 @@
 package com.akijoey.library.util;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -25,6 +26,25 @@ public class FileUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void deleteFile(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
+    public String uploadImage(MultipartFile image) {
+        String path = ClassUtils.getDefaultClassLoader().getResource("static/img/").getPath();
+        String name = uploadFile(path, image);
+        return name == null ? null : "/img/" + name;
+    }
+
+    public void deleteImage(String src) {
+        String path = ClassUtils.getDefaultClassLoader().getResource("static/img/").getPath();
+        String name = src.replace("/img/", "");
+        deleteFile(path + name);
     }
 
 }

@@ -1,16 +1,12 @@
 package com.akijoey.library.controller;
 
 import com.akijoey.library.service.UserService;
-import com.akijoey.library.util.FileUtil;
 import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.Map;
 
 @RestController
@@ -26,9 +22,6 @@ public class UserController {
     @Autowired
     ResultUtil resultUtil;
 
-    @Autowired
-    FileUtil fileUtil;
-
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> data) {
         userService.insertUser(data.get("username"), data.get("password"));
@@ -36,44 +29,39 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public Map<String, Object> getInfo(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
+    public Map<String, Object> getInfo(@RequestHeader("Authorization") String authorization) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         Map<String, Object> info = userService.getInfoByUsername(username);
         return resultUtil.successResult("Get Success", info);
     }
 
     @GetMapping("/detail")
-    public Map<String, Object> getDetail(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
+    public Map<String, Object> getDetail(@RequestHeader("Authorization") String authorization) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         Map<String, Object> detail = userService.getDetailByUsername(username);
-        return resultUtil.successResult("Get Success", detail);
+        return resultUtil.successResult("Get Success", Map.of("detail", detail));
     }
 
     @PostMapping("/upload")
-    public Map<String, Object> upload(HttpServletRequest request, @RequestParam("avatar") MultipartFile file) {
-        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\";
-        String name = fileUtil.uploadFile(path, file);
-        if (name == null) {
+    public Map<String, Object> upload(@RequestHeader("Authorization") String authorization, @RequestParam("avatar") MultipartFile image) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
+        String avatar = userService.uploadAvatar(username, image);
+        if (avatar == null) {
             return resultUtil.customResult(500, "Upload Failure");
         }
-        String username = tokenUtil.getSubject(request.getHeader("Authorization").replace("Bearer ", ""));
-        String avatar = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/img/" + name;
-        userService.uploadAvatar(username, avatar);
         return resultUtil.successResult("Upload Success", Map.of("avatar", avatar));
     }
 
     @PostMapping("/update")
-    public Map<String, Object> update(@RequestBody Map<String, String> data) {
-        userService.updateUser();
+    public Map<String, Object> update(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, String> data) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
+        userService.updateUser(username, data);
         return resultUtil.successResult("Update Success");
     }
 
     @PostMapping("/passwd")
-    public Map<String, Object> passwd(HttpServletRequest request, @RequestBody Map<String, String> data) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
+    public Map<String, Object> passwd(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, String> data) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         if (!userService.changePassword(username, data.get("oldPassword"), data.get("newPassword"))) {
             return resultUtil.customResult(401, "Password Error");
         }

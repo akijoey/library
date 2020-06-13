@@ -6,7 +6,6 @@ import com.akijoey.library.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -24,25 +23,22 @@ public class RecordController {
     ResultUtil resultUtil;
 
     @GetMapping("/total")
-    public Map<String, Object> getTotal(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
+    public Map<String, Object> getTotal(@RequestHeader("Authorization") String authorization) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         long total = recordService.getTotalByUsername(username);
         return resultUtil.successResult("Get Success", Map.of("total", total));
     }
 
     @GetMapping("/table/{page}/{size}")
-    public Map<String, Object> getTable(HttpServletRequest request, @PathVariable("page") int page, @PathVariable("size") int size) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
+    public Map<String, Object> getTable(@RequestHeader("Authorization") String authorization, @PathVariable("page") int page, @PathVariable("size") int size) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         List<Map<String, Object>> table = recordService.getTableByUsername(username, page, size);
         return resultUtil.successResult("Get Success", Map.of("table", table));
     }
 
     @PostMapping("/borrow")
-    public Map<String, Object> borrowing(HttpServletRequest request, @RequestBody Map<String, Long> data) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
+    public Map<String, Object> borrowing(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, Long> data) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         recordService.insertRecord(username, data.get("isbn"));
         return resultUtil.successResult("Borrow Success");
     }

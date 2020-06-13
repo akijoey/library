@@ -13,7 +13,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByUsername(String username);
 
-    @Query(value = "select username as username, avatar as avatar, phone as phone, address as address from User where username = :username")
+    boolean existsByUsername(String username);
+
+    @Query(value = "select username as username, phone as phone, address as address from User where username = :username")
     Map<String, Object> findDetailByUsername(@Param("username") String username);
 
 }

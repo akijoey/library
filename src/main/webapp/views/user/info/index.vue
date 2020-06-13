@@ -1,7 +1,7 @@
 <template>
   <el-form :model="form" :rules="rules" ref="form" status-icon label-width="70px">
-    <el-form-item prop="avatar">
-      <img v-if="form.avatar" :src="form.avatar">
+    <el-form-item>
+      <img :src="avatar">
       <el-upload ref="upload" action="#" :limit="1" :auto-upload="false" :before-upload="beforeUpdate" :http-request="httpRequest">
         <el-button icon="el-icon-refresh" slot="trigger" @click="handleSelect">选择图片</el-button>
         <el-button icon="el-icon-check" type="primary" @click="handleUpload">点击上传</el-button>
@@ -14,6 +14,9 @@
     <el-form-item label="手机号" prop="phone">
       <el-input v-model="form.phone" />
     </el-form-item>
+    <el-form-item label="地址" prop="address">
+      <el-input v-model="form.address" />
+    </el-form-item>
     <el-form-item>
       <el-button icon="el-icon-check" type="primary" @click="handleSubmit">提交</el-button>
       <el-button icon="el-icon-switch-button" @click="handleLogout">退出</el-button>
@@ -22,16 +25,21 @@
 </template>
 
 <script>
-  import { upload } from '@/api/user'
-  import { validateUsername, validatePhone } from '@/utils/validate'
+  import { upload, getDetail } from '@/api/user'
+  import {
+    validateUsername,
+    validatePhone,
+    validateAddress
+  } from '@/utils/validate'
   export default {
     name: 'Info',
     data() {
       return {
+        avatar: this.$store.getters.avatar,
         form: {
-          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-          username: 'admin',
-          phone: '13751706869'
+          username: this.$store.getters.name,
+          phone: '',
+          address: ''
         },
         rules: {
           username: [{
@@ -41,9 +49,19 @@
           phone: [{
             validator: validatePhone,
             trigger: 'blur'
+          }],
+          address: [{
+            validator: validateAddress,
+            trigger: 'blur'
           }]
         }
       }
+    },
+    created() {
+      getDetail().then(response => {
+        const { data } = response
+        this.form = data.detail
+      })
     },
     methods: {
       beforeUpdate(file) {
@@ -61,7 +79,9 @@
         data.append('avatar', file)
         upload(data).then(response => {
           const { message, data } = response
-          this.form.avatar = data.avatar
+          const { avatar } = data
+          this.avatar = avatar
+          this.$store.commit('user/setAvatar', avatar)
           this.$message.success(message)
         }).catch(() => this.$refs.upload.clearFiles())
       },
@@ -99,7 +119,7 @@
 
 <style lang="scss" scoped>
   .el-form {
-    @for $i from 1 to 5 {
+    @for $i from 1 to 6 {
       & > div:nth-child(#{$i}) {
         width: 425px;
         animation: star (.5s + $i * .1);

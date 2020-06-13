@@ -58,3 +58,11 @@ export const validatePhone = (rule, value, callback) => {
     callback()
   }
 }
+
+export const validateAddress = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('请输入地址'))
+  } else {
+    callback()
+  }
+}
