@@ -37,9 +37,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
-    FileUtil fileUtil;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = getUserByUsername(username);
@@ -84,14 +81,10 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public String uploadAvatar(String username, MultipartFile image) {
-        String avatar = fileUtil.uploadImage(image);
-        if (avatar != null) {
-            User user = getUserByUsername(username);
-            user.setAvatar(avatar);
-            userRepository.save(user);
-        }
-        return avatar;
+    public void uploadAvatar(String username, String avatar) {
+        User user = getUserByUsername(username);
+        user.setAvatar(avatar);
+        userRepository.save(user);
     }
 
     public boolean changePassword(String username, String oldPassword, String newPassword) {

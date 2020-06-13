@@ -1,13 +1,16 @@
 package com.akijoey.library.controller;
 
 import com.akijoey.library.service.UserService;
+import com.akijoey.library.util.FileUtil;
 import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Map;
 
 @RestController
@@ -22,6 +25,9 @@ public class UserController {
 
     @Autowired
     ResultUtil resultUtil;
+
+    @Autowired
+    FileUtil fileUtil;
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> data) {
@@ -46,13 +52,15 @@ public class UserController {
     }
 
     @PostMapping("/upload")
-    public Map<String, Object> upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile image) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        String username = tokenUtil.getSubject(token);
-        String avatar = userService.uploadAvatar(username, image);
-        if (avatar == null) {
+    public Map<String, Object> upload(HttpServletRequest request, @RequestParam("avatar") MultipartFile file) {
+        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\";
+        String name = fileUtil.uploadFile(path, file);
+        if (name == null) {
             return resultUtil.customResult(500, "Upload Failure");
         }
+        String username = tokenUtil.getSubject(request.getHeader("Authorization").replace("Bearer ", ""));
+        String avatar = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/img/" + name;
+        userService.uploadAvatar(username, avatar);
         return resultUtil.successResult("Upload Success", Map.of("avatar", avatar));
     }
 

@@ -10,15 +10,17 @@ import java.util.UUID;
 @Component
 public class FileUtil {
 
-    public String uploadImage(MultipartFile file) {
-        String path = "src/main/resources/static/img/";
+    public String uploadFile(String path, MultipartFile file) {
         String name = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String suffix = name.substring(name.lastIndexOf("."));
-        File image = new File(path + uuid + suffix);
+        File local = new File(path + uuid + suffix);
+        if(!local.getParentFile().exists()) {
+            local.getParentFile().mkdirs();
+        }
         try {
-            file.transferTo(image);
-            return "/img/" + uuid + suffix;
+            file.transferTo(local);
+            return uuid + suffix;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

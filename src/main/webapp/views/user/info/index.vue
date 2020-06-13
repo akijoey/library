@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  import { upload } from '@/api/user'
   import { validateUsername, validatePhone } from '@/utils/validate'
   export default {
     name: 'Info',
@@ -55,14 +56,24 @@
         }
         return true
       },
-      httpRequest() {
-        this.$message.success('上传成功')
+      httpRequest({ file }) {
+        const data = new FormData()
+        data.append('avatar', file)
+        upload(data).then(response => {
+          const { message, data } = response
+          this.form.avatar = data.avatar
+          this.$message.success(message)
+        }).catch(() => this.$refs.upload.clearFiles())
       },
       handleSelect() {
         this.$refs.upload.clearFiles()
       },
       handleUpload() {
-        this.$refs.upload.submit()
+        if (this.$refs.upload.uploadFiles.length > 0) {
+          this.$refs.upload.submit()
+        } else {
+          this.$message.error('请选择图片')
+        }
       },
       handleSubmit() {
         this.$refs.form.validate(valid => {

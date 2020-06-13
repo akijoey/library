@@ -22,6 +22,14 @@ export function getDetail() {
   })
 }
 
+export function upload(data) {
+  return request({
+    url: '/user/upload',
+    method: 'post',
+    data
+  })
+}
+
 export function update(data) {
   return request({
     url: '/user/update',
