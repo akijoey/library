@@ -448,6 +448,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_login"><strong>Login</strong></a></li>
 <li><a href="#_get_info"><strong>Get Info</strong></a></li>
 <li><a href="#_get_detail"><strong>Get Detail</strong></a></li>
+<li><a href="#_upload"><strong>Upload</strong></a></li>
+<li><a href="#_update"><strong>Update</strong></a></li>
+<li><a href="#_passwd"><strong>Passwd</strong></a></li>
 <li><a href="#_logout"><strong>Logout</strong></a></li>
 </ul>
 </li>
@@ -520,8 +523,8 @@ Content-Length: 51
 Host: localhost:8080
 
 {
-  "password" : 123456,
-  "username" : "user"
+  "username" : "test",
+  "password" : 123456
 }</code></pre>
 </div>
 </div>
@@ -572,8 +575,8 @@ Content-Length: 51
 Host: localhost:8080
 
 {
-  "password" : 123456,
-  "username" : "user"
+  "username" : "user",
+  "password" : 123456
 }</code></pre>
 </div>
 </div>
@@ -597,7 +600,7 @@ Content-Length: 243
 
 {
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg5MTYifQ.sYxRr955Pq5C5f1uTvnJA75H4KAKfTlaTAgb5WDwIwM"
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTgzNjYifQ.oAgX3h6tJkGH8mPKqqodns4p9jDYCTnUi8QH0QFDidE"
   },
   "message" : "Login Success",
   "status" : 200
@@ -622,7 +625,7 @@ Content-Length: 243
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user/info HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg3MTMifQ.-2U0P55P8zCJ2jbkzGqEhKC7ejZlJRjI2sQjczPDqfo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTgxNjQifQ.JZbIAo3z5-8qxRm0qAyi7cvF3zRghK9Pe3sm8ZxJOrY
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -642,10 +645,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1117
+Content-Length: 1091
 
 {
   "data" : {
+    "avatar" : "/img/142bab34987d406782bca2c5c63a2460.png",
+    "name" : "user",
     "routes" : [ {
       "id" : 1,
       "name" : "Client",
@@ -682,9 +687,7 @@ Content-Length: 1117
         "component" : "views/home",
         "children" : [ ]
       } ]
-    } ],
-    "name" : "user",
-    "avatar" : "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+    } ]
   },
   "message" : "Get Success",
   "status" : 200
@@ -709,7 +712,7 @@ Content-Length: 1117
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user/detail HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg5NTMifQ.5zdr8HHEe6j1MyJwArZ84brIm1K9XWP5_ocBjx5MH24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTgzOTYifQ.F3UTT9oxK2_POXs1wLa7xq27phgvaqPp9XhblZtQ1JE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -729,16 +732,248 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 163
+Content-Length: 191
 
 {
   "data" : {
-    "username" : "user",
-    "address" : null,
-    "phone" : null,
-    "avatar" : null
+    "detail" : {
+      "phone" : "13751706464",
+      "username" : "user",
+      "address" : "test address"
+    }
   },
   "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_upload"><strong>Upload</strong></h4>
+<div class="paragraph">
+<p>Upload user avatar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>POST /api/user/upload</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_5"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc5OTIifQ.mR5KILUmjGVi4Bq_CPJIXVtt3vgJuiaNNLCnK4GE1uw
+Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=avatar; filename=avatar.png
+Content-Type: multipart/form-data
+
+塒NG
+
+   IHDR   }   }   弨l%    IDATx^磔g恗[U鲴載3 E蘠$垻倛b��,
+f薖纥A璕K-魞sD馚!ATT個9鐪s矽减涳鵺�3佥玺棍b)瞠�諾3岎実�9钻搟茔楊z谆~�7箴�/囒苕6�;茚噞啕迖K�.^銭^鋚玔蓐p隱啁������?茴v穂邼{媅茆p薣農澯贿NNN直傀肟&gt;啐輏�5//峻鯖楏濄�璫~赢w/��;痥}v瑅?�篝浩鈠/m毲|檑玾煹9讕啁�1邠撱鶡�y�9颻�鮛O?霄忰�7籽侚嵯�/鮎/稻��?挀鬍_麴JJ啭澾9_覔惘�*迄�嚳�?溰w夸`儃蓷|擅k计k顁椈瑡#鴹鶙%
+|錡~迕思趟,�鳷鯰鵁�觉[旷瘥�&lt;荿_z低`殆�&gt;餻蟵辳)ǘ唩j;ERV蔐懫漄$8r|HF�Sv盱��8w�c赻`勶�&lt;?�1dD鞠筪 鋽�8绶�2礗唁C尉3啝]叔@壕�瓦�V�'骱捉.蓦^�:/�(澼韓w;攱_碚^mY豲o^鐄^g)揸璙G詏ya^鱟?鯿噊o[謿騮闬
+羰H&gt;鬋?麴ZZ囒搛锭(�鐧tF岣~秊r`^l挼踃2杭o�.鵎(瞷z邚)|�Z鮗�7�蚼W:绻辻攏n霍I�4g"�??^F醃熠讄妥\幥娱鲣诀斤%拔_鱱_w5B�纆'�$�2 �#戬�锖�'O0??zx蘡�:轤Nq,� _�%^怵唎鴨x�;蓍贛6D桑绻蠨�&lt;3铘帙鵭p蘞鎜�28�6玟辙}wj�?�(�5辻┳韔麉��本Cd葫鮛�蹂遐�"凄廭�3&amp;璎蠐飤棞燬�8$|秣~镝臹炫Vc敮1蕐匴x吤C驉#^濈N香�鬐tx�#y奎�5睅Т&lt;幽磎R阭喏mWXi馀齚z奐绷d树葭^OY�鬅鐄&gt;穞蚽(3肫L�)t"剆�o)$�9�)6您嵾鴯54 烃戬2:"恕钂瀸瀛啁�
+羹淞~�%1[&amp;�烍滅,�F]�畿飤鱗f�,)B椀��?O&gt;|���搊p趰�(﨧掬M鞴蟷枙B��=擱�t鱗
+.SJ躟� 趫X顖鵶嶓�&amp;鬙扞纐F\,鯷5D熂0碴3~箺{�5w讗!O啕竭[邦|:�袛顨愹躐姱鴬K哨x�7x兠丝痵�3&lt;饋寄硟剡�篌鈟诏�:蠡啞�嫤菤\寮_鶗_9&lt;_着瓷�;�J掾-唑p弡躢�&amp;擉益粼┘�9M灣�&lt;7"jlQm樝�.贁)魸職籧�c/哋箚@d彙$F封 ?�#?瞲G唗�;遹匑
+婆r睵咟狏鬄骷5r硷}锘Fp驙=钂龙� �"N夤��
+$!
+�狂縬A扛骰遾u猐L孅石孟蠞"D轍@舥擋�1诡唏�;G_絺�4�;峛z鞤儗躲�悭�&lt;髽碧T0瀲笢�勂�,�30
+县c鰐@??圾慕�飜啐蒎様V蔍Nt-)\[揣}幦佽1$?y�p)⑴蔃V�"1滰�:笀�,醼!凐诏鏶�)晻
+�鴱�鳵z筸�� !榍g}b炄澏M�掟v餄d�9葇鰓�(奶|&lt;8�&lt;憣��;厱瓟?且�*婖鮫綹斿\鑖�蜬q_[2&amp;'帴/使渻鞝"錉gR歆鼡{啕迼T睔u�K�蟚奔槻漁櫩鴭縳稔�5Y灱%Vh@爥馠齜�;烈咺癭颩BXa&lt;y=嬒�3棓篊s
+泭垩Ｘ�1eびSА�{瞽osOI�2u峷�0#鎱&gt;W�"'h鐋阐蔁u�!cゼ匹&lt;覎p鶦?鬋雡懶�妛紊=飝螷�k忑閳礲崿僂QC坄睘�7}�7滗�'另舸�5S榶VPG羸驨裄Id镊Hc=SΚ喌�5'鬁1y蔓酊屖祷襣鎽!鳰鹐43�0^
+%m1�%g�飛溰A惑�;��!j瀨t�淏�7�1�鹓~鎔柋愰J�g觏揞頄団嬑剠堥脌uV�5H柱℅=jy便�)吭趋,{z愊铘a,寢鮆鉒络?�2�6Y�9擜�!�&gt;^h'伒5裲啟y&gt;e9遻a+聶r"r駣R镀煶�	钖嫑�30m角肥6菴皇鎡b爵腨_�鮛�3諳疁&gt;鞴�%0@�/�"�.n燒!|:1罃�[d8�!T�1悪贸p莃騳_轛]煑砃�汸c�2�*r��瀎�6%硈*濼z異睬n姫弻`f鷯,櫉WEむ蔡bL��Ef&amp;@v蜔�9楃騲E3}槐	)�#銪C2�梸烓蘥.�"礐v'w慧軻舒跗oK�绀�.濮鍗遄眗m焨�唣RRH%尿绖獊yy嚩嶕R合�胓�游或B艻8昺	�,!a�$
+3d逡懖恓o礓鸦R#rr1准荼B�9O釃鴩,s2�晨考攏\秭n锒�;�蛩]琰&lt;�&lt; 缟�霭U�#�� 靁Cm璕b0洜�侩斞蝤鬗靀艔敒WU�1芿��才璛蟋跊$l滔榗莪"6�PH(!幪劧冼\
+f�&gt;9翁 2倫�譜`A蜙筩�吙�窖︻廟C H蕬@�y瓚&lt;�6�2�)�"X/BoB泡騋秳W	�瓜}�)q�f,� 鋛鷯D�進謌�揢�"F崥G珅�茢a仟蠹蝮&lt;看�捡篰{)}Bz�糘驑�# 蓌jD�&lt;O_
+渫�膒�'gs创婞!z午榔壶危酲K	四4�秗Z儨釳啄�:擲z比�&lt;�)���朡��懔�锍忻x具L'�+柶帻�姷C奓f
+茹螈鄻u幬ГxJ�&amp;葻姙薀�!栂3)^Sá8龥�8藓剆(�狦?塍�魻e(-惌U肚&lt;�1k鰼l怑�(O�3喩葍酄9"僸�O{谟&lt;乫)	Oq&lt;)F�	膓}S现嚿暰罅~蕅m0�1�*T�8芆ZXi&lt;旾C绰P溠霈;d;9M賋��糍1芼Lj隞�
+4�9冗K�(?r嶏 锈=恹�?薍漯怌x.O荿"詳Zq脀痓�$L0蒣,�6L萷o�啟L e蘣鱴毀带鲁�;x��=奾湷h3郛忶嘼�	)��&lt;稡枴訵uzw�g在
+襣鎼�#途[碦蛗譿}讌hT鋆)|3逝#嫩V盖=顠�k4�矈U弊b{Mq	�9鈮�,�鏤晩qS0$鏞x熺2F施h皿M伉 Sl柜惑_B1��*鰟t猼-v傚鞟z�3?=u巬Λe	羮垨�'柔~�'~b)濧骹�c泷慽�般艷d�� J蒓烌敡�梎愷猶rGtl艛Rd薵
+栵隲|iq�6奱羨�$浤Fv(怋&amp;�;廱]鞘匠lP楺槢哎镏�錓DG[螇虚玐Y殭R紱忛豅�2鏅�暵妪��6賘�)L伵贴�nX婹�4烁
+Gd!爹K眶K嚪x嫹Xc^D顗O|釸zBゴ9�兡嚈O麥g窄殮&lt;+召魩]�--講0賧3%援笈蛑騳z比#�%���%(�!8d藄
+_叜b诫��瘠矌Y揙絆�醋W笸癴
+�1}TS垥鸐�屰gc.圞F^s闷摄�鳨涫U鏙V栵]鏼脵�
+vS楴R掑TB+w�6塎僳洨S倹灅:�
+@V�B�朜椒崋�$m壕y闲g岠妢i1b\E[潡A�9Nd渞槄�c气溠y征5k鎪��/s渑苂�=F/磣W逻Rz$%�#勦芇	�1捋2g,殴g&lt;�+巸QP秣c/歽�$L撫&amp;�*BＭ蜇狻s�:x&gt;��*SU饿孕\
+-懡BO^r@D�枣�鎀鳧�8惐曇E毜1勇i瘠蠥�畻奴衴筲8瞜畘兇鬳辷0襟;矿徜痪牖枾梸U諜�臅�焬�$=�58y殖灥&lt;\裣蠋*|zB饸TI�	w3智;&amp;*瀔瞪倪鬗遲	厒郾S.o炍5繅|舗B�$i誰W��&gt;嚣4n縂実U�=嬐Y幞m鑵6� h^萚d賟�-$�錢縆�7躳肸O绛;,U8)瓺純儕@�	竼u丂r�巌縓槜'艾?+瘽y|汽齲9xP哳办Ηjkr挔柞姒&lt;m�&gt;3�
+X�+敥騑�6應~8M厾d�翣屨5^�脫笲菎E?宺喪垹k潇揖哮屜8�&lt;�	OX腴六T�禔;�"J;&lt;tRG&amp;g?{uk�-k渼&amp;疦�悟鋝,$C崺 q彿�+&amp;�1驒歂兾�(聈k&gt;��甊n[峠躰巺渋悤价炛湏莿{^蝃-劌d�S{箨PW熎f兼@8�鶁銰~溽銲Oz液氓\t�揺朩:^屻�历�蝠�'&lt;a	E蘔眙兲孪R�$w�9厒鵾倠凟萙K腱&amp;)輐c�$�)�%g駻傏徠尤罍驦a!嚾垉�^邩菼�6Y�寕睝慌0嵘�;4h玸鶫泼礎G首k蛽燑銾�3)i�y��x;s鮙*aI旲鋾菷a f:峘'或驕榕;达譒b伉#f鈿9�0耤+J逋讵NQ豟謜繐IhA唓�=錶睢]堎\*l戂4悩x�/u]!バ怎1N昋垫n哕桑K|5駈0�K�;&amp;:缝��*宥�lFN詬摷肢b�1瘞癳p宦SH�;j�8婐9ゴ;Tn迣#E瀋�*枤扛�7Bd衅壴a违x羣;n歡c�x'�6r凬-軔{痞蟏�!p硃Q沾瑺ミ崕�.}鐲捉l 6!穳c�AP4�.智�+y笟粁\驮lW|�1媼cY�$?筌进C醡�4G6鬉t*tB誺蠒嗸e	竨t首杮鮨Z�2x�R�4蠷�2��:G驇$S合�/�6瀸腗}9穟�m�9W8O駡G�&lt;絒�"y\�6'1ZG甯菙RZ紜�q缗饳;O�r&amp;洘叄`璳鬍@遢庲虸Y逸:有)輝	笒n芾紤*摺椀l�[笜溌x:^,.W�飡ム�8y%銑U嶹檏俟錇A� 擜�:社|午\R飖蔼�.﹚#僇犃瓎#2u铤
+暖芜==虺厴)勨v鵱,=榥�-9N�#睄R?�?pA出蝣鈊eXF鄗迬í9%w嫲几筅耇煌7僲c鉒�&amp;稩Ar嶡橿屆&lt;[彝X
+!GF/��=�蟈瀆^9暳;(蹥x般8匴�&amp;&lt;椷6褜�,匫/槺&lt;�!?//蜏19C��7!柷C�[爹趉)周错Z�
+L蝌61Pǘ舦員慨嵭9楥靬餠v��$做賅L汮�8�5o璪(k�*[�5�&lt;C)鯖岿汷稲E滨閰;�
+灋禰騞侗�&amp;&gt;'蠹敐"簏R� 懸黫'EDrx碹魁郫5阞鋵艒/%錔墟M楬,(�YYz姛笣孨黉侖�9祃墉S誟淪
+n瑫�3娴蔉X�薑燌�'��m�%)&lt;M2療�槛瀾d	凔餖胒�~J良糶犣獴WZ�$鶁秣~K康疢議k�2辜儆5莜治邛
+rx/%巡�gm#镄U�;y贼鴇Bi呅谔孺D�縮3测延燓鬕.榹错曲�}�	幮��&lt;&gt;阬Zj榪}*y灈抔汚V刎	a髉L� 節5-3f矽滔�0嶷r镓�N槲�=嚄乻�Kn�)穑牰ygdAm|顃幮蝟s!�&lt;陴懠鑽lZO&amp;�&lt;柖曀/&lt;韎O�#LY頥憥拍5{$紕�5蓄�"糠a`Z�5鐀鰥�!M�3�3VjV蕺幚�媠谎�&amp;�鶒9瓆僅9,%粏b]�7:N&gt;襏@為\�*�4蟟鋨涜朼&amp;儗絣!C�3EV'号砛S:缂萛齾嶚錂蟶妤I陇#nVP皦蚧笗飊}UfU���&lt;聺v�枟蔕艈]袂緂彷[&lt;禸鋽鵌ā俢�&gt;裁�-V驶妓滑%^J�7{硊o渮侗3訴謆烩t腠�!闤U蒜$ю�4uN!(彑閂F殐昻稏_�0鵃;s礂#:烍鍞q搶!�kN砇蜱&gt;鞴迡,鲹&gt;閾朥直鱞ペ�(OU觹燋y焑 h[幓%	Qj#ドR蟁�$�]L阪:|J"d磩匏S]k破l�2轏Y	螛X衿O裢莞 A
+韣9{b*�6[鯕�H'
+堤k諫v"噲勂w嫖�BC恙踨麉蟵摅.M挚鬕眶TG(痺Ａ�鸰毖猩輥a#饾�-M�硇^淌耀@UZ$� 1O�1蘱B徨�2J4a拴猣b.叺&lt;趒��妖褫塲.�#D尥�0{蔧稸雿K3��o扼蟑�3湆1刿�
+O3�9y龀焳簊哹&gt;?}M&gt;覂禣鶖O9}哱妕皂躳脺衊韛�苣B�,7Oㄘ饧屌鄃*樨P蓎嶲@q輜啠F逸烨	2R輇�邺嚙HJoｅ躤愫R垫�.#鉐y�搻S�4t榟琰聕zh#,$譣?斯駛庪痳r醩沈9蟳蜶�?� �5�挂效}讧-※&lt;鲿鬏�!喵}呲@�&gt;_l.綿Ln@�&lt;iB遴厸凱綴疁靼a㈠�!�贁獜 lS傘嵮u袀盌趞n'm錙绉�
+诲蓸�4
+c�.迏涙9==}��7熑氥刘.�&lt;盒Q,�_/U剺吊镋弡茔N7 sS掚y{{褥瀜{S$"Ae崶C 0v�毙
+!�/g=!B鐇+j嵔薙葆墘僯駷px�*釂l旐笗G�2N莾K鉰罨�9?;=�8c7a�30苃侂睫虢朅V爄�闉%h�怮5瀰捔;孃枷拥汩閥��8eU�'{趹临辟鲧yn$$v\�!絞文tgA(o洝 V洝榅L66澅XB~削|膝瓒堥"斳糺讁舒RW穡~c甌菁R�&gt;萈�]Z渞畒Or蚳2其Wㄔ涤TD頨蟴�*肦貤}贄-镬4h旋P�1s�2�$T闰終赚@賽鐂�'Uh儐趴孖{=靈臛鯨8鴼^6夀条}�K�E^G鴍&lt;K玭醆耲衤x饾灠侺e像榦誑扣/H欪啔�)�鷾虌�)Y咤哂褚Cc(]嗣#抡5�3[p�,U敊L籌蘥}謌澛[訶O撿\^AI禢捻苏稴剺^詭攂y獼)�*W撡'=��+千D,鏵x&lt;�騰叩��-	&lt;]U0滒�黇f嗪寧迅�5閊^&lt;=緑�"坯灳B阈%矘\!�撱峍�X幗,騊dN|へe �0gmI�澢窡帒_璴0ヌ%�&amp;Y幄逅斬5&amp;S%kz膭�&lt;�睔嫝襸亏{/亀�膐辗6N�Z'漕2撐�p�倒恮�!冮潚蒨诵�"eO�7灉⒈畒&lt;酴O絋:驖啭潾覆縇覛1铮0d� 嶨ㄐ)z&amp;蘺�螽胭g&amp;\i代@�68�蜙弉]*&gt;�:|オS鶓灱C&lt;捂S.鬆&lt;S?e搋W滷p蘄(�罫鄓蚹Snし��jq昘�1ow]0吒
+x pe&gt;&lt;;�b�J��f霖�撅嬼干岜弣�TOxjB[垕MU衎馦.p陋�擐E�:�;!7!A蟐Z蔞NI,�泏匏勑x螐嬗齹讷耙&lt;w萈摰飁1�05筗簍溰B%�;咜;揆帶O� 葀|詇妛B��'.忘瞎&amp;`B��k癀)�葖�Myuyq蹨�lO&amp;d簄2謽{瘳坝騢飛�鮍敌G猩柖�s茷窍�1區訶:_吀Yt��禱k.�r谆辵=G.萳撩鱮鑐8鎪&gt;F+X*%鄏Z�$ａ5�/N�-挃蛮}2艄�霽嫛f�@锘�=�-�篊%耊}{忲2告�3� 4詺
+澘M聐栆�1夅$k畦渧盐泰鰃�44� 蚁傳捉� 糶聪�羬篕t68賛L沽h'%蝥�?e敆藱yz	箈?匩�挟蠄蹖e�O�E嘹鮖煳拑1�.Q贄Tt炓S铘精yy冰貀苅�謀閗�9g(,鬚倀澻w^腴搮�&amp;]m�W;灠Z9+瀊�驳ｕ9v��'))囍�r\7S5姄揷椤B籞RD濼�薓p網菔�+Km鞲�僥e�  処DAT攉蒷?炗擸�溩�$)载兊0玮`蝫/�:�.w顾z(A㏑搷5_颼玎u榃[燖UHR坕O�眑&lt;Ax�,�6TX毺�&gt;�諱=�4卦銐�&gt;鼤9匆嚖V�)诸羢�3雇x;e簻eq�9焨Ｂe2浦-Ψ砱霸 瑉�3�=潭�D蝿~�Q�A滔A?E鵮憛B儨	鏏}涿y�'�諳瀀鵗1垻-�诏謳F釟鈡�&amp;3濲栍�7�0C菧C?R詾脀L啈��3�bq√{(�:�3澋�o�賀|
+鳜�7�7?溰穇D.媜)}缠�b轨n�3棟嵓�t灋鄡瓟m铮\濆[+g輏&amp;圧hF7絨�3!N鬥撅s腴穣D硷皲)葮*垲蕧Ｌp詼k嵒X=踉J閑71鯜ac騑vb�ク濐t懀敢帾e:3睓鎹R鎰Rt蕢细樀�"V!�8號5縆W傱嗾q�$L\y昋U)gX蒉�1M&amp;Z昡妇98N忻*�#駡EL[�肅Sd檌[m霄N	皱:杌緑'sME瞙�-0?/�/@赠-o鸐x忉H�"粀该Vq&amp;x� 4些��偩 |Zg�(�z瀿QhK�蹆�*AV鸵guz诸N}d跂{+ =^7cf滃�yK蠰`蓬&lt;緲醠鮨�=tS衠1�5特军丝|-于i酃9�$_)*9g\�'/O鎱:亏`�2c堏饩鎘緁輅i�?N�=雇mnsZ�	襣G3诇qdZg洧�鵭磯d玍芋魽9=咻�淨��2`;X悦臙飳K\诅鐍铉炥�5j鎉⑵cZ首rf傱{� 蠖Xb&lt;dǎ�k鲇疴4禌l庯�4g�(懷鬿L踥g幍Q�趍}s_粵S逽貆P罫茷&lt;1&amp;考|�5yA�6臿蹞	�d腧m,Gz阡d麉壖剳8O�伀x懅UglL邝凜!鵓甹qA嫡Iw�镳飌�;yヘI貟_af�&amp;�7昋4gm牖派筦2�o鷿荟斗]邾鲽q-�?	Qh卸1/7囟S�\�&lt;J酇`鷆?鯿鹠�	瞪c茶9FFV?�&gt;`临$櫗戨7掠祄惾�2�楺v茱m僾.弐wc|阶{接[�+#�S&amp;�]&amp;Q軌s栝�
+Bm魇P&amp;�栖�$訣t�1偤敒gO(孤
+硒I+擽ug�$u淍w#�餞�&amp;灓{駼擌�X笃�甮 P耂&amp;埽V	5�)斉v啕/赼霟踈衺^(篻锁ML阀辬豃硕Z冇R悠X()T蜭 渌#橊�
+N懩r髮針q懗��鶡歶d|衫麆�&gt;馊W�;�1云湗I穢P.陀)\*(d1猬5"W?���N-呶槯遍揁)�c枹�?芯牵=靉;]訿$6堗敭堠mF�23詨醟蒶�.f烑楘匩)拣規滓磶�,鷄翩腀调_�噺�&gt;E豆rr慧蓊傣綜黅N逌EN薒釗璒V陎�	鎨�OWXi磔僸錀韈�	"哴\w%葑}蓐+f瀰�/ユ鞻�(綈�K塔祲�?W}�'騴h彁冊U亭t(e湠NQ熍邎�y)鶻8濛ご =�4�
+0誃堂V5eWcp|諶鶷梏�襬荍噛竝嶝,�荤K]挤烲L其	衙 a橝e膵鼬��7M8(y婜�炢3鉅婔喡枕)�舗�8r㎡銻┯_婭B柽偡rk螥'Y�
+吷邝獣.C绪色凢c禃濈s犅蹹坨嬮�#3啯�:沕3�$y�y}�=E;涋)嚥喷�9�0[輯蜹囇▕}戋~觊nX悌毀�&amp;気柵K)皹亹a鐚O�世玡危惆悺m(C�-=�2ps/岼蔽-饰(B�y聱蒏&amp;捨伴Z�.鼼囶�5�+&lt;]L?eu鯫]�
+蚗=瀣謺f漿�1y链葷�0沏筵纪�,xo�0鰊媢駖V霬濢誣ZS t瘖赩笎~裨6��螌�6n鳙u廭97E埒H牠z姑�#Mx{h��	�&amp;阺J$骿Q(弚&lt;鰹儂锂閝+B湑批6畺玫qE�6;n蠸q&gt;Wx9Ω綆jゐ�鲭#朽辯K辋鞣~U冠⑼絕唼钜	�雩窙飂@��#o_鴧_x隀O�钗u^A)OQ;H4R鏀"颓仈]3��#�3藂Nh荫饩�聣r!Y�艭[敮B├)Mfъ}2莁礁欦;宦RnJ鷱竎譾}律�1`郫&gt;?|y敟隐Wx鋛�龐羅鬍_t�窹jn!8细SPqWN甩 魬弢洫Qc鬾鋭勅刳峩?��?燩�=古s贠P|M&gt;{N炵j団S罴暙遞佘o8�9橛z 攖~2慻蒶YV鋒拰仳YJB''貢炃熣F9k睙0moz忳x忓A冶P刵�祢V諱 3蚢m靦％2eE弜	厏�|龙奏�5髲
+x�舽耤X:柆ы縎z1|&gt;�+咱S邜gㄒ�
+�"�ｌ�2\肑z窓仑�-�1&lt;hv靌龌猞襅Iv�1v焟�a杭�6'朱帎�83凓褞劐蝂慳谈閦+P揊8翋J)軫(愀聥�.駒轈�&gt;{9稧搼S�嵐g劳贡4嬉篯�=e硄M袅8&lt;"尸矐弎*Igl�.U蛅0獸坯鬆y企}b钱双弎儕*b葵�/臩鯪�3槱H1"�杈/騬乖KY�8h幄�&lt;C窿}o妩鋈贵UQ哘zP扄轠鰸�&lt;s内&amp;�脇Xi层9_�
+侅@竻�B�9�3t,仺瓽奤啙u啩7韸�X�4X氾摯湧鳹鏎绰&amp;�0?=G[�6��8湄湃�5�.鲺癰稲+勿d����#�&lt;香脥凂H�"t�%闽釻髱MC�2a搃J:珚)x捰R々A窾�#Yq斞h/t\瀪,^稆愕皾靻渤詉\�8鐢篴牉骹	愉1笅oy@炩濛接;接2濿諥� P~�xP�.娄 #嶃誔牶�6皌惄H�H
+�"i橻)�$骚偪&lt;螧^阆隰讯sH妆)�&gt;�"g紙噏岹商,a殍,ヤR瓇煋仁鱴t�}�*摜t馶e�癜^逅搢謴�!望實鳘泝9涮.妈wD圙蟥爻6)4R4匝鰀詤�*�翪虫\�,3魄姝�煡or骈e0/42\;壓侠\Vm阒肪踮9s鞎@�z惓縍标瞥軻�倃dJ�B齳琯譾~B(g爪E#GUB姇�"e斷iS�2E凖�/S�3~0)fS冈搰&lt;3&gt;�'箷�2備2脵禼�釩夹牲�&amp;59W橦:曹$视�-沲�)躒�9古-n駖腴觡蟘靬f�4浱Y修魔挦鱦偿Y盚衙劙�/鶔/9�ク�;c欢矎�鴱?峚勁腶0乜�0mSvE廼坮�6[R&lt;o鏏-l甫襫�趋e/�s圧眽
+!BT仴癡Zj�r駈!L止�Z辬L2晸摀�+wP\+畯榰谙"~劊髒頱嘏tu�!/$l	贛`捧&lt;)v玣.桋@帼恧�/#nS&amp;啐銜kя壿糧埩鑵橓元-/邑龃*鯟∴~Τ骋�#J艡渿翚�殲簸'Q主K僄M泮敒傛`M窧腨�壔島渜瘌种冩Y3pn�i蹠\�'妎b�#�@dЬ+f#朚)X;J續婅嶲ss糐^d�粭端 8粠!磣鄐张BX叩1�1辕1��. �嬖&gt;荬Z旈\阀�n挼c1{2鱎竸�Z眱"Iz^K
+.甮xP�這粭6yQ炰:偄d&gt;S4莮	z瞰Kq刉]b*&amp;�=�U�*~屙鋹鏵(巙n�7i.9侉0"檶纼湱"贏d俊骹榵&gt;�9閺遑A\4a稌斩N|疼#h*dQ軵8醹"G� \茋吹�ㄝ�:�銧恮[ tm粂礉憜0)槛5!&gt;O疨4冱4庲r垮��;�6� #戅B1菘&lt;狄&amp;u5�6[\稚曫~-J摺=a_嶍县咧�y�;醋M=�&lt;霝c槀�2置垩鉼&gt;厷紭纬1\鄔拴b""磭X�+r6絨捸�&gt;嵏q藵蛍骛O|A�瞬UF�
++唑-卟斕P��tOU�"U腪粭迂鐝閃S|'a	�&lt;七5輎Rj2s鷌髞Fm
+A�硵檺x�Lq;厳%#�愀詫�愲y剼=燧闬_S閸%鍧W箿�,任B��#舂@杯舱遷|莣�0�迁=m迱肱�&gt;WS躖!Bbg7坉L�	虹vｉ榕厄�樈4夕嘼o蠮i
+1V烖a耳7�6aㄚ5軨驉eXr�%zHPsk�;窐s熼X剋n猵m陛u屄w銢鼽醺P対[嬥橐Z��.e�'~鈐誩4�8{?︳i耒q�,辉M[蟊倩�y切�6;喞&lt;酴O]_藱�8r嗀(�g騩逜�1a脉蝍�◇�F�@c礦-D K终笋}_e屒qh�.�#靴強N�G蟮s呛7耏83灙稜=玮5j�j懋u^b=颗}狦P茎_s0c井&lt;�q歱|碐H紱肛�36呙噹]V干砵7贸�b鶖穩i膸迈#W��!AQ]坎jl酱J?s眂O箓h銏榰Mi]唧鯲羊膸鼬灯+e5奉襟幝p蔽鏍V�诐餐罯8塍YJ/艐H醑6�级&lt;へ==E/)侲wKo! 肧屜�r藫襍焬O+f紝魑缟B	m0"順抿浘�JB1s琵�'婈&lt;墭鷔崀籫蛁韞gL蝩軠硚�5[徊}A鏑昖谥谊E+r鼻教x鶍iS皝菕	琑*e邦�暙)Z齏怭�蟕緀Q镆赤赑X暇階�鼺榒:鴚-t�(礰沐旲鮸}洀�,鴧�%麱Q萅E#m獳3 X枀漮.扪�坬-6�x遀!�0H昁�'k粖登惖荘._б鹗ガ&lt;謮pxQR暚X鬨�:O袂�I&lt;衔X瀚tZ崺暛=U
+鄂輋D鲡�-w蝹Kご箚揁EH�l冭H$n� y捈&gt;k[;�:�脙b綂⒒]逸�t1"G�	�2▊敘獦D�Sv罪錋追鵣重�)8�胫螷北麳�寵畹b��w�=芧讀
+1汌蔚�0S&gt;m2◤廩廢磉u骪腝絙W湣y$GF畭�)犼滖uo熭3盹粣襣⑾	疁3E變uB鱗倛@錳摫汣叧J礸)]礻�廖篈熺{譄擵U昈�+嬸搌沖鏜�:鏓萊$�� 泈憾;}屗�;az銺帥/O�k�.芠a�5�+D���1馅财儺�S蕃d業k;粨赤栤+D灬$AK徭M鷊}蟐h欩t$q/寄皬懯妻5;睗F銁誄贾�,龙�碽舯��
+7妣骺�:_∑锒宨�/淑擞蠇�8腠-Z煺归�	4L圓dp昰d,濓w姉[Д孜,彋T)`�9F蛃хq+g4叓跈\ad喍
+*9萀�2愝怚^\f视筨�?D珅杝�G蓨3�"ニ&amp;熖蒥:q�+�&gt;'t枾O佺錣鎸i荘!匚C��褥� )嘝丢�)�&amp;4�&lt;玸�#醰蝞埢G�1%酏穼�9�
+&gt;骢�1鵎劚q9娣秈��糇挃AX|慤 r秬a靤�)紵擷噛�邒缁�"Q�8&lt;�($檺阽磊gH殼y�$浀斌�C�鳟褒]�眍 �7峼o硈Z|(睂 治s�敓�Mバgは"孁�7湲v5$(c�"锘矻縊8氜4�&gt;�褭,TM早� 咕鬐憙匪�+淭檴���篾辛B劜嗞琵b啙=s橕醰c�1�b误}鲐p���'僣}馼妋儋擼跩疂n�:e颵4iW��蟘�3﨨C
+2)Y-澭Np争臗吲-缁瓮鰲肭謇�(茍�BBo-@玈虍恈J;敕╈鎝,t}灛Jㄠ丬箶跇*鬜臋闾─κ�=瓋l89N醶逴c鷜J镓$"比I�:N恲攒�P︰{=弁�骘-}j?B�8R"�杤餿0_
+覂麺柒墛T15铃��,n�2�w',荌�1楮涜鎠J:碴嚶輎兂L4i�&lt;TJ挚�*雋l獙 ^{漭F蠝D洩y新B�迎nu1矘紦峕�;$�搖l и3o舃H殐浄5ΧL篂碌�-�;".蛞鵭|搹L%S饧fW�4AJ瘡蒛�1NrL羻窉E]_!屈[蕧悉+菭*橳蒶螦|婹鱤朣扝�5V羆
+�&lt;�7归-Y�.蘌嶝昼嬂�'R煳聪�,R檶�09峣-3c}w矯颙?惜]F�ヰ菔廙��鏧#х)+�&lt;k庴诮H膵郅	�!#噾嬠匐稠醤�,瓝畒j唚�~o橋W�;W&lt;擿/y灖鬮躈~*瑴U&gt;�1J練穃错曦X'Dg陶��rs3HWS��&lt;!{Qp缛洂�0茕�≦鲼|削溵锠栵/�焖荪tWU�&gt;x挙s3邒�	x唻裒紇彌	u
+:塊+'isN(t,禢躽繬师另⑵v5h7_蝺壡�='O�#瞊庽$慿贄�-籎邷oo�癃J熜m瞘弊潯顀�骓5鬰手glz�E�4.銦9U谽�?6W紫岮硨ピ镓貣吁鴳c�&gt;斤Zb詞on#�$e??F6蟼壮橑,竆Di譺頝竩轼D╦鑫絕肌k檫N鋿s灖�\%韟冶�.A锉4'领渾yl2��4�ssx�nRd�=}cd{贪fE�1潌釘~s胇鹁缍厖c膇D徨&lt;~朩f8髱弅襦�9g"錗ピ媽c:O騗鑧5O�"t-袾靼蚒盰p槓&gt;坡c暢k�O厷泝y_d&lt;/╯'Z�*齒�/N乇狐E&lt;�紜3F瑦扒χ茈{B�砃Y�r韃渭鑌�'�c暡纱o屢T�薇�'鎂饘�聒c撄骡崆岓蘥蜭卂勷�'�&lt;Z{s逾\^腐*M�?柒�'{�r扃&gt;]j弮�4�N懪�&gt;kw.觱荼�-?/借8_匚_J縣雁Z劥髞楗記跕1o�5烓&lt;�	�)�&lt;齔磒鼫荡zc怩揿纛箷榧!�&lt;瞂?7j熳R�觠蒗狋I蝔h笧u鏄�#u��7厸杂凈Ym+.邤hb�/天正�袹烾0奾馺禝坍请蠜d藵gU閚瑎�7^�#痚聓烢怴宋�7_K鹹鮊廬��m]瀪�&lt;黬沫邡凸抲mS�U窓*N（�璵齩:镤柗煎�藇=撥w寝┼E艵审f�-*檗�!�"c8�&amp;U鶿&lt;i27E�菶牸:钺簌紞!�J构袲n鄚n送锳撞屭劓=�蚘�7螞�8on^K�!^粠nrO廙_d[拥8g_貦�)痚納]�%涔EM;7�&amp;〗魊y崤濪q5容梢礚�uN耹1i.訂7':^鰙傜涂�3堑毗}禬�&lt;躜� i~� f:l    IEND瓸`�
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_5"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 135
+
+{
+  "data" : {
+    "avatar" : "/img/142bab34987d406782bca2c5c63a2460.png"
+  },
+  "message" : "Upload Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_update"><strong>Update</strong></h4>
+<div class="paragraph">
+<p>Update user detail.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>POST /api/user/update</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_6"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc5NTYifQ.pWi7bFxcB-fapJXbqqdvuo_f_CTmF-kBlYCIktxJBvw
+Content-Length: 79
+Host: localhost:8080
+
+{
+  "address" : "china",
+  "username" : "user",
+  "phone" : "18820188310"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_6"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Update Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_passwd"><strong>Passwd</strong></h4>
+<div class="paragraph">
+<p>Change password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>POST /api/user/passwd</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_7"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/passwd HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc3NzEifQ.IHTvyXD_yNrBQ25MY0NED5xjtuphfJL7aX-ZiaZbtoU
+Content-Length: 64
+Host: localhost:8080
+
+{
+  "oldPassword" : "123456",
+  "newPassword" : "123456789"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_7"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Change Success",
   "status" : 200
 }</code></pre>
 </div>
@@ -756,18 +991,18 @@ Content-Length: 163
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_5"><em>Sample Request</em></h6>
+<h6 id="_sample_request_8"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/logout HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg1NTQifQ.NPigLVzpugixvPtxz-YL-tmuNENSQknOmlY7QeWW7Tw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc3MzkifQ.DxjBSWMA2AtYm9cRuC2uzlYcpIeUxPcMA5xmr4fg1jI
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_5"><em>Sample Response</em></h6>
+<h6 id="_sample_response_8"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -810,18 +1045,18 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_6"><em>Sample Request</em></h6>
+<h6 id="_sample_request_9"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/category/side HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgxMzcifQ.pYLLLzPbnboJVEQ-GDGDyei47kIdgsvtmQBbXkyW6jc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTczNzYifQ.5R0NoNFtTF5RL396jGb2o471XAyCtaQ1H9liCh0bFZQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_6"><em>Sample Response</em></h6>
+<h6 id="_sample_response_9"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -835,28 +1070,28 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 449
+Content-Length: 468
 
 {
   "data" : {
     "side" : [ {
-      "title" : "文学",
-      "icon" : "book"
+      "icon" : "wenxue",
+      "title" : "文学"
     }, {
-      "title" : "流行",
-      "icon" : "book"
+      "icon" : "xiaofeipin",
+      "title" : "流行"
     }, {
-      "title" : "文化",
-      "icon" : "book"
+      "icon" : "yishu",
+      "title" : "文化"
     }, {
-      "title" : "生活",
-      "icon" : "book"
+      "icon" : "lvyou",
+      "title" : "生活"
     }, {
       "title" : "经管",
-      "icon" : "book"
+      "icon" : "jingji"
     }, {
-      "title" : "科技",
-      "icon" : "book"
+      "icon" : "dianzixinxi",
+      "title" : "科技"
     } ]
   },
   "message" : "Get Success",
@@ -885,18 +1120,18 @@ Content-Length: 449
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_7"><em>Sample Request</em></h6>
+<h6 id="_sample_request_10"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/total/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgwNzkifQ.Ur7Efm1gR-S89ZKDcAS-pHDcebr8wIDcH0fMyQxECvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTczMzUifQ.VA7sndsuuz30KU8aw4TZdNyOt-KnuAWLtupZATF6wG8
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_7"><em>Sample Response</em></h6>
+<h6 id="_sample_response_10"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -934,18 +1169,18 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_8"><em>Sample Request</em></h6>
+<h6 id="_sample_request_11"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/list/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTYzNjMifQ.kKSam8bPenmYFN-pEI5osHZHS6mEwNNTJbkkxPkTotU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTU2MjEifQ.u6_43YJ5l-sL2BLjYeyXgDKHwcxJ22_UG3WulCrgMeY
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_8"><em>Sample Response</em></h6>
+<h6 id="_sample_response_11"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1033,18 +1268,18 @@ Content-Length: 2112
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_9"><em>Sample Request</em></h6>
+<h6 id="_sample_request_12"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/table/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgwMzIifQ.ZwJqlME17T0ZLAcU3MTZoWsHtfgRTdCCQLSEOD7Xv9o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTcyOTcifQ.mPtKALaCigDAWOxokotlGsjXY2WOQ4oNHzNwq7oyUx4
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_9"><em>Sample Response</em></h6>
+<h6 id="_sample_response_12"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1152,13 +1387,13 @@ Content-Length: 2227
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_10"><em>Sample Request</em></h6>
+<h6 id="_sample_request_13"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/book/detail HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTc5NzIifQ.VGcZb4UolzO04t4XCDbu8TobVW4IulTvnKz7TuAjMoI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTcyMTkifQ.gs5IEH1uhcd4MVeTbbUaEJiGRgyQtK1e1xftKaD1PK4
 Content-Length: 30
 Host: localhost:8080
 
@@ -1169,7 +1404,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_10"><em>Sample Response</em></h6>
+<h6 id="_sample_response_13"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1183,7 +1418,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 934
+Content-Length: 936
 
 {
   "data" : {
@@ -1199,7 +1434,7 @@ Content-Length: 934
       "category" : {
         "id" : 1,
         "name" : "文学",
-        "icon" : "book"
+        "icon" : "wenxue"
       }
     }
   },
@@ -1229,18 +1464,18 @@ Content-Length: 934
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_11"><em>Sample Request</em></h6>
+<h6 id="_sample_request_14"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/record/total HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg1MDAifQ.Tw1x5RLKxTpTuurLmqx-LCWiWFVKmCr_NqMZlElFyGY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc2ODUifQ.vWZQ7GxqD1wV8RPVrYHtFt-oFYqOAaOqZDr9a4F6v2k
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_11"><em>Sample Response</em></h6>
+<h6 id="_sample_response_14"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1258,7 +1493,7 @@ Content-Length: 90
 
 {
   "data" : {
-    "total" : 23
+    "total" : 25
   },
   "message" : "Get Success",
   "status" : 200
@@ -1278,18 +1513,18 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_12"><em>Sample Request</em></h6>
+<h6 id="_sample_request_15"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/record/table/1/10 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg0MTYifQ.fKigwbFU-QY8kKJn8Hoa3ka0reWmoaX-I_k2xbqZ9fE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc2MTcifQ.Icz7DsECv-eIhH4qFEJ7scR8LIV3lBJim5GXofDwQic
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_12"><em>Sample Response</em></h6>
+<h6 id="_sample_response_15"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1314,6 +1549,12 @@ Content-Length: 2073
       "id" : 1,
       "borrow" : "2020-06-09T00:00:00.000+0000"
     }, {
+      "return" : "2020-07-09T10:16:25.000+0000",
+      "borrow" : "2020-06-09T10:16:25.000+0000",
+      "id" : 35,
+      "isbn" : 9787100021654,
+      "name" : "中国近三百年学术史（全两册）"
+    }, {
       "return" : "2020-08-09T02:55:02.000+0000",
       "name" : "艺术批评史",
       "isbn" : 9787100130448,
@@ -1326,35 +1567,11 @@ Content-Length: 2073
       "id" : 23,
       "isbn" : 9787100130448
     }, {
-      "id" : 24,
-      "borrow" : "2020-06-09T09:19:19.000+0000",
-      "isbn" : 9787101052039,
-      "return" : "2020-07-09T09:19:19.000+0000",
-      "name" : "万历十五年"
-    }, {
-      "id" : 25,
-      "return" : "2020-07-09T09:19:20.000+0000",
-      "name" : "唐人行第录",
-      "isbn" : 9787101041828,
-      "borrow" : "2020-06-09T09:19:20.000+0000"
-    }, {
-      "id" : 27,
-      "return" : "2020-07-09T09:19:24.000+0000",
-      "isbn" : 9787101014914,
-      "borrow" : "2020-06-09T09:19:24.000+0000",
-      "name" : "万历十五年"
-    }, {
       "borrow" : "2020-06-09T09:19:25.000+0000",
       "id" : 28,
       "return" : "2020-07-09T09:19:25.000+0000",
       "name" : "古代交通与地理文献研究",
       "isbn" : 9787100157582
-    }, {
-      "isbn" : 9787101052039,
-      "id" : 33,
-      "name" : "万历十五年",
-      "return" : "2020-07-09T10:16:22.000+0000",
-      "borrow" : "2020-06-09T10:16:22.000+0000"
     }, {
       "return" : "2020-07-09T10:16:23.000+0000",
       "borrow" : "2020-06-09T10:16:23.000+0000",
@@ -1362,11 +1579,29 @@ Content-Length: 2073
       "isbn" : 9787101001846,
       "name" : "突厥集史（全二册）"
     }, {
-      "return" : "2020-07-09T10:16:25.000+0000",
-      "borrow" : "2020-06-09T10:16:25.000+0000",
-      "id" : 35,
-      "isbn" : 9787100021654,
-      "name" : "中国近三百年学术史（全两册）"
+      "id" : 27,
+      "return" : "2020-07-09T09:19:24.000+0000",
+      "isbn" : 9787101014914,
+      "borrow" : "2020-06-09T09:19:24.000+0000",
+      "name" : "万历十五年"
+    }, {
+      "isbn" : 9787101014914,
+      "return" : "2020-07-09T10:16:29.000+0000",
+      "borrow" : "2020-06-09T10:16:29.000+0000",
+      "name" : "万历十五年",
+      "id" : 36
+    }, {
+      "id" : 25,
+      "return" : "2020-07-09T09:19:20.000+0000",
+      "name" : "唐人行第录",
+      "isbn" : 9787101041828,
+      "borrow" : "2020-06-09T09:19:20.000+0000"
+    }, {
+      "id" : 24,
+      "borrow" : "2020-06-09T09:19:19.000+0000",
+      "isbn" : 9787101052039,
+      "return" : "2020-07-09T09:19:19.000+0000",
+      "name" : "万历十五年"
     } ]
   },
   "message" : "Get Success",
@@ -1387,13 +1622,13 @@ Content-Length: 2073
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_13"><em>Sample Request</em></h6>
+<h6 id="_sample_request_16"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/borrow HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgzMjAifQ.ebQLrbK545pLp-soi-M-XJauIgINNPeqyqVcuNLM5BM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc1NDAifQ.D-P8lS6V9fvygrMlgzGE4mxskIRuXxJ65--wMijN7xY
 Content-Length: 30
 Host: localhost:8080
 
@@ -1404,7 +1639,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_13"><em>Sample Response</em></h6>
+<h6 id="_sample_response_16"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1439,13 +1674,13 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_14"><em>Sample Request</em></h6>
+<h6 id="_sample_request_17"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/return HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgxOTkifQ.2_MVE8nL2zNUqjCx1EsWeIFsfMmk_wgyBBTHFZChRfw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc0MzMifQ.vsZJG1DXk1N3h74MQP3K7nx3hYdy0ojQZlrulYVzMOc
 Content-Length: 16
 Host: localhost:8080
 
@@ -1456,7 +1691,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_14"><em>Sample Response</em></h6>
+<h6 id="_sample_response_17"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1491,25 +1726,25 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_15"><em>Sample Request</em></h6>
+<h6 id="_sample_request_18"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/renew HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgyNjUifQ.c-rJtB0l6fQdsacmi1hOV6pMiL-GUF89lNo8qbKFUbc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIxNjEwNTc0OTYifQ.-3YRceenyMb042zDP1_SUgxhO8Tp49g4kqbROwWeQTU
 Content-Length: 48
 Host: localhost:8080
 
 {
-  "id" : 1,
-  "timestamp" : 1596931200000
+  "timestamp" : 1596931200000,
+  "id" : 1
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_15"><em>Sample Response</em></h6>
+<h6 id="_sample_response_18"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1539,7 +1774,7 @@ Content-Length: 54
 <div id="footer">
 <div id="footer-text">
 Version v1.0<br>
-Last updated 2020-06-10 21:34:19 +0800
+Last updated 2020-06-15 01:44:10 +0800
 </div>
 </div>
 </body>

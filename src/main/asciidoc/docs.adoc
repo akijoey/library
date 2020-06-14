@@ -63,6 +63,36 @@ include::{snippets}/user/detail/http-request.adoc[]
 ====== _Sample Response_
 include::{snippets}/user/detail/http-response.adoc[]
 
+==== *Upload*
+Upload user avatar.
+----
+POST /api/user/upload
+----
+====== _Sample Request_
+include::{snippets}/user/upload/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/user/upload/http-response.adoc[]
+
+==== *Update*
+Update user detail.
+----
+POST /api/user/update
+----
+====== _Sample Request_
+include::{snippets}/user/update/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/user/update/http-response.adoc[]
+
+==== *Passwd*
+Change password.
+----
+POST /api/user/passwd
+----
+====== _Sample Request_
+include::{snippets}/user/passwd/http-request.adoc[]
+====== _Sample Response_
+include::{snippets}/user/passwd/http-response.adoc[]
+
 ==== *Logout*
 Logout and invalidate token.
 ----
