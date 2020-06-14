@@ -29,13 +29,13 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "avatar")
-    private String avatar;
+    private String avatar = "";
 
     @Column(name = "phone")
-    private String phone;
+    private String phone = "";
 
     @Column(name = "address")
-    private String address;
+    private String address = "";
 
     @Transient
     private Boolean enabled = true;

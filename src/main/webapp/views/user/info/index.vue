@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import { upload, getDetail } from '@/api/user'
+  import { getDetail, upload, update } from '@/api/user'
   import {
     validateUsername,
     validatePhone,
@@ -79,9 +79,8 @@
         data.append('avatar', file)
         upload(data).then(response => {
           const { message, data } = response
-          const { avatar } = data
-          this.avatar = avatar
-          this.$store.commit('user/setAvatar', avatar)
+          this.avatar = data.avatar
+          this.$store.commit('user/setAvatar', this.avatar)
           this.$message.success(message)
         }).catch(() => this.$refs.upload.clearFiles())
       },
@@ -98,8 +97,11 @@
       handleSubmit() {
         this.$refs.form.validate(valid => {
           if (valid) {
-            // post username and phone
-            console.log('submit')
+            update(this.form).then(response => {
+              const { message } = response
+              this.$store.commit('user/setName', this.form.username)
+              this.$message.success(message)
+            })
           } else {
             this.$message.error('Format Error')
             return false

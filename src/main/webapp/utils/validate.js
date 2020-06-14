@@ -21,6 +21,8 @@ export const validatePassword = (rule, value, callback) => {
 export const validateOldPassword = function (rule, value, callback) {
   if (value === '') {
     callback(new Error('请输入密码'))
+  } else if (value.length < 6) {
+    callback(new Error('密码长度不能小于 6 位'))
   } else {
     if (this.form.checkPassword !== '') {
       this.$refs.form.validateField('checkPassword')

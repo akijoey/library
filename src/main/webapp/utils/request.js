@@ -10,7 +10,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(request => {
   const token = store.getters.token
-  if (token !== null) {
+  if (token !== null && token.length > 0) {
     request.headers.authorization = 'Bearer ' + token
   }
   return request

@@ -24,7 +24,9 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> data) {
-        userService.insertUser(data.get("username"), data.get("password"));
+        if (!userService.insertUser(data.get("username"), data.get("password"))) {
+            return resultUtil.customResult(401, "Username Existed");
+        }
         return resultUtil.successResult("Register Success");
     }
 
@@ -55,7 +57,9 @@ public class UserController {
     @PostMapping("/update")
     public Map<String, Object> update(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, String> data) {
         String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
-        userService.updateUser(username, data);
+        if (!userService.updateUser(username, data.get("username"), data.get("phone"), data.get("address"))) {
+            return resultUtil.customResult(401, "Username Existed");
+        }
         return resultUtil.successResult("Update Success");
     }
 

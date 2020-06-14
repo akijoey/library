@@ -63,26 +63,33 @@ public class UserService implements UserDetailsService {
         return userRepository.findDetailByUsername(username);
     }
 
-    public void insertUser(String username, String password) {
-        User user = new User();
-        user.setUsername(username);
-        String encrypt = passwordEncoder.encode(password);
-        user.setPassword(encrypt);
-        List<Role> roles = roleService.getUserRoles();
-        user.setRoles(roles);
-        userRepository.save(user);
+    public boolean insertUser(String username, String password) {
+        if (!userRepository.existsByUsername(username)) {
+            User user = new User();
+            user.setUsername(username);
+            String encrypt = passwordEncoder.encode(password);
+            user.setPassword(encrypt);
+            List<Role> roles = roleService.getUserRoles();
+            user.setRoles(roles);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 
-    public void updateUser(String username, Map<String, String> data) {
-        User user = getUserByUsername(username);
-        user.setUsername(data.get("username"));
-        user.setPhone(data.get("phone"));
-        user.setAddress(data.get("Address"));
-        userRepository.save(user);
-    }
-
-    public boolean existUsername(String username) {
-        return userRepository.existsByUsername(username);
+    public boolean updateUser(String username, String newUsername, String phone, String address) {
+        boolean equal = username.equals(newUsername);
+        if (equal || !userRepository.existsByUsername(newUsername)) {
+            User user = getUserByUsername(username);
+            if (!equal) {
+                user.setUsername(newUsername);
+            }
+            user.setPhone(phone);
+            user.setAddress(address);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 
     public String uploadAvatar(String username, MultipartFile image) {
