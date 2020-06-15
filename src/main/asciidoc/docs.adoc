@@ -27,82 +27,90 @@ Collection of user API.
 
 ==== *Register*
 Register by username and password.
+[source, http]
 ----
-POST /api/user/register
+POST /api/user/register HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/register/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/register/http-response.adoc[]
 
 ==== *Login*
 Login by username and password.
+[source, http]
 ----
-POST /api/user/login
+POST /api/user/login HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/login/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/login/http-response.adoc[]
 
 ==== *Get Info*
 Get user info after login.
+[source, http]
 ----
-GET /api/user/info
+GET /api/user/info HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/info/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/info/http-response.adoc[]
 
 ==== *Get Detail*
 Get user detail after login.
+[source, http]
 ----
-GET /api/user/detail
+GET /api/user/detail HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/detail/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/detail/http-response.adoc[]
 
 ==== *Upload*
 Upload user avatar.
+[source, http]
 ----
-POST /api/user/upload
+POST /api/user/upload HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/upload/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/upload/http-response.adoc[]
 
 ==== *Update*
 Update user detail.
+[source, http]
 ----
-POST /api/user/update
+POST /api/user/update HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/update/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/update/http-response.adoc[]
 
 ==== *Passwd*
 Change password.
+[source, http]
 ----
-POST /api/user/passwd
+POST /api/user/passwd HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/passwd/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/passwd/http-response.adoc[]
 
 ==== *Logout*
 Logout and invalidate token.
+[source, http]
 ----
-POST /api/user/logout
+POST /api/user/logout HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/user/logout/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/user/logout/http-response.adoc[]
 
 == *Category API*
@@ -110,12 +118,13 @@ Collection of category API.
 
 ==== *Get Side*
 Get client sidebar.
+[source, http]
 ----
-GET /api/category/side
+GET /api/category/side HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/category/side/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/category/side/http-response.adoc[]
 
 == *Book API*
@@ -123,42 +132,46 @@ Collection of book API.
 
 ==== *Get Total*
 Get total of books by category.
+[source, http]
 ----
-GET /api/book/total/{cid}
+GET /api/book/total/{cid} HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/book/total/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/book/total/http-response.adoc[]
 
 ==== *Get List*
 Get book list by category.
+[source, http]
 ----
-GET /api/book/list/{page}/{size}/{cid}
+GET /api/book/list/{page}/{size}/{cid} HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/book/list/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/book/list/http-response.adoc[]
 
 ==== *Get Table*
 Get book table by category.
+[source, http]
 ----
-GET /api/book/table/{page}/{size}/{cid}
+GET /api/book/table/{page}/{size}/{cid} HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/book/table/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/book/table/http-response.adoc[]
 
 ==== *Get Detail*
 Get book detail by isbn.
+[source, http]
 ----
-POST /api/book/detail
+POST /api/book/detail HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/book/detail/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/book/detail/http-response.adoc[]
 
 == *Record API*
@@ -166,50 +179,55 @@ Collection of record API.
 
 ==== *Get Total*
 Get total of records by user.
+[source, http]
 ----
-GET /api/record/total
+GET /api/record/total HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/record/total/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/record/total/http-response.adoc[]
 
 ==== *Get Table*
 Get record table.
+[source, http]
 ----
-GET /api/record/table/{page}/{size}
+GET /api/record/table/{page}/{size} HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/record/table/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/record/table/http-response.adoc[]
 
 ==== *Borrow*
 Borrow book by isbn.
+[source, http]
 ----
-Post /api/record/borrow
+Post /api/record/borrow HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/record/borrow/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/record/borrow/http-response.adoc[]
 
 ==== *Return*
 Return book by id.
+[source, http]
 ----
-Post /api/record/return
+Post /api/record/return HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/record/return/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/record/return/http-response.adoc[]
 
 ==== *Renew*
 Renew book by id and new return time.
+[source, http]
 ----
-Post /api/record/renew
+Post /api/record/renew HTTP/1.1
 ----
-====== _Sample Request_
+====== *_Sample Request_*
 include::{snippets}/record/renew/http-request.adoc[]
-====== _Sample Response_
+====== *_Sample Response_*
 include::{snippets}/record/renew/http-response.adoc[]

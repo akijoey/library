@@ -68,7 +68,7 @@ public class MockUtil {
 
     public void permitFileUpload(MockMvc mockMvc, String url, MockMultipartFile file) {
         String path = url.split("/")[2] + "/" + url.split("/")[3];
-        String content = "<< " + file.getOriginalFilename() + " >>";
+        String content = "< " + file.getOriginalFilename() + " >";
         try {
             mockMvc.perform(fileUpload(url).file(file)
                     .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -124,7 +124,7 @@ public class MockUtil {
     public void authenticateFileUpload(MockMvc mockMvc, String url, MockMultipartFile file) {
         String token = tokenUtil.generateToken("user");
         String path = url.split("/")[2] + "/" + url.split("/")[3];
-        String content = "<< " + file.getOriginalFilename() + " >>";
+        String content = "< " + file.getOriginalFilename() + " >";
         try {
             mockMvc.perform(fileUpload(url).file(file)
                     .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
