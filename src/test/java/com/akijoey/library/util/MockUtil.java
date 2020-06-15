@@ -11,15 +11,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.fileUpload;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @Component
@@ -51,7 +48,7 @@ public class MockUtil {
         try {
             mockMvc.perform(post(url)
                     .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                    .andDo(document(path, preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
+                    .andDo(document(path, preprocessResponse(prettyPrint())));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,10 +68,11 @@ public class MockUtil {
 
     public void permitFileUpload(MockMvc mockMvc, String url, MockMultipartFile file) {
         String path = url.split("/")[2] + "/" + url.split("/")[3];
+        String content = "<< " + file.getOriginalFilename() + " >>";
         try {
             mockMvc.perform(fileUpload(url).file(file)
                     .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                    .andDo(document(path, preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
+                    .andDo(document(path, preprocessRequest(replacePattern(Pattern.compile("^.*$"), content)), preprocessResponse(prettyPrint())));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,7 +99,7 @@ public class MockUtil {
             mockMvc.perform(post(url)
                     .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                     .header("Authorization", "Bearer " + token))
-                    .andDo(document(path, preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
+                    .andDo(document(path, preprocessResponse(prettyPrint())));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,11 +124,12 @@ public class MockUtil {
     public void authenticateFileUpload(MockMvc mockMvc, String url, MockMultipartFile file) {
         String token = tokenUtil.generateToken("user");
         String path = url.split("/")[2] + "/" + url.split("/")[3];
+        String content = "<< " + file.getOriginalFilename() + " >>";
         try {
             mockMvc.perform(fileUpload(url).file(file)
                     .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                    .header("Authorization", "Bearer " + token))
-                    .andDo(document(path, preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
+                    .header("Authorization", "Bearer " + token).contentType(MediaType.MULTIPART_FORM_DATA))
+                    .andDo(document(path, preprocessRequest(replacePattern(Pattern.compile("^.*$"), content)), preprocessResponse(prettyPrint())));
         } catch (Exception e) {
             e.printStackTrace();
         }

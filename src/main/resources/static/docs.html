@@ -448,6 +448,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_login"><strong>Login</strong></a></li>
 <li><a href="#_get_info"><strong>Get Info</strong></a></li>
 <li><a href="#_get_detail"><strong>Get Detail</strong></a></li>
+<li><a href="#_upload"><strong>Upload</strong></a></li>
+<li><a href="#_update"><strong>Update</strong></a></li>
+<li><a href="#_passwd"><strong>Passwd</strong></a></li>
 <li><a href="#_logout"><strong>Logout</strong></a></li>
 </ul>
 </li>
@@ -513,15 +516,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h6 id="_sample_request"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/register HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/register HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
 Content-Length: 51
 Host: localhost:8080
 
 {
-  "password" : 123456,
-  "username" : "user"
+  "username" : "test",
+  "password" : 123456
 }</code></pre>
 </div>
 </div>
@@ -530,7 +533,7 @@ Host: localhost:8080
 <h6 id="_sample_response"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -565,15 +568,15 @@ Content-Length: 57
 <h6 id="_sample_request_2"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/login HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/login HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
 Content-Length: 51
 Host: localhost:8080
 
 {
-  "password" : 123456,
-  "username" : "user"
+  "username" : "user",
+  "password" : 123456
 }</code></pre>
 </div>
 </div>
@@ -582,7 +585,7 @@ Host: localhost:8080
 <h6 id="_sample_response_2"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -597,7 +600,7 @@ Content-Length: 243
 
 {
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg5MTYifQ.sYxRr955Pq5C5f1uTvnJA75H4KAKfTlaTAgb5WDwIwM"
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTUyMTEifQ.dGK9sHJOijGF90cn8DtlC_xZcs03s4SBgJN7-t8BLrM"
   },
   "message" : "Login Success",
   "status" : 200
@@ -620,9 +623,9 @@ Content-Length: 243
 <h6 id="_sample_request_3"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user/info HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/info HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg3MTMifQ.-2U0P55P8zCJ2jbkzGqEhKC7ejZlJRjI2sQjczPDqfo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTUwMDUifQ.BoGmk2kFfyz4ZDQ5dKwN61ADDRM2r8PULA_Q0rx8EjQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -631,7 +634,7 @@ Host: localhost:8080</code></pre>
 <h6 id="_sample_response_3"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -642,10 +645,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1117
+Content-Length: 1091
 
 {
   "data" : {
+    "name" : "user",
     "routes" : [ {
       "id" : 1,
       "name" : "Client",
@@ -683,8 +687,7 @@ Content-Length: 1117
         "children" : [ ]
       } ]
     } ],
-    "name" : "user",
-    "avatar" : "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+    "avatar" : "/img/ea332a804f1b4ecc9822ab78a550cb14.png"
   },
   "message" : "Get Success",
   "status" : 200
@@ -707,9 +710,9 @@ Content-Length: 1117
 <h6 id="_sample_request_4"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user/detail HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/detail HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg5NTMifQ.5zdr8HHEe6j1MyJwArZ84brIm1K9XWP5_ocBjx5MH24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTUyMzYifQ.JAd0QlrMwM759ZesfinO3G1k0hdUiexwMvF9e6H966c
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -718,7 +721,7 @@ Host: localhost:8080</code></pre>
 <h6 id="_sample_response_4"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -729,16 +732,176 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 163
+Content-Length: 191
 
 {
   "data" : {
-    "username" : "user",
-    "address" : null,
-    "phone" : null,
-    "avatar" : null
+    "detail" : {
+      "phone" : "13751706464",
+      "username" : "user",
+      "address" : "test address"
+    }
   },
   "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_upload"><strong>Upload</strong></h4>
+<div class="paragraph">
+<p>Upload user avatar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>POST /api/user/upload</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_5"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQ4MDMifQ.1gRn0a1cAQkISh51TyBhH1IzcQgWvi1kHV-wMoEEcTg
+Host: localhost:8080
+
+&lt;&lt; avatar.png &gt;&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_5"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 135
+
+{
+  "data" : {
+    "avatar" : "/img/ea332a804f1b4ecc9822ab78a550cb14.png"
+  },
+  "message" : "Upload Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_update"><strong>Update</strong></h4>
+<div class="paragraph">
+<p>Update user detail.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>POST /api/user/update</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_6"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQ3NjcifQ.0UU7EKxzFAU_deqaujeN_Ov-2s7hKuxSny5gzXuKcZ0
+Content-Length: 79
+Host: localhost:8080
+
+{
+  "phone" : "18820188310",
+  "address" : "china",
+  "username" : "user"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_6"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Update Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_passwd"><strong>Passwd</strong></h4>
+<div class="paragraph">
+<p>Change password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>POST /api/user/passwd</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_7"><em>Sample Request</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/passwd HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQ1NTEifQ.Nyqz1kZAtGrijDFhnBHeeyaOpA_oj7HSI7bSvnoJXE4
+Content-Length: 64
+Host: localhost:8080
+
+{
+  "oldPassword" : "123456",
+  "newPassword" : "123456789"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_7"><em>Sample Response</em></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Change Success",
   "status" : 200
 }</code></pre>
 </div>
@@ -756,21 +919,21 @@ Content-Length: 163
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_5"><em>Sample Request</em></h6>
+<h6 id="_sample_request_8"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/logout HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/logout HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg1NTQifQ.NPigLVzpugixvPtxz-YL-tmuNENSQknOmlY7QeWW7Tw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQ1MjUifQ.rh5Z-qyypDHuB9bQ4Qu2MjA6fc6fWL5PPS88-XwKWKw
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_5"><em>Sample Response</em></h6>
+<h6 id="_sample_response_8"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -810,21 +973,21 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_6"><em>Sample Request</em></h6>
+<h6 id="_sample_request_9"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/category/side HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/category/side HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgxMzcifQ.pYLLLzPbnboJVEQ-GDGDyei47kIdgsvtmQBbXkyW6jc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQyMTQifQ.rXyIBiCjE4N22Cb1bcStUGGtFFzLNOZ24PEp8Y3KqTM
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_6"><em>Sample Response</em></h6>
+<h6 id="_sample_response_9"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -835,28 +998,28 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 449
+Content-Length: 468
 
 {
   "data" : {
     "side" : [ {
-      "title" : "文学",
-      "icon" : "book"
+      "icon" : "wenxue",
+      "title" : "文学"
     }, {
-      "title" : "流行",
-      "icon" : "book"
+      "icon" : "xiaofeipin",
+      "title" : "流行"
     }, {
-      "title" : "文化",
-      "icon" : "book"
+      "icon" : "yishu",
+      "title" : "文化"
     }, {
-      "title" : "生活",
-      "icon" : "book"
+      "icon" : "lvyou",
+      "title" : "生活"
     }, {
       "title" : "经管",
-      "icon" : "book"
+      "icon" : "jingji"
     }, {
-      "title" : "科技",
-      "icon" : "book"
+      "icon" : "dianzixinxi",
+      "title" : "科技"
     } ]
   },
   "message" : "Get Success",
@@ -885,21 +1048,21 @@ Content-Length: 449
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_7"><em>Sample Request</em></h6>
+<h6 id="_sample_request_10"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/total/5 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/total/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgwNzkifQ.Ur7Efm1gR-S89ZKDcAS-pHDcebr8wIDcH0fMyQxECvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQxNjgifQ.2nciUpncuLhFkzLoo-uhAaQMIVAMRa2QhSdT5KGW7j0
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_7"><em>Sample Response</em></h6>
+<h6 id="_sample_response_10"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -934,21 +1097,21 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_8"><em>Sample Request</em></h6>
+<h6 id="_sample_request_11"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/list/1/10/5 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/list/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTYzNjMifQ.kKSam8bPenmYFN-pEI5osHZHS6mEwNNTJbkkxPkTotU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTI0NDYifQ.TKwYh1f3URhOaLp2XWHOZSEXKgdkno7mHc7zrJwuHPQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_8"><em>Sample Response</em></h6>
+<h6 id="_sample_response_11"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1033,21 +1196,21 @@ Content-Length: 2112
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_9"><em>Sample Request</em></h6>
+<h6 id="_sample_request_12"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/book/table/1/10/5 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/table/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgwMzIifQ.ZwJqlME17T0ZLAcU3MTZoWsHtfgRTdCCQLSEOD7Xv9o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQxMzIifQ.5FwUwH7dPrxpBgbs_OPTvdkT4dfWUT4ncZQJ3R1htEE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_9"><em>Sample Response</em></h6>
+<h6 id="_sample_response_12"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1152,13 +1315,13 @@ Content-Length: 2227
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_10"><em>Sample Request</em></h6>
+<h6 id="_sample_request_13"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/book/detail HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/book/detail HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTc5NzIifQ.VGcZb4UolzO04t4XCDbu8TobVW4IulTvnKz7TuAjMoI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQwNzQifQ.X35U8mJTn-tWprIrzchRiiR1pL-eMMrc1f2FSXhvJok
 Content-Length: 30
 Host: localhost:8080
 
@@ -1169,10 +1332,10 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_10"><em>Sample Response</em></h6>
+<h6 id="_sample_response_13"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1183,7 +1346,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 934
+Content-Length: 936
 
 {
   "data" : {
@@ -1199,7 +1362,7 @@ Content-Length: 934
       "category" : {
         "id" : 1,
         "name" : "文学",
-        "icon" : "book"
+        "icon" : "wenxue"
       }
     }
   },
@@ -1229,21 +1392,21 @@ Content-Length: 934
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_11"><em>Sample Request</em></h6>
+<h6 id="_sample_request_14"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/record/total HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/total HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg1MDAifQ.Tw1x5RLKxTpTuurLmqx-LCWiWFVKmCr_NqMZlElFyGY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQ0ODIifQ.fl6M0vVg02ZmYUw1I5zaXR7yBz8MSlLHQOEDFzHnlVk
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_11"><em>Sample Response</em></h6>
+<h6 id="_sample_response_14"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1258,7 +1421,7 @@ Content-Length: 90
 
 {
   "data" : {
-    "total" : 23
+    "total" : 25
   },
   "message" : "Get Success",
   "status" : 200
@@ -1278,21 +1441,21 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_12"><em>Sample Request</em></h6>
+<h6 id="_sample_request_15"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/record/table/1/10 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/table/1/10 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTg0MTYifQ.fKigwbFU-QY8kKJn8Hoa3ka0reWmoaX-I_k2xbqZ9fE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQ0MjIifQ.hUPr1bpD6YkYauVn2s-VCs9dqBwC7CNBywFldRUUrEo
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_12"><em>Sample Response</em></h6>
+<h6 id="_sample_response_15"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1314,6 +1477,12 @@ Content-Length: 2073
       "id" : 1,
       "borrow" : "2020-06-09T00:00:00.000+0000"
     }, {
+      "return" : "2020-07-09T10:16:25.000+0000",
+      "borrow" : "2020-06-09T10:16:25.000+0000",
+      "id" : 35,
+      "isbn" : 9787100021654,
+      "name" : "中国近三百年学术史（全两册）"
+    }, {
       "return" : "2020-08-09T02:55:02.000+0000",
       "name" : "艺术批评史",
       "isbn" : 9787100130448,
@@ -1326,35 +1495,11 @@ Content-Length: 2073
       "id" : 23,
       "isbn" : 9787100130448
     }, {
-      "id" : 24,
-      "borrow" : "2020-06-09T09:19:19.000+0000",
-      "isbn" : 9787101052039,
-      "return" : "2020-07-09T09:19:19.000+0000",
-      "name" : "万历十五年"
-    }, {
-      "id" : 25,
-      "return" : "2020-07-09T09:19:20.000+0000",
-      "name" : "唐人行第录",
-      "isbn" : 9787101041828,
-      "borrow" : "2020-06-09T09:19:20.000+0000"
-    }, {
-      "id" : 27,
-      "return" : "2020-07-09T09:19:24.000+0000",
-      "isbn" : 9787101014914,
-      "borrow" : "2020-06-09T09:19:24.000+0000",
-      "name" : "万历十五年"
-    }, {
       "borrow" : "2020-06-09T09:19:25.000+0000",
       "id" : 28,
       "return" : "2020-07-09T09:19:25.000+0000",
       "name" : "古代交通与地理文献研究",
       "isbn" : 9787100157582
-    }, {
-      "isbn" : 9787101052039,
-      "id" : 33,
-      "name" : "万历十五年",
-      "return" : "2020-07-09T10:16:22.000+0000",
-      "borrow" : "2020-06-09T10:16:22.000+0000"
     }, {
       "return" : "2020-07-09T10:16:23.000+0000",
       "borrow" : "2020-06-09T10:16:23.000+0000",
@@ -1362,11 +1507,29 @@ Content-Length: 2073
       "isbn" : 9787101001846,
       "name" : "突厥集史（全二册）"
     }, {
-      "return" : "2020-07-09T10:16:25.000+0000",
-      "borrow" : "2020-06-09T10:16:25.000+0000",
-      "id" : 35,
-      "isbn" : 9787100021654,
-      "name" : "中国近三百年学术史（全两册）"
+      "id" : 27,
+      "return" : "2020-07-09T09:19:24.000+0000",
+      "isbn" : 9787101014914,
+      "borrow" : "2020-06-09T09:19:24.000+0000",
+      "name" : "万历十五年"
+    }, {
+      "isbn" : 9787101014914,
+      "return" : "2020-07-09T10:16:29.000+0000",
+      "borrow" : "2020-06-09T10:16:29.000+0000",
+      "name" : "万历十五年",
+      "id" : 36
+    }, {
+      "id" : 25,
+      "return" : "2020-07-09T09:19:20.000+0000",
+      "name" : "唐人行第录",
+      "isbn" : 9787101041828,
+      "borrow" : "2020-06-09T09:19:20.000+0000"
+    }, {
+      "id" : 24,
+      "borrow" : "2020-06-09T09:19:19.000+0000",
+      "isbn" : 9787101052039,
+      "return" : "2020-07-09T09:19:19.000+0000",
+      "name" : "万历十五年"
     } ]
   },
   "message" : "Get Success",
@@ -1387,13 +1550,13 @@ Content-Length: 2073
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_13"><em>Sample Request</em></h6>
+<h6 id="_sample_request_16"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/borrow HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/borrow HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgzMjAifQ.ebQLrbK545pLp-soi-M-XJauIgINNPeqyqVcuNLM5BM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQzNTkifQ.eQM6P7dhscDdJT4fx8pU0Q6T3PVp1cwzo8VDr5EXqZE
 Content-Length: 30
 Host: localhost:8080
 
@@ -1404,10 +1567,10 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_13"><em>Sample Response</em></h6>
+<h6 id="_sample_response_16"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1439,13 +1602,13 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_14"><em>Sample Request</em></h6>
+<h6 id="_sample_request_17"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/return HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/return HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgxOTkifQ.2_MVE8nL2zNUqjCx1EsWeIFsfMmk_wgyBBTHFZChRfw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQyNjAifQ.uxQl47SbJYSk3Ul0wvYNdJGrA3xdoynq8awV4aAFQAs
 Content-Length: 16
 Host: localhost:8080
 
@@ -1456,10 +1619,10 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_14"><em>Sample Response</em></h6>
+<h6 id="_sample_response_17"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1491,28 +1654,28 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_15"><em>Sample Request</em></h6>
+<h6 id="_sample_request_18"><em>Sample Request</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/record/renew HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/renew HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTE3OTk2OTgyNjUifQ.c-rJtB0l6fQdsacmi1hOV6pMiL-GUF89lNo8qbKFUbc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyMDY0MTQzMTUifQ.cbTx23qi80ZOmYGWEiZokZu_VA_uofkT9gvTGdqzwPg
 Content-Length: 48
 Host: localhost:8080
 
 {
-  "id" : 1,
-  "timestamp" : 1596931200000
+  "timestamp" : 1596931200000,
+  "id" : 1
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_15"><em>Sample Response</em></h6>
+<h6 id="_sample_response_18"><em>Sample Response</em></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
@@ -1539,8 +1702,11 @@ Content-Length: 54
 <div id="footer">
 <div id="footer-text">
 Version v1.0<br>
-Last updated 2020-06-10 21:34:19 +0800
+Last updated 2020-06-15 02:19:02 +0800
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>
