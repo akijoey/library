@@ -55,6 +55,12 @@ public class RecordService {
         recordRepository.deleteById(id);
     }
 
+    public void updateState(int id) {
+        Record record = getRecordById(id);
+        record.setState(true);
+        recordRepository.save(record);
+    }
+
     public void updateReturn(int id, long timestamp) {
         Record record = getRecordById(id);
         record.setReturning(new Date(timestamp));

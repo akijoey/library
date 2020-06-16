@@ -2,7 +2,7 @@
   <el-dialog :visible.sync="visible" append-to-body @open="openDialog">
     <img :src="book.cover" />
     <div id="info">
-      <p v-for="(value, key, i) in fields" :key="key" :id="'info-' + i">
+      <p v-for="(value, key) in fields" :key="key">
         <strong>{{ value + ': ' }}</strong>
         <strong>{{ book[key] }}</strong>
       </p>
@@ -77,7 +77,7 @@
           const { data } = response
           this.book = data.detail
           this.book.category = this.book.category.name
-        }).catch(error => console.log(error))
+        })
       },
       handleBorrow() {
         borrowing({
@@ -113,8 +113,8 @@
         width: 410px;
         font-size: 17px;
         float: right;
-        @for $i from 0 to 6 {
-          #info-#{$i} {
+        @for $i from 1 to 7 {
+          p:nth-child(#{$i}) {
             animation: port (.4s + $i * .05);
             white-space: nowrap;
             overflow: hidden;

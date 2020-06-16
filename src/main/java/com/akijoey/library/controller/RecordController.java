@@ -45,7 +45,7 @@ public class RecordController {
 
     @PostMapping("/return")
     public Map<String, Object> returning(@RequestBody Map<String, Integer> data) {
-        recordService.deleteRecordById(data.get("id"));
+        recordService.updateState(data.get("id"));
         return resultUtil.successResult("Return Success");
     }
 
@@ -53,6 +53,12 @@ public class RecordController {
     public Map<String, Object> renewing(@RequestBody Map<String, Object> data) {
         recordService.updateReturn((int)data.get("id"), (long)data.get("timestamp"));
         return resultUtil.successResult("Renew Success");
+    }
+
+    @PostMapping("/delete")
+    public Map<String,Object> delete(@RequestBody Map<String, Integer> data) {
+        recordService.deleteRecordById(data.get("id"));
+        return resultUtil.successResult("Delete Success");
     }
 
 }

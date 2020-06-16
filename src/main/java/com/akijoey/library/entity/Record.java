@@ -29,6 +29,9 @@ public class Record {
     @Column(name = "returning")
     private Date returning;
 
+    @Column(name = "state")
+    private boolean state;
+
     public int getId() {
         return id;
     }
@@ -67,5 +70,13 @@ public class Record {
 
     public void setReturning(Date returning) {
         this.returning = returning;
+    }
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 }

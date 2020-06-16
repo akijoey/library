@@ -67,4 +67,12 @@ class RecordControllerTest {
         mockUtil.authenticatePost(mockMvc, url, data);
     }
 
+    @Test
+    @Transactional
+    void delete() {
+        String url = PREFIX + "/delete";
+        Map<String, Object> data = Map.of("id", 1);
+        mockUtil.authenticatePost(mockMvc, url, data);
+    }
+
 }
