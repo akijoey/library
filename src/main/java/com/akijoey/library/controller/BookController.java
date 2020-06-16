@@ -1,11 +1,11 @@
 package com.akijoey.library.controller;
 
-import com.akijoey.library.entity.Book;
 import com.akijoey.library.service.BookService;
 
 import com.akijoey.library.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -58,19 +58,28 @@ public class BookController {
 
     @PostMapping("/detail")
     public Map<String, Object> getDetail(@RequestBody Map<String, Long> data) {
-        Book detail = bookService.getBookByIsbn(data.get("isbn"));
+        Map<String, Object> detail = bookService.getDetailByIsbn(data.get("isbn"));
         return resultUtil.successResult("Get Success", Map.of("detail", detail));
     }
 
     @PostMapping("/insert")
-    public Map<String, Object> insert(@RequestBody Book book) {
-        bookService.insertOrUpdateBook(book);
+    public Map<String, Object> insert(@RequestBody Map<String, Object> data) {
+        bookService.saveBook(data);
         return resultUtil.successResult("Insert Success");
     }
 
+    @PostMapping("/upload")
+    public Map<String, Object> upload(@RequestParam("cover") MultipartFile image) {
+        String cover = bookService.uploadCover(image);
+        if (cover == null) {
+            return resultUtil.customResult(500, "Upload Failure");
+        }
+        return resultUtil.successResult("Upload Success", Map.of("cover", cover));
+    }
+
     @PostMapping("/update")
-    public Map<String, Object> update(@RequestBody Book book) {
-        bookService.insertOrUpdateBook(book);
+    public Map<String, Object> update(@RequestBody Map<String, Object> data) {
+        bookService.saveBook(data);
         return resultUtil.successResult("Update Success");
     }
 

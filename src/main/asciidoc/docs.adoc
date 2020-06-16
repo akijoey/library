@@ -60,6 +60,39 @@ include::{snippets}/user/info/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/user/info/http-response.adoc[]
 
+==== *Logout*
+Logout and invalidate token.
+[source, http]
+----
+POST /api/user/logout HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/logout/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/logout/http-response.adoc[]
+
+==== *Get Total*
+Get total of users.
+[source, http]
+----
+GET /api/user/total HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/total/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/total/http-response.adoc[]
+
+==== *Get Table*
+Get user table.
+[source, http]
+----
+GET /api/user/table HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/table/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/table/http-response.adoc[]
+
 ==== *Get Detail*
 Get user detail after login.
 [source, http]
@@ -103,17 +136,6 @@ POST /api/user/passwd HTTP/1.1
 include::{snippets}/user/passwd/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/user/passwd/http-response.adoc[]
-
-==== *Logout*
-Logout and invalidate token.
-[source, http]
-----
-POST /api/user/logout HTTP/1.1
-----
-====== *_Sample Request_*
-include::{snippets}/user/logout/http-request.adoc[]
-====== *_Sample Response_*
-include::{snippets}/user/logout/http-response.adoc[]
 
 == *Category API*
 Collection of category API.
@@ -175,6 +197,39 @@ POST /api/book/detail HTTP/1.1
 include::{snippets}/book/detail/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/book/detail/http-response.adoc[]
+
+==== *Insert*
+Insert book info.
+[source, http]
+----
+POST /api/book/insert HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/book/insert/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/book/insert/http-response.adoc[]
+
+==== *Update*
+Update book info.
+[source, http]
+----
+POST /api/book/update HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/book/update/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/book/update/http-response.adoc[]
+
+==== *Delete*
+Delete book by isbn.
+[source, http]
+----
+POST /api/book/delete HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/book/delete/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/book/delete/http-response.adoc[]
 
 == *Record API*
 Collection of record API.

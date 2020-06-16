@@ -51,13 +51,9 @@ public class RecordService {
         recordRepository.save(record);
     }
 
-    public void deleteRecordById(int id) {
-        recordRepository.deleteById(id);
-    }
-
     public void updateState(int id) {
         Record record = getRecordById(id);
-        record.setState(true);
+        record.setState(!record.isState());
         recordRepository.save(record);
     }
 
@@ -65,6 +61,10 @@ public class RecordService {
         Record record = getRecordById(id);
         record.setReturning(new Date(timestamp));
         recordRepository.save(record);
+    }
+
+    public void deleteRecordById(int id) {
+        recordRepository.deleteById(id);
     }
 
 }

@@ -14,6 +14,11 @@
           <span>{{ scope.row.return | date }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="state" label="状态" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row | type" size="small">{{ scope.row | state }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button icon="el-icon-refresh-right" size="mini" @click.stop="handleRenew(scope.row)">续借</el-button>
@@ -48,6 +53,34 @@
     filters: {
       date(timestamp) {
         return new Date(timestamp).toJSON().substr(0, 10)
+      },
+      type(row) {
+        if (row.state) {
+          return 'success'
+        }
+        const current = new Date()
+        const limit = new Date(row.return)
+        if (current > limit) {
+          return 'danger'
+        }
+        if (limit - current < 604800000) {
+          return 'warning'
+        }
+        return 'info'
+      },
+      state(row) {
+        if (row.state) {
+          return '已归还'
+        }
+        const current = new Date()
+        const limit = new Date(row.return)
+        if (current > limit) {
+          return '已过期'
+        }
+        if (limit - current < 604800000) {
+          return '即将过期'
+        }
+        return '未归还'
       }
     },
     created() {
@@ -131,13 +164,13 @@
       @for $i from 1 to 11 {
         &:nth-child(#{$i}) {
           animation: up (.4s + $i * .05);
-          span {
-            margin-left: 10px;
-          }
           .cell {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            & > span:not(.el-tag) {
+              margin-left: 10px;
+            }
           }
         }
       }

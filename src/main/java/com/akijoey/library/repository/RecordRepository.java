@@ -20,7 +20,7 @@ public interface RecordRepository extends JpaRepository<Record, Integer> {
 
     long countByUser(User user);
 
-    @Query(value = "select r.id, b.isbn, title name, borrowing borrow, returning 'return' from record r, user u, book b where r.uid = u.id and r.isbn = b.isbn and username = :username", nativeQuery = true)
+    @Query(value = "select r.id as id, b.isbn as isbn, b.title as name, r.borrowing as borrow, r.returning as return, r.state as state from Record r, User u, Book b where r.user.id = u.id and r.book.isbn = b.isbn and u.username = :username")
     List<Map<String, Object>> findTableByUsername(@Param("username") String username, Pageable pageable);
 
 }

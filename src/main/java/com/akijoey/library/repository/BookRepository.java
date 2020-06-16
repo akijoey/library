@@ -19,6 +19,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     void deleteByIsbn(long isbn);
 
+    boolean existsByIsbn(long isbn);
+
     long countByCategory(Category category);
 
     @Query(value = "select isbn as isbn, cover as cover, title as title, author as author from Book")
@@ -32,5 +34,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query(value = "select isbn as isbn, title as title, author as author, press as press, date as data, page as page from Book where category = :category")
     List<Map<String, Object>> findTableByCategory(@Param("category") Category category, Pageable pageable);
+
+    @Query(value = "select isbn as isbn, cover as cover, title as title, author as author, press as press, date as date, page as page, summary as summary, category.name as category from Book where isbn = :isbn")
+    Map<String, Object> findDetailByIsbn(long isbn);
 
 }

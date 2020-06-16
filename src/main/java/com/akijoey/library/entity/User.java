@@ -37,7 +37,7 @@ public class User implements UserDetails {
     @Column(name = "address")
     private String address = "";
 
-    @Transient
+    @Column(name = "enabled")
     private Boolean enabled = true;
 
     @JsonIgnore

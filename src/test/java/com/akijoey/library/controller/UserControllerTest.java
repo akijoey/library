@@ -60,6 +60,24 @@ class UserControllerTest {
     }
 
     @Test
+    void logout() {
+        String url = PREFIX + "/logout";
+        mockUtil.authenticatePost(mockMvc, url);
+    }
+
+    @Test
+    void getTotal() {
+        String url = PREFIX + "/total";
+        mockUtil.authenticateGet(mockMvc, url);
+    }
+
+    @Test
+    void getTable() {
+        String url = PREFIX + "/table/{page}/{size}";
+        mockUtil.authenticateGet(mockMvc, url, 1, 10);
+    }
+
+    @Test
     void getDetail() {
         String url = PREFIX + "/detail";
         mockUtil.authenticateGet(mockMvc, url);
@@ -88,12 +106,6 @@ class UserControllerTest {
         String url = PREFIX + "/passwd";
         Map<String, Object> data = Map.of("oldPassword", "123456", "newPassword", "123456789");
         mockUtil.authenticatePost(mockMvc, url, data);
-    }
-
-    @Test
-    void logout() {
-        String url = PREFIX + "/logout";
-        mockUtil.authenticatePost(mockMvc, url);
     }
 
 }

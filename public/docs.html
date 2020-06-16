@@ -448,11 +448,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_register"><strong>Register</strong></a></li>
 <li><a href="#_login"><strong>Login</strong></a></li>
 <li><a href="#_get_info"><strong>Get Info</strong></a></li>
+<li><a href="#_logout"><strong>Logout</strong></a></li>
+<li><a href="#_get_total"><strong>Get Total</strong></a></li>
+<li><a href="#_get_table"><strong>Get Table</strong></a></li>
 <li><a href="#_get_detail"><strong>Get Detail</strong></a></li>
 <li><a href="#_upload"><strong>Upload</strong></a></li>
 <li><a href="#_update"><strong>Update</strong></a></li>
 <li><a href="#_passwd"><strong>Passwd</strong></a></li>
-<li><a href="#_logout"><strong>Logout</strong></a></li>
 </ul>
 </li>
 <li><a href="#_category_api"><strong>Category API</strong></a>
@@ -462,20 +464,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_book_api"><strong>Book API</strong></a>
 <ul class="sectlevel3">
-<li><a href="#_get_total"><strong>Get Total</strong></a></li>
+<li><a href="#_get_total_2"><strong>Get Total</strong></a></li>
 <li><a href="#_get_list"><strong>Get List</strong></a></li>
-<li><a href="#_get_table"><strong>Get Table</strong></a></li>
+<li><a href="#_get_table_2"><strong>Get Table</strong></a></li>
 <li><a href="#_get_detail_2"><strong>Get Detail</strong></a></li>
+<li><a href="#_insert"><strong>Insert</strong></a></li>
+<li><a href="#_update_2"><strong>Update</strong></a></li>
+<li><a href="#_delete"><strong>Delete</strong></a></li>
 </ul>
 </li>
 <li><a href="#_record_api"><strong>Record API</strong></a>
 <ul class="sectlevel3">
-<li><a href="#_get_total_2"><strong>Get Total</strong></a></li>
-<li><a href="#_get_table_2"><strong>Get Table</strong></a></li>
+<li><a href="#_get_total_3"><strong>Get Total</strong></a></li>
+<li><a href="#_get_table_3"><strong>Get Table</strong></a></li>
 <li><a href="#_borrow"><strong>Borrow</strong></a></li>
 <li><a href="#_return"><strong>Return</strong></a></li>
 <li><a href="#_renew"><strong>Renew</strong></a></li>
-<li><a href="#_delete"><strong>Delete</strong></a></li>
+<li><a href="#_delete_2"><strong>Delete</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -525,8 +530,8 @@ Content-Length: 51
 Host: localhost:8080
 
 {
-  "username" : "test",
-  "password" : 123456
+  "password" : 123456,
+  "username" : "test"
 }</code></pre>
 </div>
 </div>
@@ -577,8 +582,8 @@ Content-Length: 51
 Host: localhost:8080
 
 {
-  "username" : "user",
-  "password" : 123456
+  "password" : 123456,
+  "username" : "user"
 }</code></pre>
 </div>
 </div>
@@ -602,7 +607,7 @@ Content-Length: 243
 
 {
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDE1MjcifQ.umTV_XSEaT9q55SSG7NVHS-8zT6hZYF6w0M-M-C6Xbw"
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzI5NjUifQ.qh8n3O2Mcl8eegMmpt_bFPh4uuUc98OzUlrFt8NFqeM"
   },
   "message" : "Login Success",
   "status" : 200
@@ -627,7 +632,7 @@ Content-Length: 243
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/info HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDEzMzAifQ.0_S0Eor_bHbooF8DeLKAK72EI8097cVBGLW3Tm4fbpk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzI3NTQifQ.cTcqXaNkk9Ckk0xkZNY6a39RA0IrqqUnkJYRHVp-4Gc
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -651,6 +656,7 @@ Content-Length: 1091
 
 {
   "data" : {
+    "avatar" : "/img/9485c6dac1ca43e48e26de84e05574c0.png",
     "routes" : [ {
       "id" : 1,
       "name" : "Client",
@@ -688,8 +694,200 @@ Content-Length: 1091
         "children" : [ ]
       } ]
     } ],
-    "avatar" : "/img/4ce4fb7ffec046f8aa91bb8cf901109f.png",
     "name" : "user"
+  },
+  "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_logout"><a class="link" href="#_logout"><strong>Logout</strong></a></h4>
+<div class="paragraph">
+<p>Logout and invalidate token.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">POST /api/user/logout HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_4"><a class="link" href="#_sample_request_4"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/logout HTTP/1.1
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIyNzcifQ.5fCyuy63DGUbFS6e3xknaXkgQC2zfQvrlH25-YhNFEI
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_4"><a class="link" href="#_sample_response_4"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=utf-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Logout Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_total"><a class="link" href="#_get_total"><strong>Get Total</strong></a></h4>
+<div class="paragraph">
+<p>Get total of users.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/user/total HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_5"><a class="link" href="#_sample_request_5"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/total HTTP/1.1
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzMwOTkifQ.ylEp4tiDhKtvc4_9o0ZBZU0iJ1XgeuzpIwOoix0zLbU
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_5"><a class="link" href="#_sample_response_5"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 89
+
+{
+  "data" : {
+    "total" : 7
+  },
+  "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_table"><a class="link" href="#_get_table"><strong>Get Table</strong></a></h4>
+<div class="paragraph">
+<p>Get user table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/user/table HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_6"><a class="link" href="#_sample_request_6"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/table/1/10 HTTP/1.1
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzMwMjYifQ.dw2gbhtLEikXKByyHhivvefpXUB60eFO8VdtyMNr5sk
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_6"><a class="link" href="#_sample_response_6"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1212
+
+{
+  "data" : {
+    "table" : [ {
+      "address" : "test address",
+      "phone" : "13751706464",
+      "roles" : [ "ROLE_USER" ],
+      "id" : 1,
+      "enabled" : 1,
+      "username" : "user"
+    }, {
+      "address" : "",
+      "phone" : "",
+      "roles" : [ "ROLE_ADMIN", "ROLE_USER" ],
+      "id" : 3,
+      "enabled" : 1,
+      "username" : "aki"
+    }, {
+      "address" : "",
+      "phone" : "",
+      "roles" : [ "ROLE_USER" ],
+      "id" : 4,
+      "enabled" : 1,
+      "username" : "test1"
+    }, {
+      "address" : "",
+      "phone" : "",
+      "roles" : [ "ROLE_USER" ],
+      "id" : 5,
+      "enabled" : 1,
+      "username" : "test2"
+    }, {
+      "address" : "",
+      "phone" : "",
+      "roles" : [ "ROLE_USER" ],
+      "id" : 28,
+      "enabled" : 1,
+      "username" : "test3"
+    }, {
+      "address" : "",
+      "phone" : "",
+      "roles" : [ "ROLE_USER" ],
+      "id" : 31,
+      "enabled" : 1,
+      "username" : "test4"
+    }, {
+      "address" : "",
+      "phone" : "",
+      "roles" : [ "ROLE_USER" ],
+      "id" : 32,
+      "enabled" : 1,
+      "username" : "test5"
+    } ]
   },
   "message" : "Get Success",
   "status" : 200
@@ -709,18 +907,18 @@ Content-Length: 1091
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_4"><a class="link" href="#_sample_request_4"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_7"><a class="link" href="#_sample_request_7"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/detail HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDE1NTAifQ.CscG0DgvkDuUlr5tzrbpPSXq2flKQK1Ys6NFY3QSZ04
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzI5OTAifQ.DBYGo0uUYLmAAqeUHo2Nly5Pa110W7obqdBPvvA9mvI
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_4"><a class="link" href="#_sample_response_4"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_7"><a class="link" href="#_sample_response_7"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -762,13 +960,13 @@ Content-Length: 191
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_5"><a class="link" href="#_sample_request_5"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_8"><a class="link" href="#_sample_request_8"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/upload HTTP/1.1
 Content-Type: multipart/form-data; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDExNTIifQ.V0hM7tSGeFTIFCciBJUFMrHghDlw9ONgj2LIREN1dyc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzI1NzAifQ.JLk33CUipBRtDpEuif5aAmtVtdUlqJBBKcHBnuvRov4
 Host: localhost:8080
 
 &lt; avatar.png &gt;</code></pre>
@@ -776,7 +974,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_5"><a class="link" href="#_sample_response_5"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_8"><a class="link" href="#_sample_response_8"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -794,7 +992,7 @@ Content-Length: 135
 
 {
   "data" : {
-    "avatar" : "/img/4ce4fb7ffec046f8aa91bb8cf901109f.png"
+    "avatar" : "/img/9485c6dac1ca43e48e26de84e05574c0.png"
   },
   "message" : "Upload Success",
   "status" : 200
@@ -814,26 +1012,26 @@ Content-Length: 135
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_6"><a class="link" href="#_sample_request_6"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_9"><a class="link" href="#_sample_request_9"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/update HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDExMTQifQ.cK5dIrUPzS0E7rbZoiumjNhzz30PrjMm5rp5NREylXw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzI1MzEifQ.xQfDaeSRKotyWebFMYyC863O2ESz_kkWov8easGFDGA
 Content-Length: 79
 Host: localhost:8080
 
 {
-  "phone" : "18820188310",
+  "username" : "user",
   "address" : "china",
-  "username" : "user"
+  "phone" : "18820188310"
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_6"><a class="link" href="#_sample_response_6"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_9"><a class="link" href="#_sample_response_9"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -868,25 +1066,25 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_7"><a class="link" href="#_sample_request_7"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_10"><a class="link" href="#_sample_request_10"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/passwd HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA5MzkifQ.olNOiF45O3c1vtf7FMMb10BoPaoUc4ASacRoc5Rj6RM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIzMDUifQ.fTMhiLcQo8fezHbM1whkzXuqJ2MalP3mZkI-dJJe_KM
 Content-Length: 64
 Host: localhost:8080
 
 {
-  "oldPassword" : "123456",
-  "newPassword" : "123456789"
+  "newPassword" : "123456789",
+  "oldPassword" : "123456"
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_7"><a class="link" href="#_sample_response_7"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_10"><a class="link" href="#_sample_response_10"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -904,52 +1102,6 @@ Content-Length: 55
 
 {
   "message" : "Change Success",
-  "status" : 200
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_logout"><a class="link" href="#_logout"><strong>Logout</strong></a></h4>
-<div class="paragraph">
-<p>Logout and invalidate token.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">POST /api/user/logout HTTP/1.1</code></pre>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_sample_request_8"><a class="link" href="#_sample_request_8"><strong><em>Sample Request</em></strong></a></h6>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/user/logout HTTP/1.1
-Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA5MTIifQ.zo5p1Rjfqu58-BaZdWCML9cNcC7lMsob8Ow8iEmqux0
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_sample_response_8"><a class="link" href="#_sample_response_8"><strong><em>Sample Response</em></strong></a></h6>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json;charset=utf-8
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 55
-
-{
-  "message" : "Logout Success",
   "status" : 200
 }</code></pre>
 </div>
@@ -975,18 +1127,18 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_9"><a class="link" href="#_sample_request_9"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_11"><a class="link" href="#_sample_request_11"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/category/side HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA1ODQifQ.LNToKcHsjkpW_gI5jUeAmsNJH_CIDm9qip7tEtCdQDA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE5NjcifQ.UjVmpieDGo4oEeRUwF9HSVJIKA8i6SZhMAtwf-FyRkM
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_9"><a class="link" href="#_sample_response_9"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_11"><a class="link" href="#_sample_response_11"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1040,7 +1192,7 @@ Content-Length: 468
 <p>Collection of book API.</p>
 </div>
 <div class="sect3">
-<h4 id="_get_total"><a class="link" href="#_get_total"><strong>Get Total</strong></a></h4>
+<h4 id="_get_total_2"><a class="link" href="#_get_total_2"><strong>Get Total</strong></a></h4>
 <div class="paragraph">
 <p>Get total of books by category.</p>
 </div>
@@ -1050,18 +1202,18 @@ Content-Length: 468
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_10"><a class="link" href="#_sample_request_10"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_12"><a class="link" href="#_sample_request_12"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/total/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA1NDYifQ.o2M3PLigCnLfz7KWqAAvPln25-P1GkzLoFnWBUBWSmc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE5MTMifQ.SjoKBveWtbDfiZswfJc-1qjjAjKiSHZNtX2V2gcw8aY
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_10"><a class="link" href="#_sample_response_10"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_12"><a class="link" href="#_sample_response_12"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1099,18 +1251,18 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_11"><a class="link" href="#_sample_request_11"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_13"><a class="link" href="#_sample_request_13"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/list/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxMzg4NTAifQ._3UHqcjveoUeTuavspJaH2Yfi_hOcPiOJcMVgswcMRk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE3MTEifQ.aKFtGImUl_f3kJ-8svAQUXkKvMkkFshqmPHJ03WrJKw
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_11"><a class="link" href="#_sample_response_11"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_13"><a class="link" href="#_sample_response_13"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1188,7 +1340,7 @@ Content-Length: 2112
 </div>
 </div>
 <div class="sect3">
-<h4 id="_get_table"><a class="link" href="#_get_table"><strong>Get Table</strong></a></h4>
+<h4 id="_get_table_2"><a class="link" href="#_get_table_2"><strong>Get Table</strong></a></h4>
 <div class="paragraph">
 <p>Get book table by category.</p>
 </div>
@@ -1198,18 +1350,18 @@ Content-Length: 2112
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_12"><a class="link" href="#_sample_request_12"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_14"><a class="link" href="#_sample_request_14"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/table/1/10/5 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA1MTQifQ.QR8l1a5qMqPnxNhPuQ4pEbjqlp6DEyrMBnWZsZri1Tk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE4NTkifQ.ivTIpOGa1tb-XYjV9TyUjP4GPgJAsDSOeIisV3MqWKE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_12"><a class="link" href="#_sample_response_12"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_14"><a class="link" href="#_sample_response_14"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1317,13 +1469,13 @@ Content-Length: 2227
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_13"><a class="link" href="#_sample_request_13"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_15"><a class="link" href="#_sample_request_15"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/book/detail HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA0NjAifQ.PVlPzwwPnHNgW5ygqujsg-cTBW4xMdpnAoPgzii79R0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE4MDEifQ.bjBEGBXEP9CFKWyTgJExrNHxR3nWu8IkF1pgfD09ii0
 Content-Length: 30
 Host: localhost:8080
 
@@ -1334,7 +1486,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_13"><a class="link" href="#_sample_response_13"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_15"><a class="link" href="#_sample_response_15"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1348,27 +1500,195 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 936
+Content-Length: 860
 
 {
   "data" : {
     "detail" : {
+      "date" : "2000-3-1",
+      "summary" : "《骆驼祥子》是老舍用同情的笔触描绘的一幕悲剧：二十年代的北京，一个勤劳、壮实的底层社会小人物怀着发家、奋斗的美好梦想，却最终为黑暗的暴风雨所吞噬。它揭示了当时“小人物”的奴隶心理和希望的最终破灭。随着祥子心爱的女人小福子的自杀，祥子熄灭了个人奋斗的最后一朵火花。这是旧中国老北京贫苦市民的典型命运。",
       "isbn" : 9787020028115,
-      "cover" : "https://img3.doubanio.com/view/subject/s/public/s1146040.jpg",
-      "title" : "骆驼祥子",
       "author" : "老舍",
       "press" : "人民文学出版社",
-      "date" : "2000-3-1",
+      "cover" : "https://img3.doubanio.com/view/subject/s/public/s1146040.jpg",
       "page" : 224,
-      "summary" : "《骆驼祥子》是老舍用同情的笔触描绘的一幕悲剧：二十年代的北京，一个勤劳、壮实的底层社会小人物怀着发家、奋斗的美好梦想，却最终为黑暗的暴风雨所吞噬。它揭示了当时“小人物”的奴隶心理和希望的最终破灭。随着祥子心爱的女人小福子的自杀，祥子熄灭了个人奋斗的最后一朵火花。这是旧中国老北京贫苦市民的典型命运。",
-      "category" : {
-        "id" : 1,
-        "name" : "文学",
-        "icon" : "wenxue"
-      }
+      "title" : "骆驼祥子",
+      "category" : "文学"
     }
   },
   "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_insert"><a class="link" href="#_insert"><strong>Insert</strong></a></h4>
+<div class="paragraph">
+<p>Insert book info.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">POST /api/book/insert HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_16"><a class="link" href="#_sample_request_16"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/book/insert HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE2MDAifQ.cbVSETfD9tn2dlf6xhWXwniFD6CKL3X_DdBw4n8YbWQ
+Content-Length: 655
+Host: localhost:8080
+
+{
+  "author" : "鲁迅",
+  "title" : "朝花夕拾",
+  "cid" : 1,
+  "page" : 116,
+  "press" : "人民文学出版社",
+  "summary" : "中西的思想确乎有一点不同。听说中国的孝子们，一到将要“罪孽深重祸延父母”的时候，就买几斤人参，煎汤灌下去，希望父母多喘几天气，即使半天也好。我的一位教医学的先生却教给我医生的职务道：可医的应该给他医治，不可医的应该给他死得没有痛苦。——但这先生自然是西医。",
+  "cover" : "https://img1.doubanio.com/view/subject/s/public/s3333559.jpg",
+  "date" : "2006-12",
+  "isbn" : 9787020055272
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_16"><a class="link" href="#_sample_response_16"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Insert Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_update_2"><a class="link" href="#_update_2"><strong>Update</strong></a></h4>
+<div class="paragraph">
+<p>Update book info.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">POST /api/book/update HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_17"><a class="link" href="#_sample_request_17"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/book/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzE2NjcifQ.yCAi4HQX_9KoPITmKkidCWcn98oakIMw3mb5gFp6Y9A
+Content-Length: 719
+Host: localhost:8080
+
+{
+  "author" : "老舍",
+  "title" : "骆驼祥子",
+  "cid" : 1,
+  "page" : 225,
+  "press" : "人民文学出版社",
+  "summary" : "《骆驼祥子》是老舍用同情的笔触描绘的一幕悲剧：二十年代的北京，一个勤劳、壮实的底层社会小人物怀着发家、奋斗的美好梦想，却最终为黑暗的暴风雨所吞噬。它揭示了当时“小人物”的奴隶心理和希望的最终破灭。随着祥子心爱的女人小福子的自杀，祥子熄灭了个人奋斗的最后一朵火花。这是旧中国老北京贫苦市民的典型命运。",
+  "cover" : "https://img3.doubanio.com/view/subject/s/public/s1146040.jpg",
+  "date" : "2000-3-1",
+  "isbn" : 9787020028115
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_17"><a class="link" href="#_sample_response_17"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Update Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_delete"><a class="link" href="#_delete"><strong>Delete</strong></a></h4>
+<div class="paragraph">
+<p>Delete book by isbn.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">POST /api/book/delete HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_18"><a class="link" href="#_sample_request_18"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/book/delete HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzAwNDMifQ.OAIvAJ06m8nDojZlAcKe7MpE11fEYwGkLvb-D-ZlK18
+Content-Length: 30
+Host: localhost:8080
+
+{
+  "isbn" : 9787020028115
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_18"><a class="link" href="#_sample_response_18"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 55
+
+{
+  "message" : "Delete Success",
   "status" : 200
 }</code></pre>
 </div>
@@ -1384,7 +1704,7 @@ Content-Length: 936
 <p>Collection of record API.</p>
 </div>
 <div class="sect3">
-<h4 id="_get_total_2"><a class="link" href="#_get_total_2"><strong>Get Total</strong></a></h4>
+<h4 id="_get_total_3"><a class="link" href="#_get_total_3"><strong>Get Total</strong></a></h4>
 <div class="paragraph">
 <p>Get total of records by user.</p>
 </div>
@@ -1394,18 +1714,18 @@ Content-Length: 936
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_14"><a class="link" href="#_sample_request_14"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_19"><a class="link" href="#_sample_request_19"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/total HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA4NzMifQ.PUcV0XcS7tGmQPpIg_tVQ6hyONgqqQds6arpvsgDYMM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIyMzUifQ.qYzktNf_qAGjUkgsw7J6GClPuii1PZW9lkzw0lMYs_0
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_14"><a class="link" href="#_sample_response_14"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_19"><a class="link" href="#_sample_response_19"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1433,7 +1753,7 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect3">
-<h4 id="_get_table_2"><a class="link" href="#_get_table_2"><strong>Get Table</strong></a></h4>
+<h4 id="_get_table_3"><a class="link" href="#_get_table_3"><strong>Get Table</strong></a></h4>
 <div class="paragraph">
 <p>Get record table.</p>
 </div>
@@ -1443,18 +1763,18 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_15"><a class="link" href="#_sample_request_15"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_20"><a class="link" href="#_sample_request_20"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/table/1/10 HTTP/1.1
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA4MTgifQ.PFyhq3lLDFG1Ms-dlvhBYR0xr8XnE50PlF6n_L4FVzY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIxOTkifQ.8oF1adbNcv0ajEm3gFje_-kWMMFzfUtbPrnvHTzU7C4
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_15"><a class="link" href="#_sample_response_15"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_20"><a class="link" href="#_sample_response_20"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1468,70 +1788,80 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2073
+Content-Length: 2312
 
 {
   "data" : {
     "table" : [ {
-      "isbn" : 9787020028115,
       "return" : "2020-07-09T00:00:00.000+0000",
+      "state" : true,
+      "isbn" : 9787020028115,
       "name" : "骆驼祥子",
       "id" : 1,
       "borrow" : "2020-06-09T00:00:00.000+0000"
     }, {
+      "isbn" : 9787100130448,
       "return" : "2020-08-09T02:55:02.000+0000",
       "name" : "艺术批评史",
-      "isbn" : 9787100130448,
       "borrow" : "2020-06-09T02:27:48.000+0000",
+      "state" : false,
       "id" : 20
     }, {
+      "isbn" : 9787100130448,
       "return" : "2020-07-16T09:19:18.000+0000",
       "name" : "艺术批评史",
       "borrow" : "2020-06-09T09:19:18.000+0000",
       "id" : 23,
-      "isbn" : 9787100130448
+      "state" : false
     }, {
       "id" : 24,
       "borrow" : "2020-06-09T09:19:19.000+0000",
       "isbn" : 9787101052039,
       "return" : "2020-07-09T09:19:19.000+0000",
-      "name" : "万历十五年"
+      "name" : "万历十五年",
+      "state" : false
     }, {
       "id" : 25,
       "return" : "2020-07-09T09:19:20.000+0000",
       "name" : "唐人行第录",
       "isbn" : 9787101041828,
-      "borrow" : "2020-06-09T09:19:20.000+0000"
+      "borrow" : "2020-06-09T09:19:20.000+0000",
+      "state" : false
     }, {
       "id" : 27,
       "return" : "2020-07-09T09:19:24.000+0000",
-      "isbn" : 9787101014914,
       "borrow" : "2020-06-09T09:19:24.000+0000",
-      "name" : "万历十五年"
+      "name" : "万历十五年",
+      "isbn" : 9787101014914,
+      "state" : false
     }, {
       "borrow" : "2020-06-09T09:19:25.000+0000",
       "id" : 28,
       "return" : "2020-07-09T09:19:25.000+0000",
       "name" : "古代交通与地理文献研究",
+      "state" : false,
       "isbn" : 9787100157582
     }, {
       "isbn" : 9787101052039,
       "id" : 33,
       "name" : "万历十五年",
       "return" : "2020-07-09T10:16:22.000+0000",
+      "state" : false,
       "borrow" : "2020-06-09T10:16:22.000+0000"
     }, {
       "return" : "2020-07-09T10:16:23.000+0000",
       "borrow" : "2020-06-09T10:16:23.000+0000",
       "id" : 34,
+      "name" : "突厥集史（全二册）",
       "isbn" : 9787101001846,
-      "name" : "突厥集史（全二册）"
+      "state" : false
     }, {
       "return" : "2020-07-09T10:16:25.000+0000",
       "borrow" : "2020-06-09T10:16:25.000+0000",
       "id" : 35,
       "isbn" : 9787100021654,
-      "name" : "中国近三百年学术史（全两册）"
+      "name" : "中国近三百年学术史（全两册）",
+      "state" : false
     } ]
   },
   "message" : "Get Success",
@@ -1552,13 +1882,13 @@ Content-Length: 2073
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_16"><a class="link" href="#_sample_request_16"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_21"><a class="link" href="#_sample_request_21"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/borrow HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA3NTgifQ.jDzEEGhGF-hMHrjCNXKx-MztGZhjqVoZcuYRLuuMDYc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIxNDYifQ.IxIGNPlbaG9sOOBKTOwfPbWmnWEc2rMKloo3cSS5nDI
 Content-Length: 30
 Host: localhost:8080
 
@@ -1569,7 +1899,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_16"><a class="link" href="#_sample_response_16"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_21"><a class="link" href="#_sample_response_21"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1604,13 +1934,13 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_17"><a class="link" href="#_sample_request_17"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_22"><a class="link" href="#_sample_request_22"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/return HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA2ODMifQ.EYwlQ6qs_of9Gr6ZTY820iLWFVMjcqk3L4NDnRMx7RM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIwNjgifQ.V0Du83_FwqM54m_-rGX_W928lOKCLat8xJvGT43f8C0
 Content-Length: 16
 Host: localhost:8080
 
@@ -1621,7 +1951,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_17"><a class="link" href="#_sample_response_17"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_22"><a class="link" href="#_sample_response_22"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1656,25 +1986,25 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_18"><a class="link" href="#_sample_request_18"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_23"><a class="link" href="#_sample_request_23"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/renew HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA3MjMifQ.rbtym2FRZSxNtEEaVlp1htWY5srVmlNaAUSPeeH--ls
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIxMDkifQ.d6DPlDlfQ9ioCiWt38v_nEM5aK7s45-xMdjj7nRAW00
 Content-Length: 48
 Host: localhost:8080
 
 {
-  "timestamp" : 1596931200000,
-  "id" : 1
+  "id" : 1,
+  "timestamp" : 1596931200000
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_18"><a class="link" href="#_sample_response_18"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_23"><a class="link" href="#_sample_response_23"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1699,7 +2029,7 @@ Content-Length: 54
 </div>
 </div>
 <div class="sect3">
-<h4 id="_delete"><a class="link" href="#_delete"><strong>Delete</strong></a></h4>
+<h4 id="_delete_2"><a class="link" href="#_delete_2"><strong>Delete</strong></a></h4>
 <div class="paragraph">
 <p>Delete record by id.</p>
 </div>
@@ -1709,13 +2039,13 @@ Content-Length: 54
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_19"><a class="link" href="#_sample_request_19"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_24"><a class="link" href="#_sample_request_24"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/delete HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIyNzUxNDA2MjcifQ.FbBiplwHK8nctsiOij4JcRXm6q3hWhp3DmRlxpAc9yM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTIzMzA4NzIwMTgifQ.IMKm0_eEjcxZWUTtq7I9Yvw3bfW5F8PdeFeDDGYsyVk
 Content-Length: 16
 Host: localhost:8080
 
@@ -1726,7 +2056,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_19"><a class="link" href="#_sample_response_19"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_24"><a class="link" href="#_sample_response_24"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1756,7 +2086,7 @@ Content-Length: 55
 <div id="footer">
 <div id="footer-text">
 Version v1.0<br>
-Last updated 2020-06-16 09:38:18 +0800
+Last updated 2020-06-17 01:01:36 +0800
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">

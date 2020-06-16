@@ -7,6 +7,8 @@ import com.akijoey.library.repository.UserRepository;
 
 import com.akijoey.library.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +48,16 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public User getUserById(int id) {
+        return userRepository.findById(id);
+    }
+
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public boolean existsUserByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     public Map<String, Object> getInfoByUsername(String username) {
@@ -59,12 +70,27 @@ public class UserService implements UserDetailsService {
         return Map.of("name", username, "avatar", avatar, "routes", menus);
     }
 
+    public long getTotal() {
+        return userRepository.count();
+    }
+
+    public List<Map<String, Object>> getTable(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<Map<String, Object>> table = userRepository.findTable(pageable);
+        return new ArrayList<>(){{
+            table.forEach(row -> add(new HashMap<>(){{
+                putAll(row);
+                put("roles", row.get("roles").toString().split(","));
+            }}));
+        }};
+    }
+
     public Map<String, Object> getDetailByUsername(String username) {
         return userRepository.findDetailByUsername(username);
     }
 
     public boolean insertUser(String username, String password) {
-        if (!userRepository.existsByUsername(username)) {
+        if (!existsUserByUsername(username)) {
             User user = new User();
             user.setUsername(username);
             String encrypt = passwordEncoder.encode(password);
@@ -77,15 +103,16 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-    public boolean updateUser(String username, String newUsername, String phone, String address) {
-        boolean equal = username.equals(newUsername);
-        if (equal || !userRepository.existsByUsername(newUsername)) {
+    public boolean updateUser(String username, Map<String, String> data) {
+        String newUsername = data.get("username");
+        boolean equals = username.equals(newUsername);
+        if (equals || !existsUserByUsername(newUsername)) {
             User user = getUserByUsername(username);
-            if (!equal) {
+            if (!equals) {
                 user.setUsername(newUsername);
             }
-            user.setPhone(phone);
-            user.setAddress(address);
+            user.setPhone(data.get("phone"));
+            user.setAddress(data.get("address"));
             userRepository.save(user);
             return true;
         }
@@ -114,4 +141,18 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+
+    public void initializePassword(String username, String password) {
+        User user = getUserByUsername(username);
+        String encrypt = passwordEncoder.encode(password);
+        user.setPassword(encrypt);
+        userRepository.save(user);
+    }
+
+    public void enableUserById(int id) {
+        User user = getUserById(id);
+        user.setEnabled(!user.getEnabled());
+        userRepository.save(user);
+    }
+
 }
