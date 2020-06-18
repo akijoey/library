@@ -15,13 +15,16 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    public Category getCategoryById(int id) {
+        return categoryRepository.findById(id).orElse(null);
+    }
+
     public List<Map<String, Object>> getSide() {
         return categoryRepository.findSide();
     }
 
-    public Category getCategoryById(int id) {
-        Category category = categoryRepository.findById(id).orElse(null);
-        return category;
+    public List<Map<String, Object>> getList() {
+        return categoryRepository.findList();
     }
 
 }

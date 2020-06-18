@@ -60,6 +60,10 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByUsername(username);
     }
 
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
     public Map<String, Object> getInfoByUsername(String username) {
         User user = getUserByUsername(username);
         String avatar = user.getAvatar();
@@ -68,6 +72,63 @@ public class UserService implements UserDetailsService {
         roles.forEach(role -> menus.addAll(role.getMenus()));
         menuService.formatMenus(menus);
         return Map.of("name", username, "avatar", avatar, "routes", menus);
+    }
+
+    public Map<String, Object> getMajorByUsername(String username) {
+        return userRepository.findMajorByUsername(username);
+    }
+
+    public boolean registerUser(String username, String password) {
+        if (!existsUserByUsername(username)) {
+            User user = new User();
+            user.setUsername(username);
+            String encrypt = passwordEncoder.encode(password);
+            user.setPassword(encrypt);
+            List<Role> roles = roleService.getUserRoles();
+            user.setRoles(roles);
+            saveUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean reportUser(String username, Map<String, Object> data) {
+        String newUsername = (String)data.get("username");
+        boolean equals = username.equals(newUsername);
+        if (equals || !existsUserByUsername(newUsername)) {
+            User user = getUserByUsername(username);
+            if (!equals) {
+                user.setUsername(newUsername);
+            }
+            user.setPhone((String)data.get("phone"));
+            user.setAddress((String)data.get("address"));
+            saveUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    public String replaceAvatar(String username, MultipartFile image) {
+        String avatar = fileUtil.uploadImage(image);
+        if (avatar != null) {
+            User user = getUserByUsername(username);
+            fileUtil.deleteImage(user.getAvatar());
+            user.setAvatar(avatar);
+            saveUser(user);
+        }
+        return avatar;
+    }
+
+    public boolean changePassword(String username, String oldPassword, String newPassword) {
+        User user = getUserByUsername(username);
+        String password = user.getPassword();
+        if (passwordEncoder.matches(oldPassword, password)) {
+            String encrypt = passwordEncoder.encode(newPassword);
+            user.setPassword(encrypt);
+            saveUser(user);
+            return true;
+        }
+        return false;
     }
 
     public long getTotal() {
@@ -85,74 +146,53 @@ public class UserService implements UserDetailsService {
         }};
     }
 
-    public Map<String, Object> getDetailByUsername(String username) {
-        return userRepository.findDetailByUsername(username);
+    public Map<String, Object> getDetailById(int id) {
+        return userRepository.findDetailById(id);
     }
 
-    public boolean insertUser(String username, String password) {
-        if (!existsUserByUsername(username)) {
-            User user = new User();
-            user.setUsername(username);
-            String encrypt = passwordEncoder.encode(password);
-            user.setPassword(encrypt);
-            List<Role> roles = roleService.getUserRoles();
-            user.setRoles(roles);
-            userRepository.save(user);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateUser(String username, Map<String, String> data) {
-        String newUsername = data.get("username");
-        boolean equals = username.equals(newUsername);
-        if (equals || !existsUserByUsername(newUsername)) {
+    public boolean insertUser(Map<String, Object> data) {
+        String username = (String)data.get("username");
+        String password = (String)data.get("password");
+        if (registerUser(username, password)) {
+            reportUser(username, data);
             User user = getUserByUsername(username);
-            if (!equals) {
-                user.setUsername(newUsername);
-            }
-            user.setPhone(data.get("phone"));
-            user.setAddress(data.get("address"));
-            userRepository.save(user);
+            user.setAvatar((String)data.get("avatar"));
+            saveUser(user);
             return true;
         }
         return false;
-    }
-
-    public String uploadAvatar(String username, MultipartFile image) {
-        String avatar = fileUtil.uploadImage(image);
-        if (avatar != null) {
-            User user = getUserByUsername(username);
-            fileUtil.deleteImage(user.getAvatar());
-            user.setAvatar(avatar);
-            userRepository.save(user);
-        }
-        return avatar;
-    }
-
-    public boolean changePassword(String username, String oldPassword, String newPassword) {
-        User user = getUserByUsername(username);
-        String password = user.getPassword();
-        if (passwordEncoder.matches(oldPassword, password)) {
-            String encrypt = passwordEncoder.encode(newPassword);
-            user.setPassword(encrypt);
-            userRepository.save(user);
-            return true;
-        }
-        return false;
-    }
-
-    public void initializePassword(String username, String password) {
-        User user = getUserByUsername(username);
-        String encrypt = passwordEncoder.encode(password);
-        user.setPassword(encrypt);
-        userRepository.save(user);
     }
 
     public void enableUserById(int id) {
         User user = getUserById(id);
         user.setEnabled(!user.getEnabled());
-        userRepository.save(user);
+        saveUser(user);
+    }
+
+    public void initializePassword(int id, String password) {
+        User user = getUserById(id);
+        String encrypt = passwordEncoder.encode(password);
+        user.setPassword(encrypt);
+        saveUser(user);
+    }
+
+    public String uploadAvatar(MultipartFile image) {
+        return fileUtil.uploadImage(image);
+    }
+
+    public boolean updateUser(Map<String, Object> data) {
+        User user = getUserById((Integer)data.get("id"));
+        String username = user.getUsername();
+        if (reportUser(username, data)) {
+            user.setAvatar((String)data.get("avatar"));
+            saveUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    public void deleteUserById(int id) {
+        userRepository.deleteById(id);
     }
 
 }

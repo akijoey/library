@@ -4,6 +4,8 @@ import com.akijoey.library.service.UserService;
 import com.akijoey.library.util.ResultUtil;
 import com.akijoey.library.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +27,7 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> data) {
-        if (!userService.insertUser(data.get("username"), data.get("password"))) {
+        if (!userService.registerUser(data.get("username"), data.get("password"))) {
             return resultUtil.customResult(401, "Username Existed");
         }
         return resultUtil.successResult("Register Success");
@@ -38,42 +40,30 @@ public class UserController {
         return resultUtil.successResult("Get Success", info);
     }
 
-    @GetMapping("/total")
-    public Map<String, Object> getTotal() {
-        long total = userService.getTotal();
-        return resultUtil.successResult("Get Success", Map.of("total", total));
-    }
-
-    @GetMapping("/table/{page}/{size}")
-    public Map<String, Object> getTable(@PathVariable("page") int page, @PathVariable("size") int size) {
-        List<Map<String, Object>> table = userService.getTable(page, size);
-        return resultUtil.successResult("Get Success", Map.of("table", table));
-    }
-
-    @GetMapping("/detail")
-    public Map<String, Object> getDetail(@RequestHeader("Authorization") String authorization) {
+    @GetMapping("/major")
+    public Map<String, Object> getMajor(@RequestHeader("Authorization") String authorization) {
         String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
-        Map<String, Object> detail = userService.getDetailByUsername(username);
-        return resultUtil.successResult("Get Success", Map.of("detail", detail));
+        Map<String, Object> major = userService.getMajorByUsername(username);
+        return resultUtil.successResult("Get Success", Map.of("major", major));
     }
 
-    @PostMapping("/upload")
-    public Map<String, Object> upload(@RequestHeader("Authorization") String authorization, @RequestParam("avatar") MultipartFile image) {
+    @PostMapping("/report")
+    public Map<String, Object> report(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, Object> data) {
         String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
-        String avatar = userService.uploadAvatar(username, image);
+        if (!userService.reportUser(username, data)) {
+            return resultUtil.customResult(401, "Username Existed");
+        }
+        return resultUtil.successResult("Update Success");
+    }
+
+    @PostMapping("/replace")
+    public Map<String, Object> replace(@RequestHeader("Authorization") String authorization, @RequestParam("avatar") MultipartFile image) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
+        String avatar = userService.replaceAvatar(username, image);
         if (avatar == null) {
             return resultUtil.customResult(500, "Upload Failure");
         }
         return resultUtil.successResult("Upload Success", Map.of("avatar", avatar));
-    }
-
-    @PostMapping("/update")
-    public Map<String, Object> update(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, String> data) {
-        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
-        if (!userService.updateUser(username, data)) {
-            return resultUtil.customResult(401, "Username Existed");
-        }
-        return resultUtil.successResult("Update Success");
     }
 
     @PostMapping("/passwd")
@@ -85,16 +75,74 @@ public class UserController {
         return resultUtil.successResult("Change Success");
     }
 
-    @PostMapping("/initialize")
-    public Map<String, Object> initialize(@RequestBody Map<String, String> data) {
-        userService.initializePassword(data.get("username"), data.get("password"));
-        return resultUtil.successResult("Initialize Success");
+    @GetMapping("/total")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> getTotal() {
+        long total = userService.getTotal();
+        return resultUtil.successResult("Get Success", Map.of("total", total));
+    }
+
+    @GetMapping("/table/{page}/{size}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> getTable(@PathVariable("page") int page, @PathVariable("size") int size) {
+        List<Map<String, Object>> table = userService.getTable(page, size);
+        return resultUtil.successResult("Get Success", Map.of("table", table));
+    }
+
+    @PostMapping("/detail")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> getDetail(@RequestBody Map<String, Integer> data) {
+        Map<String, Object> detail = userService.getDetailById(data.get("id"));
+        return resultUtil.successResult("Get Success", Map.of("detail", detail));
+    }
+
+    @PostMapping("/insert")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> insert(@RequestBody Map<String, Object> data) {
+        if (!userService.insertUser(data)) {
+            return resultUtil.customResult(401, "Username Existed");
+        }
+        return resultUtil.successResult("Insert Success");
     }
 
     @PostMapping("/enable")
+    @PreAuthorize("hasRole('ADMIN')")
     public Map<String, Object> enable(@RequestBody Map<String, Integer> data) {
         userService.enableUserById(data.get("id"));
         return resultUtil.successResult("Enable Success");
+    }
+
+    @PostMapping("/initialize")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> initialize(@RequestBody Map<String, Object> data) {
+        userService.initializePassword((Integer)data.get("id"), (String)data.get("password"));
+        return resultUtil.successResult("Initialize Success");
+    }
+
+    @PostMapping("/upload")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> upload(@RequestParam("avatar") MultipartFile image) {
+        String avatar = userService.uploadAvatar(image);
+        if (avatar == null) {
+            return resultUtil.customResult(500, "Upload Failure");
+        }
+        return resultUtil.successResult("Upload Success", Map.of("avatar", avatar));
+    }
+
+    @PostMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> update(@RequestBody Map<String, Object> data) {
+        if (!userService.updateUser(data)) {
+            return resultUtil.customResult(401, "Username Existed");
+        }
+        return resultUtil.successResult("Update Success");
+    }
+
+    @PostMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Object> delete(@RequestBody Map<String, Integer> data) {
+        userService.deleteUserById(data.get("id"));
+        return resultUtil.successResult("Delete Success");
     }
 
 }

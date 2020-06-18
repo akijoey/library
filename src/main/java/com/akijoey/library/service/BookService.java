@@ -34,6 +34,10 @@ public class BookService {
         return bookRepository.existsByIsbn(isbn);
     }
 
+    public void saveBook(Book book) {
+        bookRepository.save(book);
+    }
+
     public long getTotal() {
         return bookRepository.count();
     }
@@ -69,7 +73,7 @@ public class BookService {
         return bookRepository.findDetailByIsbn(isbn);
     }
 
-    public void saveBook(Map<String, Object> data) {
+    public void insertOrUpdateBook(Map<String, Object> data) {
         Book book;
         long isbn = (Long)data.get("isbn");
         if (existsBookByIsbn(isbn)) {
@@ -87,7 +91,13 @@ public class BookService {
         book.setSummary((String)data.get("summary"));
         Category category = categoryService.getCategoryById((Integer)data.get("cid"));
         book.setCategory(category);
-        bookRepository.save(book);
+        saveBook(book);
+    }
+
+    public void changeCount(long isbn, int count) {
+        Book book = getBookByIsbn(isbn);
+        book.setCount(count);
+        saveBook(book);
     }
 
     public String uploadCover(MultipartFile image) {

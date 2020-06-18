@@ -137,6 +137,28 @@ include::{snippets}/user/passwd/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/user/passwd/http-response.adoc[]
 
+==== *Initialize*
+Initialize password.
+[source, http]
+----
+POST /api/user/initialize HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/initialize/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/initialize/http-response.adoc[]
+
+==== *Enable*
+Enable user.
+[source, http]
+----
+POST /api/user/enable HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/enable/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/enable/http-response.adoc[]
+
 == *Category API*
 Collection of category API.
 
@@ -150,6 +172,17 @@ GET /api/category/side HTTP/1.1
 include::{snippets}/category/side/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/category/side/http-response.adoc[]
+
+==== *Get List*
+Get category list.
+[source, http]
+----
+GET /api/category/list HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/category/list/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/category/list/http-response.adoc[]
 
 == *Book API*
 Collection of book API.
@@ -208,6 +241,28 @@ POST /api/book/insert HTTP/1.1
 include::{snippets}/book/insert/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/book/insert/http-response.adoc[]
+
+==== *Count*
+Change book count.
+[source, http]
+----
+POST /api/book/count HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/book/count/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/book/count/http-response.adoc[]
+
+==== *Upload*
+Upload book cover.
+[source, http]
+----
+POST /api/book/upload HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/book/upload/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/book/upload/http-response.adoc[]
 
 ==== *Update*
 Update book info.

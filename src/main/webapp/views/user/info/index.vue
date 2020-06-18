@@ -58,9 +58,9 @@
       }
     },
     created() {
-      getDetail().then(response => {
+      getMajor().then(response => {
         const { data } = response
-        this.form = data.detail
+        this.form = data.major
       })
     },
     methods: {

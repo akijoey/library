@@ -12,6 +12,7 @@
       <div v-html="summary"></div>
     </div>
     <div slot="footer">
+      <span id="count">数量:<span>{{ book.count }}</span></span>
       <el-button v-if="path" type="primary" @click="handleBorrow">借书</el-button>
       <el-button v-else type="primary" @click="handleReturn">还书</el-button>
     </div>
@@ -57,7 +58,8 @@
     data() {
       return {
         book: {
-          summary: ''
+          summary: '',
+          count: 21
         },
         fields: {
           title: '书名',
@@ -138,6 +140,21 @@
           text-indent: 2em;
           margin: 0;
         }
+      }
+    }
+    #count {
+      display: inline-block;
+      color: #41B883;
+      font-size: 17px;
+      font-weight: bold;
+      animation: star .7s;
+      & > span {
+        color: #34495E;
+        margin-left: 10px;
+      }
+      & + button {
+        margin: 5px 10px 10px 20px;
+        animation: star .6s;
       }
     }
   }

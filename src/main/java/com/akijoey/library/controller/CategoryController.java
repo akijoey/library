@@ -26,4 +26,10 @@ public class CategoryController {
         return resultUtil.successResult("Get Success", Map.of("side", side));
     }
 
+    @GetMapping("/list")
+    public Map<String, Object> getList() {
+        List<Map<String, Object>> list = categoryService.getList();
+        return resultUtil.successResult("Get Success", Map.of("list", list));
+    }
+
 }

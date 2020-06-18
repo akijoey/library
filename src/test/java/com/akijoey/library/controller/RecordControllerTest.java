@@ -28,51 +28,51 @@ class RecordControllerTest {
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-        mockMvc = mockUtil.builder(webApplicationContext, restDocumentation);
+        mockMvc = mockUtil.setUp(webApplicationContext, restDocumentation);
     }
 
     @Test
-    void getTotal() {
+    void getTotal() throws Exception {
         String url = PREFIX + "/total";
-        mockUtil.authenticateGet(mockMvc, url);
+        mockUtil.mockGet(mockMvc, "user", url);
     }
 
     @Test
-    void getTable() {
+    void getTable() throws Exception {
         String url = PREFIX + "/table/{page}/{size}";
-        mockUtil.authenticateGet(mockMvc, url, 1, 10);
+        mockUtil.mockGet(mockMvc, "user", url, 1, 10);
     }
 
     @Test
     @Transactional
-    void borrowing() {
+    void borrowing() throws Exception {
         String url = PREFIX + "/borrow";
         Map<String, Object> data = Map.of("isbn", 9787020028115L);
-        mockUtil.authenticatePost(mockMvc, url, data);
+        mockUtil.mockPost(mockMvc, "user", url, data);
     }
 
     @Test
     @Transactional
-    void returning() {
+    void returning() throws Exception {
         String url = PREFIX + "/return";
         Map<String, Object> data = Map.of("id", 1);
-        mockUtil.authenticatePost(mockMvc, url, data);
+        mockUtil.mockPost(mockMvc, "user", url, data);
     }
 
     @Test
     @Transactional
-    void renewing() {
+    void renewing() throws Exception {
         String url = PREFIX + "/renew";
         Map<String, Object> data = Map.of("id", 1, "timestamp", 1596931200000L);
-        mockUtil.authenticatePost(mockMvc, url, data);
+        mockUtil.mockPost(mockMvc, "user", url, data);
     }
 
     @Test
     @Transactional
-    void delete() {
+    void delete() throws Exception {
         String url = PREFIX + "/delete";
         Map<String, Object> data = Map.of("id", 1);
-        mockUtil.authenticatePost(mockMvc, url, data);
+        mockUtil.mockPost(mockMvc, "user", url, data);
     }
 
 }

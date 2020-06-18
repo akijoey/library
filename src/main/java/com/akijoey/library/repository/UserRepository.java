@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findById(int id);
 
+    void deleteById(int id);
+
     User findByUsername(String username);
 
     boolean existsByUsername(String username);
@@ -23,6 +25,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<Map<String, Object>> findTable(Pageable pageable);
 
     @Query(value = "select username as username, phone as phone, address as address from User where username = :username")
-    Map<String, Object> findDetailByUsername(@Param("username") String username);
+    Map<String, Object> findMajorByUsername(@Param("username") String username);
+
+    @Query(value = "select username as username, avatar as avatar, phone as phone, address as address from User where id = :id")
+    Map<String, Object> findDetailById(@Param("id") int id);
 
 }

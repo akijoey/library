@@ -25,13 +25,19 @@ public class CategoryControllerTest {
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-        mockMvc = mockUtil.builder(webApplicationContext, restDocumentation);
+        mockMvc = mockUtil.setUp(webApplicationContext, restDocumentation);
     }
 
     @Test
-    void getSide() {
+    void getSide() throws Exception {
         String url = PREFIX + "/side";
-        mockUtil.authenticateGet(mockMvc, url);
+        mockUtil.mockGet(mockMvc, "user", url);
+    }
+
+    @Test
+    void getList() throws Exception {
+        String url = PREFIX + "/list";
+        mockUtil.mockGet(mockMvc, "user", url);
     }
 
 }

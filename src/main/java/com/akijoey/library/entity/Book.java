@@ -36,6 +36,9 @@ public class Book {
     @Column(name = "summary")
     private String summary;
 
+    @Column(name = "count")
+    private int count = 0;
+
     @ManyToOne
     @JoinColumn(name="cid", referencedColumnName = "id")
     private Category category;
@@ -106,6 +109,14 @@ public class Book {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public Category getCategory() {

@@ -29,6 +29,10 @@ public class RecordService {
         return recordRepository.findById(id);
     }
 
+    public void saveRecord(Record record) {
+        recordRepository.save(record);
+    }
+
     public long getTotalByUsername(String username) {
         User user = userService.getUserByUsername(username);
         return recordRepository.countByUser(user);
@@ -42,28 +46,43 @@ public class RecordService {
     public void insertRecord(String username, long isbn) {
         Record record = new Record();
         User user = userService.getUserByUsername(username);
-        Book book = bookService.getBookByIsbn(isbn);
         record.setUser(user);
+        Book book = bookService.getBookByIsbn(isbn);
+        book.setCount(book.getCount() - 1);
+        bookService.saveBook(book);
         record.setBook(book);
         long timestamp = System.currentTimeMillis();
         record.setBorrowing(new Date(timestamp));
         record.setReturning(new Date(timestamp + 2592000000L));
-        recordRepository.save(record);
+        saveRecord(record);
     }
 
     public void updateState(int id) {
         Record record = getRecordById(id);
+        Book book = record.getBook();
+        if (record.isState()) {
+            book.setCount(book.getCount() - 1);
+        } else {
+            book.setCount(book.getCount() + 1);
+        }
+        bookService.saveBook(book);
         record.setState(!record.isState());
-        recordRepository.save(record);
+        saveRecord(record);
     }
 
     public void updateReturn(int id, long timestamp) {
         Record record = getRecordById(id);
         record.setReturning(new Date(timestamp));
-        recordRepository.save(record);
+        saveRecord(record);
     }
 
     public void deleteRecordById(int id) {
+        Record record = getRecordById(id);
+        if (!record.isState()) {
+            Book book = record.getBook();
+            book.setCount(book.getCount() + 1);
+            bookService.saveBook(book);
+        }
         recordRepository.deleteById(id);
     }
 

@@ -15,9 +15,9 @@ export function getInfo() {
   })
 }
 
-export function getDetail() {
+export function getMajor() {
   return request({
-    url: '/user/detail',
+    url: '/user/major',
     method: 'get'
   })
 }
@@ -30,9 +30,9 @@ export function upload(data) {
   })
 }
 
-export function update(data) {
+export function replace(data) {
   return request({
-    url: '/user/update',
+    url: '/user/replace',
     method: 'post',
     data
   })

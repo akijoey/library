@@ -4,6 +4,7 @@ import com.akijoey.library.service.BookService;
 
 import com.akijoey.library.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,8 +65,14 @@ public class BookController {
 
     @PostMapping("/insert")
     public Map<String, Object> insert(@RequestBody Map<String, Object> data) {
-        bookService.saveBook(data);
+        bookService.insertOrUpdateBook(data);
         return resultUtil.successResult("Insert Success");
+    }
+
+    @PostMapping("/count")
+    public Map<String, Object> count(@RequestBody Map<String, Object> data) {
+        bookService.changeCount((Long)data.get("isbn"), (Integer)data.get("count"));
+        return resultUtil.successResult("Count Success");
     }
 
     @PostMapping("/upload")
@@ -79,11 +86,12 @@ public class BookController {
 
     @PostMapping("/update")
     public Map<String, Object> update(@RequestBody Map<String, Object> data) {
-        bookService.saveBook(data);
+        bookService.insertOrUpdateBook(data);
         return resultUtil.successResult("Update Success");
     }
 
     @PostMapping("/delete")
+    @Transactional
     public Map<String, Object> delete(@RequestBody Map<String, Long> data) {
         bookService.deleteBookByIsbn(data.get("isbn"));
         return resultUtil.successResult("Delete Success");

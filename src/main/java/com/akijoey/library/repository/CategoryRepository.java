@@ -15,4 +15,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Query(value = "select name as title, icon as icon from Category")
     List<Map<String, Object>> findSide();
 
+    @Query(value = "select id as id, name as name from Category")
+    List<Map<String, Object>> findList();
+
 }
