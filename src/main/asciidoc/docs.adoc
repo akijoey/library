@@ -60,6 +60,50 @@ include::{snippets}/user/info/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/user/info/http-response.adoc[]
 
+==== *Get Major*
+Get user major after login.
+[source, http]
+----
+GET /api/user/major HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/major/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/major/http-response.adoc[]
+
+==== *Replace*
+Replace user avatar.
+[source, http]
+----
+POST /api/user/replace HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/replace/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/replace/http-response.adoc[]
+
+==== *Report*
+Report user major.
+[source, http]
+----
+POST /api/user/report HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/report/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/report/http-response.adoc[]
+
+==== *Passwd*
+Change password.
+[source, http]
+----
+POST /api/user/passwd HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/passwd/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/passwd/http-response.adoc[]
+
 ==== *Logout*
 Logout and invalidate token.
 [source, http]
@@ -94,7 +138,7 @@ include::{snippets}/user/table/http-request.adoc[]
 include::{snippets}/user/table/http-response.adoc[]
 
 ==== *Get Detail*
-Get user detail after login.
+Get user detail by id.
 [source, http]
 ----
 GET /api/user/detail HTTP/1.1
@@ -103,6 +147,39 @@ GET /api/user/detail HTTP/1.1
 include::{snippets}/user/detail/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/user/detail/http-response.adoc[]
+
+==== *Insert*
+Insert user detail.
+[source, http]
+----
+POST /api/user/insert HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/insert/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/insert/http-response.adoc[]
+
+==== *Enable*
+Enable user by id.
+[source, http]
+----
+POST /api/user/enable HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/enable/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/enable/http-response.adoc[]
+
+==== *Initialize*
+Initialize user password.
+[source, http]
+----
+POST /api/user/initialize HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/user/initialize/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/user/initialize/http-response.adoc[]
 
 ==== *Upload*
 Upload user avatar.
@@ -116,7 +193,7 @@ include::{snippets}/user/upload/http-request.adoc[]
 include::{snippets}/user/upload/http-response.adoc[]
 
 ==== *Update*
-Update user detail.
+Update user detail by id.
 [source, http]
 ----
 POST /api/user/update HTTP/1.1
@@ -126,38 +203,16 @@ include::{snippets}/user/update/http-request.adoc[]
 ====== *_Sample Response_*
 include::{snippets}/user/update/http-response.adoc[]
 
-==== *Passwd*
-Change password.
+==== *Delete*
+Delete user by id.
 [source, http]
 ----
-POST /api/user/passwd HTTP/1.1
+POST /api/user/delete HTTP/1.1
 ----
 ====== *_Sample Request_*
-include::{snippets}/user/passwd/http-request.adoc[]
+include::{snippets}/user/delete/http-request.adoc[]
 ====== *_Sample Response_*
-include::{snippets}/user/passwd/http-response.adoc[]
-
-==== *Initialize*
-Initialize password.
-[source, http]
-----
-POST /api/user/initialize HTTP/1.1
-----
-====== *_Sample Request_*
-include::{snippets}/user/initialize/http-request.adoc[]
-====== *_Sample Response_*
-include::{snippets}/user/initialize/http-response.adoc[]
-
-==== *Enable*
-Enable user.
-[source, http]
-----
-POST /api/user/enable HTTP/1.1
-----
-====== *_Sample Request_*
-include::{snippets}/user/enable/http-request.adoc[]
-====== *_Sample Response_*
-include::{snippets}/user/enable/http-response.adoc[]
+include::{snippets}/user/delete/http-response.adoc[]
 
 == *Category API*
 Collection of category API.

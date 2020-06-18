@@ -37,3 +37,11 @@ export function renewing(data) {
     data
   })
 }
+
+export function deleting(data) {
+  return request({
+    url: '/record/delete',
+    method: 'post',
+    data
+  })
+}

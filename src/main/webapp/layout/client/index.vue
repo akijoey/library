@@ -14,7 +14,7 @@
       <router-view :key="$route.fullPath" />
     </el-main>
     <el-footer>
-      <div id="copyright">©2020 By <a href="https://akijoey.com">AkiJoey</a></div>
+      <div id="copyright">Copyright 2020</div>
       <div id="framework">Powered by <a href="https://spring.io">Spring</a> + <a href="https://vuejs.org">Vue</a></div>
     </el-footer>
   </el-container>
@@ -66,27 +66,21 @@
     padding: 1.5rem 0;
     background-size: 200%;
     background-image: linear-gradient(
-      to right,
-    #bb313e25, #bb313e25, #d7222925,
-    #dd4a1625, #e4761525, #f5c50025,
-    #f0e92725, #b1ce2425, #48a93525,
-    #03944525, #157c4f25, #176a5825,
-    #1b556325, #1d386f25, #1d386f25,
-    #20277825, #52266325, #8a244b25
+      125deg, #0BA463 0%, #3CB48E 70%
     );
     animation: up 1s, color 5s infinite;
     #copyright, #framework {
-      color: #555;
+      color: #eee;
       line-height: 2;
       font-size: 13.5px;
       font-family: Verdana;
       text-align: center;
       a {
-        color: #555;
+        color: #eee;
         text-decoration: none;
         transition: .2s;
         &:hover {
-          color: #41B883;
+          color: #2c3e50;
         }
       }
     }

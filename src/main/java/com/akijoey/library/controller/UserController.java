@@ -53,7 +53,7 @@ public class UserController {
         if (!userService.reportUser(username, data)) {
             return resultUtil.customResult(401, "Username Existed");
         }
-        return resultUtil.successResult("Update Success");
+        return resultUtil.successResult("Report Success");
     }
 
     @PostMapping("/replace")
@@ -61,9 +61,9 @@ public class UserController {
         String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
         String avatar = userService.replaceAvatar(username, image);
         if (avatar == null) {
-            return resultUtil.customResult(500, "Upload Failure");
+            return resultUtil.customResult(500, "Replace Failure");
         }
-        return resultUtil.successResult("Upload Success", Map.of("avatar", avatar));
+        return resultUtil.successResult("Replace Success", Map.of("avatar", avatar));
     }
 
     @PostMapping("/passwd")

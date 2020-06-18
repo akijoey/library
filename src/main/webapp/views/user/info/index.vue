@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import { getDetail, upload, update } from '@/api/user'
+  import { getMajor, replace, report } from '@/api/user'
   import {
     validateUsername,
     validatePhone,
@@ -77,7 +77,7 @@
       httpRequest({ file }) {
         const data = new FormData()
         data.append('avatar', file)
-        upload(data).then(response => {
+        replace(data).then(response => {
           const { message, data } = response
           this.avatar = data.avatar
           this.$store.commit('user/setAvatar', this.avatar)
@@ -97,7 +97,7 @@
       handleSubmit() {
         this.$refs.form.validate(valid => {
           if (valid) {
-            update(this.form).then(response => {
+            report(this.form).then(response => {
               const { message } = response
               this.$store.commit('user/setName', this.form.username)
               this.$message.success(message)

@@ -13,8 +13,8 @@
     </div>
     <div slot="footer">
       <span id="count">数量:<span>{{ book.count }}</span></span>
-      <el-button v-if="path" type="primary" @click="handleBorrow">借书</el-button>
-      <el-button v-else type="primary" @click="handleReturn">还书</el-button>
+      <el-button v-if="state === undefined" :disabled="book.count === 0" type="primary" @click="handleBorrow">借书</el-button>
+      <el-button v-else :disabled="state" type="primary" @click="handleReturn">还书</el-button>
     </div>
   </el-dialog>
 </template>
@@ -32,7 +32,8 @@
       show: {
         type: Boolean,
         required: true
-      }
+      },
+      state: undefined
     },
     computed: {
       visible: {
@@ -50,9 +51,6 @@
           summary += `<p>${section}</p>`
         }
         return summary
-      },
-      path() {
-        return this.$route.path === '/library'
       }
     },
     data() {
@@ -148,6 +146,8 @@
       font-size: 17px;
       font-weight: bold;
       animation: star .7s;
+      position: relative;
+      top: 1.6px;
       & > span {
         color: #34495E;
         margin-left: 10px;

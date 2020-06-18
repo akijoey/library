@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function register(data) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    data
+  })
+}
+
 export function login(data) {
   return request({
     url: '/user/login',
@@ -22,17 +30,17 @@ export function getMajor() {
   })
 }
 
-export function upload(data) {
+export function replace(data) {
   return request({
-    url: '/user/upload',
+    url: '/user/replace',
     method: 'post',
     data
   })
 }
 
-export function replace(data) {
+export function report(data) {
   return request({
-    url: '/user/replace',
+    url: '/user/report',
     method: 'post',
     data
   })
@@ -50,13 +58,5 @@ export function logout() {
   return request({
     url: '/user/logout',
     method: 'post'
-  })
-}
-
-export function register(data) {
-  return request({
-    url: '/user/register',
-    method: 'post',
-    data
   })
 }
