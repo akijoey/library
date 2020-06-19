@@ -344,8 +344,30 @@ include::{snippets}/book/delete/http-response.adoc[]
 == *Record API*
 Collection of record API.
 
+==== *Get Count*
+Get count of records by user.
+[source, http]
+----
+GET /api/record/count/{uid} HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/record/count/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/record/count/http-response.adoc[]
+
+==== *Get List*
+Get record list by user.
+[source, http]
+----
+GET /api/record/list/{page}/{size}/{uid} HTTP/1.1
+----
+====== *_Sample Request_*
+include::{snippets}/record/list/http-request.adoc[]
+====== *_Sample Response_*
+include::{snippets}/record/list/http-response.adoc[]
+
 ==== *Get Total*
-Get total of records by user.
+Get total of records.
 [source, http]
 ----
 GET /api/record/total HTTP/1.1

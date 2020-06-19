@@ -1,15 +1,15 @@
 import request from '@/utils/request'
 
-export function getTotal() {
+export function getCount(uid) {
   return request({
-    url: '/record/total',
+    url: `/record/count/${uid}`,
 		method: 'get'
   })
 }
 
-export function getTable(page, size) {
+export function getList(page, size, uid) {
 	return request({
-    url: `/record/table/${page}/${size}`,
+    url: `/record/list/${page}/${size}/${uid}`,
     method: 'get'
 	})
 }

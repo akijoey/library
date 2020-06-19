@@ -42,13 +42,13 @@ class BookControllerTest {
     @Test
     void getList() throws Exception {
         String url = PREFIX + "/list/{page}/{size}/{cid}";
-        mockUtil.mockGet(mockMvc, "user", url, 1, 10, 5);
+        mockUtil.mockGet(mockMvc, "user", url, 1, 5, 5);
     }
 
     @Test
     void getTable() throws Exception {
         String url = PREFIX + "/table/{page}/{size}/{cid}";
-        mockUtil.mockGet(mockMvc, "user", url, 1, 10, 5);
+        mockUtil.mockGet(mockMvc, "user", url, 1, 5, 5);
     }
 
     @Test

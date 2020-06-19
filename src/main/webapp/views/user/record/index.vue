@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import { getTable, getTotal, returning, renewing, deleting } from '@/api/record'
+  import { getCount, getList, returning, renewing, deleting } from '@/api/record'
   import Dialog from '@/components/dialog'
   export default {
     name: 'Record',
@@ -62,13 +62,13 @@
     },
     methods: {
       getRecords(page) {
-        getTotal().then(response => {
+        getCount('').then(response => {
           const { data } = response
-          this.total = data.total
+          this.total = data.count
         })
-        getTable(page, 10).then(response => {
+        getList(page, 10, '').then(response => {
           const { data } = response
-          this.records = data.table
+          this.records = data.list
           this.formatRecoreds()
         })
       },

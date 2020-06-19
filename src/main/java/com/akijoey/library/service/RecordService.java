@@ -33,14 +33,42 @@ public class RecordService {
         recordRepository.save(record);
     }
 
-    public long getTotalByUsername(String username) {
-        User user = userService.getUserByUsername(username);
+    public long countByUser(User user) {
         return recordRepository.countByUser(user);
     }
 
-    public List<Map<String, Object>> getTableByUsername(String username, int page, int size) {
+    public long getCountByUsername(String username) {
+        User user = userService.getUserByUsername(username);
+        return countByUser(user);
+    }
+
+    public long getCountByUserId(int uid) {
+        User user = userService.getUserById(uid);
+        return countByUser(user);
+    }
+
+    public List<Map<String, Object>> getListByUser(int page, int size, User user) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return recordRepository.findTableByUsername(username, pageable);
+        return recordRepository.findListByUser(pageable, user);
+    }
+
+    public List<Map<String, Object>> getListByUsername(int page, int size, String username) {
+        User user = userService.getUserByUsername(username);
+        return getListByUser(page, size, user);
+    }
+
+    public List<Map<String, Object>> getListByUserId(int page, int size, int uid) {
+        User user = userService.getUserById(uid);
+        return getListByUser(page, size, user);
+    }
+
+    public long getTotal() {
+        return recordRepository.count();
+    }
+
+    public List<Map<String, Object>> getTable(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return recordRepository.findTable(pageable);
     }
 
     public void insertRecord(String username, long isbn) {

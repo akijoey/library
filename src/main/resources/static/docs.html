@@ -485,6 +485,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_record_api"><strong>Record API</strong></a>
 <ul class="sectlevel3">
+<li><a href="#_get_count"><strong>Get Count</strong></a></li>
+<li><a href="#_get_list_3"><strong>Get List</strong></a></li>
 <li><a href="#_get_total_3"><strong>Get Total</strong></a></li>
 <li><a href="#_get_table_3"><strong>Get Table</strong></a></li>
 <li><a href="#_borrow"><strong>Borrow</strong></a></li>
@@ -615,7 +617,7 @@ Content-Length: 243
 
 {
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTI1MjY4NDk0MTYifQ.iSIbVP6OuC5d14IlJ1X33R9sUwSvGXBSyy7DOZo7yHY"
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiYWtpam9leSIsImV4cCI6IjE1OTI1NjkzOTI5NzEifQ.g4_OSX1HkhNeiNs8YAXy2rdbxrcodcOWVYwgPKrDQBw"
   },
   "message" : "Login Success",
   "status" : 200
@@ -663,7 +665,7 @@ Content-Length: 1091
 
 {
   "data" : {
-    "avatar" : "/img/00a8018bf036447d9cfaf237d9f6facc.png",
+    "avatar" : "/img/d077f264c73b4bbcbbf6c27cba060050.png",
     "routes" : [ {
       "id" : 1,
       "name" : "Client",
@@ -805,7 +807,7 @@ Content-Length: 136
 
 {
   "data" : {
-    "avatar" : "/img/12e0440e39d04b4cb7a7f17afde1434f.png"
+    "avatar" : "/img/1e4d41d458464c7e8d5428cb6e79a49a.png"
   },
   "message" : "Replace Success",
   "status" : 200
@@ -1003,7 +1005,7 @@ Content-Length: 90
 
 {
   "data" : {
-    "total" : 28
+    "total" : 29
   },
   "message" : "Get Success",
   "status" : 200
@@ -1026,7 +1028,7 @@ Content-Length: 90
 <h6 id="_sample_request_10"><a class="link" href="#_sample_request_10"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/table/1/10 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/user/table/1/5 HTTP/1.1
 Authorization: Bearer &lt; admin token &gt;
 Host: localhost:8080</code></pre>
 </div>
@@ -1047,7 +1049,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1746
+Content-Length: 943
 
 {
   "data" : {
@@ -1086,41 +1088,6 @@ Content-Length: 1746
       "id" : 80,
       "enabled" : 1,
       "username" : "wubo"
-    }, {
-      "address" : "环印城市街",
-      "phone" : "18822356964",
-      "roles" : [ "ROLE_USER" ],
-      "id" : 81,
-      "enabled" : 1,
-      "username" : "Van♂"
-    }, {
-      "address" : "",
-      "phone" : "",
-      "roles" : [ "ROLE_USER" ],
-      "id" : 82,
-      "enabled" : 1,
-      "username" : "wyj2"
-    }, {
-      "address" : "",
-      "phone" : "",
-      "roles" : [ "ROLE_USER" ],
-      "id" : 83,
-      "enabled" : 1,
-      "username" : "wyj3"
-    }, {
-      "address" : "",
-      "phone" : "",
-      "roles" : [ "ROLE_USER" ],
-      "id" : 84,
-      "enabled" : 1,
-      "username" : "wyj4"
-    }, {
-      "address" : "",
-      "phone" : "",
-      "roles" : [ "ROLE_USER" ],
-      "id" : 85,
-      "enabled" : 1,
-      "username" : "wyj0"
     } ]
   },
   "message" : "Get Success",
@@ -1177,9 +1144,9 @@ Content-Length: 254
   "data" : {
     "detail" : {
       "phone" : "13751706464",
+      "avatar" : "/img/d077f264c73b4bbcbbf6c27cba060050.png",
       "username" : "user",
-      "address" : "test address",
-      "avatar" : "/img/00a8018bf036447d9cfaf237d9f6facc.png"
+      "address" : "test address"
     }
   },
   "message" : "Get Success",
@@ -1210,11 +1177,11 @@ Content-Length: 138
 Host: localhost:8080
 
 {
-  "password" : "123456",
   "avatar" : "/img/avatar.png",
   "username" : "test",
   "phone" : "18820188310",
-  "address" : "china"
+  "address" : "china",
+  "password" : "123456"
 }</code></pre>
 </div>
 </div>
@@ -1316,8 +1283,8 @@ Content-Length: 45
 Host: localhost:8080
 
 {
-  "id" : 1,
-  "password" : "123456789"
+  "password" : "123456789",
+  "id" : 1
 }</code></pre>
 </div>
 </div>
@@ -1390,7 +1357,7 @@ Content-Length: 135
 
 {
   "data" : {
-    "avatar" : "/img/79fb5a7d91a54fec9f45e3ee4cd2f62c.png"
+    "avatar" : "/img/2de2dc426e5e47a0a566dfafb84e95a1.png"
   },
   "message" : "Upload Success",
   "status" : 200
@@ -1420,11 +1387,11 @@ Content-Length: 125
 Host: localhost:8080
 
 {
-  "id" : 1,
   "avatar" : "/img/avatar.png",
   "username" : "user",
   "phone" : "18820188310",
-  "address" : "china"
+  "address" : "china",
+  "id" : 1
 }</code></pre>
 </div>
 </div>
@@ -1715,7 +1682,7 @@ Content-Length: 90
 <h6 id="_sample_request_21"><a class="link" href="#_sample_request_21"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/list/1/10/5 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/list/1/5/5 HTTP/1.1
 Authorization: Bearer &lt; user token &gt;
 Host: localhost:8080</code></pre>
 </div>
@@ -1736,7 +1703,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2112
+Content-Length: 1090
 
 {
   "data" : {
@@ -1765,31 +1732,6 @@ Content-Length: 2112
       "isbn" : 9787115282828,
       "cover" : "https://img9.doubanio.com/view/subject/s/public/s9114855.jpg",
       "author" : "[美]吴军"
-    }, {
-      "title" : "猿猴的把戏",
-      "author" : "Dario Maestripieri",
-      "isbn" : 9787121222863,
-      "cover" : "https://img3.doubanio.com/view/subject/s/public/s27240930.jpg"
-    }, {
-      "isbn" : 9787220003479,
-      "title" : "卖桔者言",
-      "author" : "张五常",
-      "cover" : "https://img1.doubanio.com/view/subject/s/public/s2986418.jpg"
-    }, {
-      "author" : "[美]罗伯特·西奥迪尼",
-      "title" : "影响力",
-      "cover" : "https://img9.doubanio.com/view/subject/s/public/s1657785.jpg",
-      "isbn" : 9787300072487
-    }, {
-      "title" : "大而不倒",
-      "author" : "安德鲁•罗斯•索尔金（Andrew Ross Sorkin）",
-      "cover" : "https://img3.doubanio.com/view/subject/s/public/s4490382.jpg",
-      "isbn" : 9787300126579
-    }, {
-      "author" : "弗雷德里克·S·米什金",
-      "title" : "货币金融学",
-      "isbn" : 9787300129266,
-      "cover" : "https://img3.doubanio.com/view/subject/s/public/s6277651.jpg"
     } ]
   },
   "message" : "Get Success",
@@ -1813,7 +1755,7 @@ Content-Length: 2112
 <h6 id="_sample_request_22"><a class="link" href="#_sample_request_22"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/table/1/10/5 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/book/table/1/5/5 HTTP/1.1
 Authorization: Bearer &lt; user token &gt;
 Host: localhost:8080</code></pre>
 </div>
@@ -1834,7 +1776,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2437
+Content-Length: 1247
 
 {
   "data" : {
@@ -1842,7 +1784,7 @@ Content-Length: 2437
       "press" : "商务印书馆",
       "page" : 376,
       "title" : "如何阅读一本书",
-      "count" : 19,
+      "count" : 18,
       "author" : "[美] 莫提默·J. 艾德勒",
       "isbn" : 9787100040945,
       "data" : "2004-1"
@@ -1878,46 +1820,6 @@ Content-Length: 2437
       "count" : 21,
       "author" : "[美]吴军",
       "press" : "人民邮电出版社"
-    }, {
-      "page" : 315,
-      "title" : "猿猴的把戏",
-      "press" : "电子工业出版社",
-      "author" : "Dario Maestripieri",
-      "data" : "2014-2-1",
-      "isbn" : 9787121222863,
-      "count" : 21
-    }, {
-      "isbn" : 9787220003479,
-      "data" : "1988-06-01",
-      "title" : "卖桔者言",
-      "author" : "张五常",
-      "count" : 21,
-      "press" : "四川人民出版社",
-      "page" : 229
-    }, {
-      "author" : "[美]罗伯特·西奥迪尼",
-      "title" : "影响力",
-      "data" : "2006-5",
-      "press" : "中国人民大学出版社",
-      "page" : 353,
-      "count" : 20,
-      "isbn" : 9787300072487
-    }, {
-      "data" : "2010-9",
-      "press" : "中国人民大学出版社",
-      "title" : "大而不倒",
-      "author" : "安德鲁•罗斯•索尔金（Andrew Ross Sorkin）",
-      "page" : 620,
-      "count" : 21,
-      "isbn" : 9787300126579
-    }, {
-      "author" : "弗雷德里克·S·米什金",
-      "press" : "中国人民大学出版社",
-      "title" : "货币金融学",
-      "data" : "2011-1",
-      "count" : 21,
-      "page" : 645,
-      "isbn" : 9787300129266
     } ]
   },
   "message" : "Get Success",
@@ -1979,8 +1881,8 @@ Content-Length: 882
       "author" : "老舍",
       "press" : "人民文学出版社",
       "cover" : "https://img3.doubanio.com/view/subject/s/public/s1146040.jpg",
+      "count" : 19,
       "title" : "骆驼祥子",
-      "count" : 20,
       "page" : 2245,
       "category" : "文学"
     }
@@ -2013,15 +1915,15 @@ Content-Length: 655
 Host: localhost:8080
 
 {
+  "date" : "2006-12",
+  "isbn" : 9787020055272,
+  "author" : "鲁迅",
+  "title" : "朝花夕拾",
   "cid" : 1,
   "page" : 116,
   "press" : "人民文学出版社",
   "summary" : "中西的思想确乎有一点不同。听说中国的孝子们，一到将要“罪孽深重祸延父母”的时候，就买几斤人参，煎汤灌下去，希望父母多喘几天气，即使半天也好。我的一位教医学的先生却教给我医生的职务道：可医的应该给他医治，不可医的应该给他死得没有痛苦。——但这先生自然是西医。",
-  "cover" : "https://img1.doubanio.com/view/subject/s/public/s3333559.jpg",
-  "date" : "2006-12",
-  "isbn" : 9787020055272,
-  "author" : "鲁迅",
-  "title" : "朝花夕拾"
+  "cover" : "https://img1.doubanio.com/view/subject/s/public/s3333559.jpg"
 }</code></pre>
 </div>
 </div>
@@ -2146,7 +2048,7 @@ Content-Length: 134
 
 {
   "data" : {
-    "cover" : "/img/55e29ed4acb1400a806bc5b2a7ff2a5e.jpg"
+    "cover" : "/img/c766137c6fd74e3b9c553974c00319f9.jpg"
   },
   "message" : "Upload Success",
   "status" : 200
@@ -2176,15 +2078,15 @@ Content-Length: 719
 Host: localhost:8080
 
 {
+  "date" : "2000-3-1",
+  "isbn" : 9787020028115,
+  "author" : "老舍",
+  "title" : "骆驼祥子",
   "cid" : 1,
   "page" : 225,
   "press" : "人民文学出版社",
   "summary" : "《骆驼祥子》是老舍用同情的笔触描绘的一幕悲剧：二十年代的北京，一个勤劳、壮实的底层社会小人物怀着发家、奋斗的美好梦想，却最终为黑暗的暴风雨所吞噬。它揭示了当时“小人物”的奴隶心理和希望的最终破灭。随着祥子心爱的女人小福子的自杀，祥子熄灭了个人奋斗的最后一朵火花。这是旧中国老北京贫苦市民的典型命运。",
-  "cover" : "https://img3.doubanio.com/view/subject/s/public/s1146040.jpg",
-  "date" : "2000-3-1",
-  "isbn" : 9787020028115,
-  "author" : "老舍",
-  "title" : "骆驼祥子"
+  "cover" : "https://img3.doubanio.com/view/subject/s/public/s1146040.jpg"
 }</code></pre>
 </div>
 </div>
@@ -2274,20 +2176,20 @@ Content-Length: 55
 <p>Collection of record API.</p>
 </div>
 <div class="sect3">
-<h4 id="_get_total_3"><a class="link" href="#_get_total_3"><strong>Get Total</strong></a></h4>
+<h4 id="_get_count"><a class="link" href="#_get_count"><strong>Get Count</strong></a></h4>
 <div class="paragraph">
-<p>Get total of records by user.</p>
+<p>Get count of records by user.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/record/total HTTP/1.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/record/count/{uid} HTTP/1.1</code></pre>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_sample_request_29"><a class="link" href="#_sample_request_29"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/total HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/count/1 HTTP/1.1
 Authorization: Bearer &lt; user token &gt;
 Host: localhost:8080</code></pre>
 </div>
@@ -2312,7 +2214,7 @@ Content-Length: 90
 
 {
   "data" : {
-    "total" : 16
+    "count" : 21
   },
   "message" : "Get Success",
   "status" : 200
@@ -2322,20 +2224,20 @@ Content-Length: 90
 </div>
 </div>
 <div class="sect3">
-<h4 id="_get_table_3"><a class="link" href="#_get_table_3"><strong>Get Table</strong></a></h4>
+<h4 id="_get_list_3"><a class="link" href="#_get_list_3"><strong>Get List</strong></a></h4>
 <div class="paragraph">
-<p>Get record table.</p>
+<p>Get record list by user.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/record/table/{page}/{size} HTTP/1.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/record/list/{page}/{size}/{uid} HTTP/1.1</code></pre>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_sample_request_30"><a class="link" href="#_sample_request_30"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/table/1/10 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/list/1/5/1 HTTP/1.1
 Authorization: Bearer &lt; user token &gt;
 Host: localhost:8080</code></pre>
 </div>
@@ -2356,11 +2258,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2310
+Content-Length: 1186
 
 {
   "data" : {
-    "table" : [ {
+    "list" : [ {
       "borrow" : "2020-06-12T02:42:50.000+0000",
       "id" : 1,
       "return" : "2020-07-12T02:42:50.000+0000",
@@ -2395,41 +2297,147 @@ Content-Length: 2310
       "borrow" : "2020-06-18T22:26:05.000+0000",
       "return" : "2020-07-18T22:26:05.000+0000",
       "state" : false
+    } ]
+  },
+  "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_total_3"><a class="link" href="#_get_total_3"><strong>Get Total</strong></a></h4>
+<div class="paragraph">
+<p>Get total of records.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/record/total HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_31"><a class="link" href="#_sample_request_31"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/total HTTP/1.1
+Authorization: Bearer &lt; user token &gt;
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_31"><a class="link" href="#_sample_response_31"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 90
+
+{
+  "data" : {
+    "total" : 43
+  },
+  "message" : "Get Success",
+  "status" : 200
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_table_3"><a class="link" href="#_get_table_3"><strong>Get Table</strong></a></h4>
+<div class="paragraph">
+<p>Get record table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http hljs" data-lang="http">GET /api/record/table/{page}/{size} HTTP/1.1</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_request_32"><a class="link" href="#_sample_request_32"><strong><em>Sample Request</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/record/table/1/5 HTTP/1.1
+Authorization: Bearer &lt; user token &gt;
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_response_32"><a class="link" href="#_sample_response_32"><strong><em>Sample Response</em></strong></a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1434
+
+{
+  "data" : {
+    "table" : [ {
+      "uid" : 1,
+      "username" : "user",
+      "borrow" : "2020-06-12T02:42:50.000+0000",
+      "id" : 1,
+      "return" : "2020-07-12T02:42:50.000+0000",
+      "bookname" : "激荡三十年（上）",
+      "state" : false,
+      "isbn" : 9787508607719
     }, {
-      "id" : 137,
-      "name" : "水浒传（全二册）",
-      "return" : "2020-07-18T22:30:35.000+0000",
-      "borrow" : "2020-06-18T22:30:35.000+0000",
-      "isbn" : 9787020008742,
+      "uid" : 1,
+      "isbn" : 9787508610344,
+      "username" : "user",
+      "return" : "2020-07-12T02:42:53.000+0000",
+      "borrow" : "2020-06-12T02:42:53.000+0000",
+      "bookname" : "野蛮生长",
+      "id" : 53,
       "state" : false
     }, {
-      "name" : "悲惨世界（上中下）",
-      "id" : 138,
-      "return" : "2020-07-18T22:30:36.000+0000",
-      "isbn" : 9787020017164,
-      "borrow" : "2020-06-18T22:30:36.000+0000",
+      "uid" : 1,
+      "username" : "user",
+      "isbn" : 9787508036083,
+      "return" : "2020-07-12T02:42:55.000+0000",
+      "bookname" : "国富论",
+      "borrow" : "2020-06-12T02:42:55.000+0000",
+      "id" : 54,
       "state" : false
     }, {
-      "id" : 139,
-      "return" : "2020-07-18T22:30:37.000+0000",
-      "name" : "雷雨",
-      "isbn" : 9787020018567,
-      "borrow" : "2020-06-18T22:30:37.000+0000",
+      "uid" : 1,
+      "username" : "user",
+      "borrow" : "2020-06-12T02:43:00.000+0000",
+      "isbn" : 9787508631424,
+      "bookname" : "众魔在人间",
+      "return" : "2020-07-12T02:43:00.000+0000",
+      "id" : 55,
       "state" : false
     }, {
-      "id" : 142,
-      "isbn" : 9787100012935,
-      "return" : "2020-07-18T22:30:41.000+0000",
-      "name" : "菊与刀",
-      "borrow" : "2020-06-18T22:30:41.000+0000",
-      "state" : false
-    }, {
-      "return" : "2020-07-18T22:30:42.000+0000",
-      "id" : 143,
-      "borrow" : "2020-06-18T22:30:42.000+0000",
-      "isbn" : 9787100021654,
-      "name" : "中国近三百年学术史（全两册）",
-      "state" : false
+      "borrow" : "2020-06-17T06:50:38.000+0000",
+      "username" : "test1",
+      "state" : true,
+      "id" : 98,
+      "uid" : 74,
+      "return" : "2020-07-24T06:50:38.000+0000",
+      "bookname" : "水浒传（全二册）",
+      "isbn" : 9787020008742
     } ]
   },
   "message" : "Get Success",
@@ -2450,7 +2458,7 @@ Content-Length: 2310
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_31"><a class="link" href="#_sample_request_31"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_33"><a class="link" href="#_sample_request_33"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/borrow HTTP/1.1
@@ -2466,7 +2474,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_31"><a class="link" href="#_sample_response_31"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_33"><a class="link" href="#_sample_response_33"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -2501,7 +2509,7 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_32"><a class="link" href="#_sample_request_32"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_34"><a class="link" href="#_sample_request_34"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/return HTTP/1.1
@@ -2517,7 +2525,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_32"><a class="link" href="#_sample_response_32"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_34"><a class="link" href="#_sample_response_34"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -2552,7 +2560,7 @@ Content-Length: 55
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_33"><a class="link" href="#_sample_request_33"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_35"><a class="link" href="#_sample_request_35"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/renew HTTP/1.1
@@ -2569,7 +2577,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_33"><a class="link" href="#_sample_response_33"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_35"><a class="link" href="#_sample_response_35"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -2604,7 +2612,7 @@ Content-Length: 54
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_request_34"><a class="link" href="#_sample_request_34"><strong><em>Sample Request</em></strong></a></h6>
+<h6 id="_sample_request_36"><a class="link" href="#_sample_request_36"><strong><em>Sample Request</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/record/delete HTTP/1.1
@@ -2620,7 +2628,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_response_34"><a class="link" href="#_sample_response_34"><strong><em>Sample Response</em></strong></a></h6>
+<h6 id="_sample_response_36"><a class="link" href="#_sample_response_36"><strong><em>Sample Response</em></strong></a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -2650,7 +2658,7 @@ Content-Length: 55
 <div id="footer">
 <div id="footer-text">
 Version v1.0<br>
-Last updated 2020-06-19 01:52:23 +0800
+Last updated 2020-06-19 19:19:06 +0800
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">

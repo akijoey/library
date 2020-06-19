@@ -32,6 +32,18 @@ class RecordControllerTest {
     }
 
     @Test
+    void getCount() throws Exception {
+        String url = PREFIX + "/count/{uid}";
+        mockUtil.mockGet(mockMvc, "user", url, 1);
+    }
+
+    @Test
+    void getList() throws Exception {
+        String url = PREFIX + "/list/{page}/{size}/{uid}";
+        mockUtil.mockGet(mockMvc, "user", url, 1, 5, 1);
+    }
+
+    @Test
     void getTotal() throws Exception {
         String url = PREFIX + "/total";
         mockUtil.mockGet(mockMvc, "user", url);
@@ -40,7 +52,7 @@ class RecordControllerTest {
     @Test
     void getTable() throws Exception {
         String url = PREFIX + "/table/{page}/{size}";
-        mockUtil.mockGet(mockMvc, "user", url, 1, 10);
+        mockUtil.mockGet(mockMvc, "user", url, 1, 5);
     }
 
     @Test

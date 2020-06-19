@@ -55,7 +55,7 @@ public class BookService {
     public List<Map<String, Object>> getListByCategory(int page, int size, int cid) {
         Category category = categoryService.getCategoryById(cid);
         Pageable pageable = PageRequest.of(page - 1, size);
-        return bookRepository.findListByCategory(category, pageable);
+        return bookRepository.findListByCategory(pageable, category);
     }
 
     public List<Map<String, Object>> getTable(int page, int size) {
@@ -66,7 +66,7 @@ public class BookService {
     public List<Map<String, Object>> getTableByCategory(int page, int size, int cid) {
         Category category = categoryService.getCategoryById(cid);
         Pageable pageable = PageRequest.of(page - 1, size);
-        return bookRepository.findTableByCategory(category, pageable);
+        return bookRepository.findTableByCategory(pageable, category);
     }
 
     public Map<String, Object> getDetailByIsbn(long isbn) {

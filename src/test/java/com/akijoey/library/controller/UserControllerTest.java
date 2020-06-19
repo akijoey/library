@@ -105,7 +105,7 @@ class UserControllerTest {
     @Test
     void getTable() throws Exception {
         String url = PREFIX + "/table/{page}/{size}";
-        mockUtil.mockGet(mockMvc, "admin", url, 1, 10);
+        mockUtil.mockGet(mockMvc, "admin", url, 1, 5);
     }
 
     @Test

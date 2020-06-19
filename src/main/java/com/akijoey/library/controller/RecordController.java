@@ -22,17 +22,39 @@ public class RecordController {
     @Autowired
     ResultUtil resultUtil;
 
-    @GetMapping("/total")
-    public Map<String, Object> getTotal(@RequestHeader("Authorization") String authorization) {
+    @GetMapping("/count")
+    public Map<String, Object> getCount(@RequestHeader("Authorization") String authorization) {
         String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
-        long total = recordService.getTotalByUsername(username);
+        long count = recordService.getCountByUsername(username);
+        return resultUtil.successResult("Get Success", Map.of("count", count));
+    }
+    @GetMapping("/count/{uid}")
+    public Map<String, Object> getCount(@PathVariable("uid") int uid) {
+        long count = recordService.getCountByUserId(uid);
+        return resultUtil.successResult("Get Success", Map.of("count", count));
+    }
+
+    @GetMapping("/list/{page}/{size}")
+    public Map<String, Object> getList(@RequestHeader("Authorization") String authorization, @PathVariable("page") int page, @PathVariable("size") int size) {
+        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
+        List<Map<String, Object>> list = recordService.getListByUsername(page, size, username);
+        return resultUtil.successResult("Get Success", Map.of("list", list));
+    }
+    @GetMapping("/list/{page}/{size}/{uid}")
+    public Map<String, Object> getList(@PathVariable("page") int page, @PathVariable("size") int size, @PathVariable("uid") int uid) {
+        List<Map<String, Object>> list = recordService.getListByUserId(page, size, uid);
+        return resultUtil.successResult("Get Success", Map.of("list", list));
+    }
+
+    @GetMapping("/total")
+    public Map<String, Object> getTotal() {
+        long total = recordService.getTotal();
         return resultUtil.successResult("Get Success", Map.of("total", total));
     }
 
     @GetMapping("/table/{page}/{size}")
-    public Map<String, Object> getTable(@RequestHeader("Authorization") String authorization, @PathVariable("page") int page, @PathVariable("size") int size) {
-        String username = tokenUtil.getSubject(authorization.replace("Bearer ", ""));
-        List<Map<String, Object>> table = recordService.getTableByUsername(username, page, size);
+    public Map<String, Object> getTable(@PathVariable("page") int page, @PathVariable("size") int size) {
+        List<Map<String, Object>> table = recordService.getTable(page, size);
         return resultUtil.successResult("Get Success", Map.of("table", table));
     }
 
