@@ -1,29 +1,27 @@
 # library
 
-## Project setup
-```
-yarn install
-```
+Books management system powered by Spring Boot and Vue.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## Installation
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+Install node modules.
 
-### Run your tests
-```
-yarn run test
-```
+`$ yarn`
 
-### Lints and fixes files
-```
-yarn run lint
-```
+Compile web application.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+`$ yarn run build`
+
+Maven package and skip test.
+
+`$ mvn package -DskipTests`
+
+## Usage
+
+Run jar.
+
+`$ java -jar ./target/library-0.0.1-SNAPSHOT.jar`
+
+## License
+
+[MIT](https://github.com/akijoey/library/blob/master/LICENSE) © AkiJoey
