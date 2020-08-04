@@ -10,13 +10,17 @@ Install node modules.
 
 Compile web application.
 
-`$ yarn run build`
+`$ yarn build`
+
+## Usage
+
+`$ mvn spring-boot:run`
+
+## Deployment
 
 Maven package and skip test.
 
 `$ mvn package -DskipTests`
-
-## Usage
 
 Run jar.
 
