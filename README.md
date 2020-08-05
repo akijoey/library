@@ -1,6 +1,6 @@
 # library
 
-Books management system powered by Spring Boot and Vue.
+Books management system powered by Spring and Vue.
 
 ## Installation
 
